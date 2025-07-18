@@ -409,11 +409,6 @@
               <FilePath>..\..\SWM231_StdPeriph_Driver\CSL\SWM231_StdPeriph_Driver\SWM231_gpio.c</FilePath>
             </File>
             <File>
-              <FileName>SWM231_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\SWM231_StdPeriph_Driver\CSL\SWM231_StdPeriph_Driver\SWM231_i2c.c</FilePath>
-            </File>
-            <File>
               <FileName>SWM231_pwm.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\SWM231_StdPeriph_Driver\CSL\SWM231_StdPeriph_Driver\SWM231_pwm.c</FilePath>
@@ -449,11 +444,6 @@
               <FilePath>..\..\SWM231_StdPeriph_Driver\CSL\SWM231_StdPeriph_Driver\SWM231_flash.c</FilePath>
             </File>
             <File>
-              <FileName>SWM231_can.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\SWM231_StdPeriph_Driver\CSL\SWM231_StdPeriph_Driver\SWM231_can.c</FilePath>
-            </File>
-            <File>
               <FileName>SWM231_div.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\SWM231_StdPeriph_Driver\CSL\SWM231_StdPeriph_Driver\SWM231_div.c</FilePath>
@@ -462,11 +452,6 @@
               <FileName>SWM231_dma.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\SWM231_StdPeriph_Driver\CSL\SWM231_StdPeriph_Driver\SWM231_dma.c</FilePath>
-            </File>
-            <File>
-              <FileName>SWM231_qei.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\SWM231_StdPeriph_Driver\CSL\SWM231_StdPeriph_Driver\SWM231_qei.c</FilePath>
             </File>
           </Files>
         </Group>

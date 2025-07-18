@@ -424,11 +424,6 @@
               <FilePath>.\CSL\SWM231_StdPeriph_Driver\SWM231_adc.c</FilePath>
             </File>
             <File>
-              <FileName>SWM231_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\CSL\SWM231_StdPeriph_Driver\SWM231_i2c.c</FilePath>
-            </File>
-            <File>
               <FileName>SWM231_pwm.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\CSL\SWM231_StdPeriph_Driver\SWM231_pwm.c</FilePath>
@@ -449,19 +444,9 @@
               <FilePath>.\CSL\SWM231_StdPeriph_Driver\SWM231_spi.c</FilePath>
             </File>
             <File>
-              <FileName>SWM231_qei.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\CSL\SWM231_StdPeriph_Driver\SWM231_qei.c</FilePath>
-            </File>
-            <File>
               <FileName>SWM231_dma.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\CSL\SWM231_StdPeriph_Driver\SWM231_dma.c</FilePath>
-            </File>
-            <File>
-              <FileName>SWM231_can.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\CSL\SWM231_StdPeriph_Driver\SWM231_can.c</FilePath>
             </File>
             <File>
               <FileName>SWM231_flash.c</FileName>
@@ -472,26 +457,6 @@
               <FileName>SWM231_iofilt.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\CSL\SWM231_StdPeriph_Driver\SWM231_iofilt.c</FilePath>
-            </File>
-            <File>
-              <FileName>SWM231_mpu.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\CSL\SWM231_StdPeriph_Driver\SWM231_mpu.c</FilePath>
-            </File>
-            <File>
-              <FileName>SWM231_qspi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\CSL\SWM231_StdPeriph_Driver\SWM231_qspi.c</FilePath>
-            </File>
-            <File>
-              <FileName>SWM231_crc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\CSL\SWM231_StdPeriph_Driver\SWM231_crc.c</FilePath>
-            </File>
-            <File>
-              <FileName>SWM231_usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\CSL\SWM231_StdPeriph_Driver\SWM231_usart.c</FilePath>
             </File>
           </Files>
         </Group>

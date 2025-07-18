@@ -414,11 +414,6 @@
               <FilePath>..\..\SWM231_StdPeriph_Driver\CSL\SWM231_StdPeriph_Driver\SWM231_gpio.c</FilePath>
             </File>
             <File>
-              <FileName>SWM231_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\SWM231_StdPeriph_Driver\CSL\SWM231_StdPeriph_Driver\SWM231_i2c.c</FilePath>
-            </File>
-            <File>
               <FileName>SWM231_pwm.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\SWM231_StdPeriph_Driver\CSL\SWM231_StdPeriph_Driver\SWM231_pwm.c</FilePath>

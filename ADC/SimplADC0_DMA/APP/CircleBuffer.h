@@ -4,7 +4,7 @@
 
 #define cb_item_t	uint16_t	// item type
 
-#define CB_ITEM_N	2048		// item number，实际可存入数据少一个，留一个空位表示满，以区别于空
+#define CB_ITEM_N	1024		// item number，实际可存入数据少一个，留一个空位表示满，以区别于空
 
 
 typedef struct

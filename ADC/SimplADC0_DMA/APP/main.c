@@ -62,7 +62,7 @@ int main(void)
 	{
 		while(CirBuf_Full(&CirBuf) == 0) __NOP();
 		
-		for(int i = 0; i < 2000; i++)
+		for(int i = 0; i < 1000; i++)
 		{
 			uint16_t data;
 			
