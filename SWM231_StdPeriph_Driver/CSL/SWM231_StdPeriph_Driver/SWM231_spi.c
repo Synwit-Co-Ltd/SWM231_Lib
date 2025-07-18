@@ -81,11 +81,11 @@ void SPI_Init(SPI_TypeDef * SPIx, SPI_InitStructure * initStruct)
 	case ((uint32_t)SPI0):		
 		if(initStruct->RXThresholdIEn | initStruct->TXThresholdIEn | initStruct->TXCompleteIEn)
 		{
-			NVIC_EnableIRQ(GPIOB3_GPIOA11_SPI0_IRQn);
+			NVIC_EnableIRQ(SPI0_IRQn);
 		}
 		else
 		{
-			NVIC_DisableIRQ(GPIOB3_GPIOA11_SPI0_IRQn);
+			NVIC_DisableIRQ(SPI0_IRQn);
 		}
 		break;
 	}

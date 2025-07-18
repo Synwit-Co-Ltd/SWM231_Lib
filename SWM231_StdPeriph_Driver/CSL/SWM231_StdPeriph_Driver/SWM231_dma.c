@@ -78,7 +78,7 @@ void DMA_CH_Init(uint32_t chn, DMA_InitStructure * initStruct)
 	DMA_CH_INTClr(chn, initStruct->INTEn);
 	DMA_CH_INTEn(chn, initStruct->INTEn);
 	
-	if(initStruct->INTEn) NVIC_EnableIRQ(GPIOB1_GPIOA9_DMA_IRQn);
+	if(initStruct->INTEn) NVIC_EnableIRQ(DMA_IRQn);
 }
 
 /****************************************************************************************************************************************** 

@@ -17,37 +17,37 @@ typedef enum IRQn
   
 /******  Cortex-M0 specific Interrupt Numbers ************************************************/
   UART0_IRQn                = 0,
-  TIMR0_IRQn                = 1,
-  CAN0_IRQn                 = 2,
-  UART1_IRQn                = 3,
+  UART1_IRQn                = 1,
+  TIMR0_IRQn                = 2,
+  PWM0_IRQn                 = 3,
   PWM1_IRQn                 = 4,
-  TIMR1_IRQn                = 5,
-  HALL_IRQn                 = 6,
-  PWM0_IRQn                 = 7,
-  QSPI0_IRQn                = 8,
-  PWMBRK_IRQn               = 9,
-  USART0_IRQn               = 10,
-  WDT_IRQn                  = 11,
-  I2C0_IRQn                 = 12,
-  XTALSTOP_IRQn             = 13,
-  ADC_IRQn                  = 14,
-  ACMP_IRQn                 = 15,
-  BTIMR0_IRQn               = 16,
-  BTIMR1_IRQn               = 17,
-  BTIMR2_IRQn               = 18,
-  BTIMR3_IRQn               = 19,
-  GPIOA_IRQn                = 20,
-  GPIOB_IRQn                = 21,
-  GPIOC_IRQn                = 22,
-  GPIOA0_GPIOC0_IRQn        = 23,
-  GPIOA1_GPIOC1_IRQn		= 24,
-  GPIOA2_GPIOC2_MPU_IRQn    = 25,
-  GPIOA3_GPIOC3_PVD_IRQn    = 26,
-  GPIOB0_GPIOA8_TIMR2_IRQn  = 27,
-  GPIOB1_GPIOA9_DMA_IRQn    = 28,
-  GPIOB2_GPIOA10_DIV_IRQn   = 29,
-  GPIOB3_GPIOA11_SPI0_IRQn  = 30,
-  GPIOB4_GPIOB10_QEI_IRQn   = 31,
+  PWMBRK_IRQn               = 5,
+  DMA_IRQn					= 6,
+  SPI0_IRQn  				= 7,
+  WDT_IRQn                  = 8,
+  PVD_IRQn    				= 9,
+  HALL_IRQn                 = 10,
+  ADC_IRQn                  = 11,
+  ACMP_IRQn                 = 12,
+  BTIMR0_IRQn               = 13,
+  BTIMR1_IRQn               = 14,
+  BTIMR2_IRQn               = 15,
+  DIV_IRQn   				= 16,
+  XTALSTOP_IRQn             = 17,
+  FOC_IRQn					= 18,
+  GPIOA_IRQn                = 19,
+  GPIOB_IRQn                = 20,
+  GPIOA0_GPIOB0_IRQn        = 21,
+  GPIOA1_GPIOB1_IRQn		= 22,
+  GPIOA2_GPIOB2_IRQn    	= 23,
+  GPIOA3_GPIOB3_IRQn    	= 24,
+  GPIOA4_GPIOB4_IRQn    	= 25,
+  GPIOA5_GPIOB5_IRQn    	= 26,
+  GPIOA6_GPIOB6_IRQn    	= 27,
+  GPIOA7_GPIOB7_IRQn    	= 28,
+  GPIOA8_GPIOB8_IRQn    	= 29,
+  GPIOA9_GPIOB9_IRQn    	= 30,
+  GPIOA10_GPIOB10_IRQn    	= 31,
 } IRQn_Type;
 
 /*
@@ -117,8 +117,8 @@ typedef struct {
 	__IO uint32_t PRSTEN;					//外设复位使能，只有当PRSTEN的值为0x55时，才能写PRSTR0、PRSTR1
 	__IO uint32_t PRSTR0;
 
-    //Analog Control: 0x40045800
-         uint32_t RESERVED8[(0x40045800-0x40000724)/4-1];
+    //Analog Control: 0x40044800
+         uint32_t RESERVED8[(0x40044800-0x40000724)/4-1];
 	
 	__IO uint32_t PMUCR;
 	
@@ -1661,7 +1661,6 @@ typedef struct {
 #define RAM_BASE		   	0x20000000
 #define AHB_BASE			0x40000000
 #define APB1_BASE		 	0x40040000
-#define APB2_BASE			0x400A0000
 
 
 /* AHB Peripheral memory map */
@@ -1669,38 +1668,40 @@ typedef struct {
 
 #define DMA_BASE			(AHB_BASE + 0x00800)
 
-#define DIV_BASE			(AHB_BASE + 0x03000)
+#define DIV_BASE			(AHB_BASE + 0x01800)
 
-#define GPIOA_BASE			(AHB_BASE + 0x03800)
-#define GPIOB_BASE			(AHB_BASE + 0x04000)
+#define GPIOA_BASE			(AHB_BASE + 0x02000)
+#define GPIOB_BASE			(AHB_BASE + 0x02800)
 
 
 /* APB1 Peripheral memory map */
 #define UART0_BASE			(APB1_BASE + 0x0000)
 #define UART1_BASE			(APB1_BASE + 0x0800)
 
-#define SPI0_BASE			(APB1_BASE + 0x1800)
+#define SPI0_BASE			(APB1_BASE + 0x1000)
 
-#define PWM0_BASE			(APB1_BASE + 0x3000)
-#define PWM1_BASE			(APB1_BASE + 0x3080)
-#define PWMG_BASE			(APB1_BASE + 0x3400)
+#define PWM0_BASE			(APB1_BASE + 0x1800)
+#define PWM1_BASE			(APB1_BASE + 0x1880)
+#define PWMG_BASE			(APB1_BASE + 0x1C00)
 
-#define TIMR0_BASE			(APB1_BASE + 0x3800)
-#define TIMRG_BASE			(APB1_BASE + 0x3C00)
+#define TIMR0_BASE			(APB1_BASE + 0x2000)
+#define TIMRG_BASE			(APB1_BASE + 0x2400)
 
-#define BTIMR0_BASE			(APB1_BASE + 0x4000)
-#define BTIMR1_BASE			(APB1_BASE + 0x4040)
-#define BTIMR2_BASE			(APB1_BASE + 0x4080)
-#define BTIMRG_BASE			(APB1_BASE + 0x4400)
+#define BTIMR0_BASE			(APB1_BASE + 0x2800)
+#define BTIMR1_BASE			(APB1_BASE + 0x2840)
+#define BTIMR2_BASE			(APB1_BASE + 0x2880)
+#define BTIMRG_BASE			(APB1_BASE + 0x2C00)
 
-#define ADC0_BASE			(APB1_BASE + 0x4800)
+#define FOC_BASE			(APB1_BASE + 0x3000)
 
-#define FMC_BASE			(APB1_BASE + 0x5000)		//Flash Memory Controller
+#define ADC0_BASE			(APB1_BASE + 0x3800)
 
-#define PORTA_BASE			(APB1_BASE + 0x6000)
-#define PORTB_BASE			(APB1_BASE + 0x6010)
+#define FMC_BASE			(APB1_BASE + 0x4000)		//Flash Memory Controller
 
-#define WDT_BASE			(APB1_BASE + 0x6800)
+#define PORTA_BASE			(APB1_BASE + 0x5000)
+#define PORTB_BASE			(APB1_BASE + 0x5010)
+
+#define WDT_BASE			(APB1_BASE + 0x5800)
 
 
 /******************************************************************************/
