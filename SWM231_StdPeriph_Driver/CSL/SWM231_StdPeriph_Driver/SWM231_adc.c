@@ -46,7 +46,7 @@ void ADC_Init(ADC_TypeDef * ADCx, ADC_InitStructure * initStruct)
 	
 	if(initStruct->refsrc & (1 << 0))
 	{
-		PORT_Init(PORTA, PIN11, PORTA_PIN11_ADC_REFP, 0);
+		PORT_Init(PORTA, PIN1, PORTA_PIN1_ADC0_REFP, 0);
 		
 		if(initStruct->refsrc & (1 << 1))
 		{
