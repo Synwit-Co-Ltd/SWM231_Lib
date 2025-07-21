@@ -25,9 +25,9 @@ typedef int  (*IAP_Flash_Erase_t)(uint32_t sector, uint32_t flag);
 typedef int  (*IAP_Flash_Write_t)(uint32_t flash_addr, uint32_t ram_addr, uint32_t count, uint32_t flag);
 
 
-IAP_Flash_Erase_t IAP_Flash_Erase = (IAP_Flash_Erase_t)0x01000401;
-IAP_Flash_Write_t IAP_Flash_Write = (IAP_Flash_Write_t)0x01000461;
-IAP_Flash_Param_t IAP_Flash_Param = (IAP_Flash_Param_t)0x010004D1;
+IAP_Flash_Erase_t IAP_Flash_Erase = (IAP_Flash_Erase_t)0x01000385;
+IAP_Flash_Write_t IAP_Flash_Write = (IAP_Flash_Write_t)0x010003E1;
+IAP_Flash_Param_t IAP_Flash_Param = (IAP_Flash_Param_t)0x01000451;
 
 
 /****************************************************************************************************************************************** 
@@ -42,8 +42,6 @@ uint32_t FLASH_Erase(uint32_t addr)
 	__disable_irq();
 	
 	IAP_Flash_Erase(addr / 0x200, 0x0B11FFAC);
-	
-	Cache_Clear();
 	
 	__enable_irq();
 	
@@ -66,8 +64,6 @@ uint32_t FLASH_Write(uint32_t addr, uint32_t buff[], uint32_t count)
 	
 	IAP_Flash_Write(addr, (uint32_t)buff, count/2, 0x0B11FFAC);
 	
-	Cache_Clear();
-	
 	__enable_irq();
 	
 	return FLASH_RES_OK;
@@ -89,78 +85,3 @@ void Flash_Param_at_xMHz(uint32_t x)
 	
 	__enable_irq();
 }
-
-
-#if   defined ( __CC_ARM ) || defined (__ARMCC_VERSION)
-
-/* Code_Cache_Clear 中数据是此函数编译生成的指令
-__asm void Cache_Clear(void)
-{
-	NOP
-	NOP
-	NOP
-	NOP
-	MOVS R0, #0x40		// 0x40045000
-	LSLS R0, R0, #8
-	ADDS R0, R0, #0x04
-	LSLS R0, R0, #8
-	ADDS R0, R0, #0x50
-	LSLS R0, R0, #8
-	LDR  R1,[R0, #0xC]
-	MOVS R2, #1
-	LSLS R2, R2, #31
-	ORRS R1, R1, R2
-	STR  R1,[R0, #0xC]
-	NOP
-	NOP
-	NOP
-	NOP
-	BX LR
-}
-*/
-uint16_t Code_Cache_Clear[] = {
-	0xBF00, 0xBF00, 0xBF00, 0xBF00, 0x2040, 0x0200, 0x1D00, 0x0200,
-	0x3050, 0x0200, 0x68C1, 0x2201, 0x07D2, 0x4311, 0x60C1, 0xBF00,
-	0xBF00, 0xBF00, 0xBF00, 0x4770, 
-};
-
-#if   defined ( __CC_ARM )
-__asm void Cache_Clear(void)	// AC5
-{
-	IMPORT Code_Cache_Clear
-	PUSH {LR}
-	NOP
-	LDR R0,=Code_Cache_Clear
-    ADDS R0, R0, #1
-	NOP
-	BLX R0
-	POP {R0}
-	BX R0
-}
-#else
-void Cache_Clear(void)			// AC6
-{
-__asm(
-	"PUSH {LR}\n"
-	"NOP\n"
-	"LDR R0,=Code_Cache_Clear\n"
-	"ADDS R0, R0, #1\n"
-	"NOP\n"
-	"BLX R0\n"
-	"POP {R0}\n"
-	"BX R0\n");
-}
-#endif
-
-#elif defined ( __ICCARM__ )
-
-__ramfunc void Cache_Clear(void)
-{
-	__NOP(); __NOP(); __NOP(); __NOP();
-	
-	FMC->CACHE |= FMC_CACHE_CCLR_Msk;	// Cache Clear
-	
-	__NOP(); __NOP(); __NOP(); __NOP();
-}
-
-#endif

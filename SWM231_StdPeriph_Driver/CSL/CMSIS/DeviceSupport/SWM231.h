@@ -1512,7 +1512,7 @@ typedef struct {
 	
 	__IO uint32_t ERASE;
 	
-	__IO uint32_t CACHE;
+	__IO uint32_t RSVD;
 	
 	__IO uint32_t CFG0;
 	
@@ -1525,7 +1525,7 @@ typedef struct {
 	__IO uint32_t CFG4;
 	
 	__IO uint32_t STAT;
-		
+	
 	__IO uint32_t REMAP;
 } FMC_TypeDef;
 
@@ -1535,14 +1535,7 @@ typedef struct {
 #define FMC_ERASE_REQ_Pos			24
 #define FMC_ERASE_REQ_Msk			(0xFFu<< FMC_ERASE_REQ_Pos)
 
-#define FMC_CACHE_CEN_Pos			0		//Cache Enable
-#define FMC_CACHE_CEN_Msk			(0x01 << FMC_CACHE_CEN_Pos)
-#define FMC_CACHE_CPEN_Pos			1		//Cache Predict Enable
-#define FMC_CACHE_CPEN_Msk			(0x01 << FMC_CACHE_CPEN_Pos)
-#define FMC_CACHE_CCLR_Pos			31		//Cache Clear，自动清零
-#define FMC_CACHE_CCLR_Msk			(0x01u<< FMC_CACHE_CCLR_Pos)
-
-#define FMC_CFG0_WREN_Pos			9
+#define FMC_CFG0_WREN_Pos			0
 #define FMC_CFG0_WREN_Msk			(0x01 << FMC_CFG0_WREN_Pos)
 
 #define FMC_STAT_ERASEBUSY_Pos		0
@@ -1565,7 +1558,7 @@ typedef struct {
 #define FMC_REMAP_ON_Pos			0
 #define FMC_REMAP_ON_Msk			(0x01 << FMC_REMAP_ON_Pos)
 #define FMC_REMAP_OFFSET_Pos		1		//对0x000-0x800这2K地址的访问映射到2K*OFFSET-2K*(OFFSET+1)地址处
-#define FMC_REMAP_OFFSET_Msk		(0x3F << FMC_REMAP_OFFSET_Pos)
+#define FMC_REMAP_OFFSET_Msk		(0x0F << FMC_REMAP_OFFSET_Pos)
 
 
 

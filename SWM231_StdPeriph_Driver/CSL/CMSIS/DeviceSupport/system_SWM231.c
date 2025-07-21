@@ -118,10 +118,6 @@ void SystemInit(void)
 	
 	Flash_Param_at_xMHz(CyclesPerUs);
 	
-	Cache_Clear();						// Cache Clear
-	
-	FMC->CACHE |= FMC_CACHE_CEN_Msk;	// Cache Enable
-	
 	PORTB->PULLD &= ~((1 << PIN10) | (1 << PIN11));
 	PORTB->PULLU &= ~((1 << PIN12) | (1 << PIN15));
 }
