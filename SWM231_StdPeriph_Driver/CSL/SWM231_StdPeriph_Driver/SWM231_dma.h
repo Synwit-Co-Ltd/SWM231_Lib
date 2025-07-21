@@ -26,7 +26,6 @@ typedef struct {
 
 
 #define DMA_CH0		0
-#define DMA_CH1		1
 
 #define DMA_MODE_SINGLE			0		// 单次模式，传输完成后停止
 #define DMA_MODE_CIRCLE			1		// 环形模式，传输完成后从头执行下一轮传输
@@ -52,33 +51,26 @@ typedef struct {
 // memory read handshake signal
 #define DMA_CH0_UART0TX		(0 | DMA_HS_MRD)
 #define DMA_CH0_SPI0TX		(1 | DMA_HS_MRD)
-#define DMA_CH0_QSPI0TX		(2 | DMA_HS_MRD)
+#define DMA_CH0_UART1TX		(2 | DMA_HS_MRD)
 
-#define DMA_CH1_USART0TX	(0 | DMA_HS_MRD)
-#define DMA_CH1_UART1TX		(1 | DMA_HS_MRD)
-#define DMA_CH1_MPUTX		(2 | DMA_HS_MRD)
 
 // memory write handshake signal
-#define DMA_CH0_USART0RX	(0 | DMA_HS_MWR)
+#define DMA_CH0_ADC0SEQ1	(0 | DMA_HS_MWR)
 #define DMA_CH0_UART1RX		(1 | DMA_HS_MWR)
-#define DMA_CH0_MPURX		(2 | DMA_HS_MWR)
-#define DMA_CH0_ADC0SEQ1	(3 | DMA_HS_MWR)
-
-#define DMA_CH1_UART0RX		(0 | DMA_HS_MWR)
-#define DMA_CH1_SPI0RX		(1 | DMA_HS_MWR)
-#define DMA_CH1_QSPI0RX		(2 | DMA_HS_MWR)
-#define DMA_CH1_ADC1SEQ1	(3 | DMA_HS_MWR)
+#define DMA_CH0_SPI0RX		(2 | DMA_HS_MWR)
+#define DMA_CH0_UART0RX		(3 | DMA_HS_MWR)
 
 
 // 外部握手信号
 #define DMA_EXMRD_TIMR0		(0 | DMA_HS_MRD | DMA_HS_EXT)
-#define DMA_EXMRD_TIMR1		(1 | DMA_HS_MRD | DMA_HS_EXT)
-#define DMA_EXMRD_TIMR2		(2 | DMA_HS_MRD | DMA_HS_EXT)
+#define DMA_EXMRD_BTIMR0	(1 | DMA_HS_MRD | DMA_HS_EXT)
+#define DMA_EXMRD_BTIMR1	(2 | DMA_HS_MRD | DMA_HS_EXT)
+#define DMA_EXMRD_BTIMR2	(3 | DMA_HS_MRD | DMA_HS_EXT)
 
 #define DMA_EXMWR_TIMR0		(0 | DMA_HS_MWR | DMA_HS_EXT)
-#define DMA_EXMWR_TIMR1		(1 | DMA_HS_MWR | DMA_HS_EXT)
-#define DMA_EXMWR_TIMR2		(2 | DMA_HS_MWR | DMA_HS_EXT)
-
+#define DMA_EXMWR_BTIMR0	(1 | DMA_HS_MWR | DMA_HS_EXT)
+#define DMA_EXMWR_BTIMR1	(2 | DMA_HS_MWR | DMA_HS_EXT)
+#define DMA_EXMWR_BTIMR2	(3 | DMA_HS_MWR | DMA_HS_EXT)
 
 
 /* Interrupt Type */

@@ -1489,10 +1489,6 @@ typedef struct {
 	__IO uint32_t QUO;						//商
 	
 	__IO uint32_t REMAIN;					//余数
-	
-	__IO uint32_t RADICAND;					//被开方数
-	
-	__IO uint32_t ROOT;						//平方根，低16位为小数部分，高16位为整数部分
 } DIV_TypeDef;
 
 
@@ -1500,21 +1496,11 @@ typedef struct {
 #define DIV_CR_DIVGO_Msk			(0x01 << DIV_CR_DIVGO_Pos)
 #define DIV_CR_DIVSIGN_Pos			1		//0 有符号除法    1 无符号除法
 #define DIV_CR_DIVSIGN_Msk			(0x01 << DIV_CR_DIVSIGN_Pos)
-#define DIV_CR_ROOTGO_Pos			8		//写1启动开平方根运算，运算完成后自动清零
-#define DIV_CR_ROOTGO_Msk			(0x01 << DIV_CR_ROOTGO_Pos)
-#define DIV_CR_ROOTMOD_Pos			9		//开平方根模式：0 结果为整数    1 结果既有整数部分又有小数部分
-#define DIV_CR_ROOTMOD_Msk			(0x01 << DIV_CR_ROOTMOD_Pos)
 
 #define DIV_SR_DIVEND_Pos			0		//除法运算完成标志，写1清零
 #define DIV_SR_DIVEND_Msk			(0x01 << DIV_SR_DIVEND_Pos)
 #define DIV_SR_DIVBUSY_Pos			1		//1 除法运算计算中
 #define DIV_SR_DIVBUSY_Msk			(0x01 << DIV_SR_DIVBUSY_Pos)
-#define DIV_SR_ROOTENDI_Pos			8		//开方整数运算完成标志，写1清零
-#define DIV_SR_ROOTENDI_Msk			(0x01 << DIV_SR_ROOTENDI_Pos)
-#define DIV_SR_ROOTENDF_Pos			9		//开方小数运算完成标志，写1清零
-#define DIV_SR_ROOTENDF_Msk			(0x01 << DIV_SR_ROOTENDF_Pos)
-#define DIV_SR_ROOTBUSY_Pos			10		//1 开方运算计算中
-#define DIV_SR_ROOTBUSY_Msk			(0x01 << DIV_SR_ROOTBUSY_Pos)
 
 
 

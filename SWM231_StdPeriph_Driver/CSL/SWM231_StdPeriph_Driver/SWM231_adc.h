@@ -39,6 +39,11 @@ typedef struct {
 #define ADC_CH7		7
 #define ADC_CH8		8
 #define ADC_CH9		9
+#define ADC_CH10	10
+#define ADC_CH11	11
+#define ADC_CH12	12
+#define ADC_CH13	13
+#define ADC_CH14	14
 
 #define ADC_REF_VDD		(0)
 #define ADC_REF_REFP	(1 | (0 << 1))
@@ -54,8 +59,9 @@ typedef struct {
 #define ADC_TRIGGER_NO			0
 #define ADC_TRIGGER_SW			1	//Èí¼þÆô¶¯
 #define ADC_TRIGGER_TIMER0		2
-#define ADC_TRIGGER_TIMER1		3
-#define ADC_TRIGGER_TIMER2		4
+#define ADC_TRIGGER_BTIMER0		3
+#define ADC_TRIGGER_BTIMER1		4
+#define ADC_TRIGGER_BTIMER2		5
 #define ADC_TRIGGER_PWM0		16
 #define ADC_TRIGGER_PWM1		17
 
