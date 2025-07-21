@@ -25,32 +25,21 @@
 /******************************************************************************************************************************************
  * 系统时钟设定
  *****************************************************************************************************************************************/
-#define SYS_CLK_8MHz		3	 	//内部高频8MHz RC振荡器
+#define SYS_CLK_48MHz		3	 	//内部高频48MHz RC振荡器
 #define SYS_CLK_XTAL		2		//外部晶体振荡器（4-24MHz）
-#define SYS_CLK_PLL			1		//锁相环输出
 #define SYS_CLK_32KHz		0		//内部低频32KHz RC振荡器
 
-#define SYS_CLK   	SYS_CLK_PLL
+#define SYS_CLK   	SYS_CLK_48MHz
 
 
 #define SYS_CLK_DIV	SYS_CLK_DIV_1	//SYS_CLK 选择的时钟，经过 SYS_CLK_DIV 分频后用作系统时钟
 
 
 
-#define __HSI		( 8000000UL)		//高速内部时钟
+#define __HSI		(48000000UL)		//高速内部时钟
 #define __LSI		(   32000UL)		//低速内部时钟
 #define __HSE		(12000000UL)		//高速外部时钟
 #define __LSE		(   32768UL)		//低速外部时钟
-
-
-/********************************** PLL 设定 **********************************************
- * PLL输出频率 = PLL输入时钟 / INDIV * FBDIV
- *****************************************************************************************/ 
-#define SYS_PLL_SRC   	SYS_CLK_XTAL	//可取值SYS_CLK_8MHz、SYS_CLK_XTAL
-
-#define PLL_IN_DIV		3
-
-#define PLL_FB_DIV		15
 
 
 
@@ -75,29 +64,13 @@ void SystemCoreClockUpdate(void)
 	{
 		switch((SYS->CLKSEL & SYS_CLKSEL_CLK_Msk) >> SYS_CLKSEL_CLK_Pos)
 		{
-		case SYS_CLK_8MHz:
+		case SYS_CLK_48MHz:
 			SystemCoreClock = __HSI;
 			break;
 		
 		case SYS_CLK_XTAL:
 			SystemCoreClock = __HSE;
 			break;
-		
-		case SYS_CLK_PLL:
-		{
-			uint32_t indiv = (SYS->PLLCR & SYS_PLLCR_INDIV_Msk) >> SYS_PLLCR_INDIV_Pos;
-			uint32_t fbdiv = (SYS->PLLCR & SYS_PLLCR_FBDIV_Msk) >> SYS_PLLCR_FBDIV_Pos;
-			
-			if(SYS->PLLCR & SYS_PLLCR_INSEL_Msk)
-			{
-				SystemCoreClock = __HSE * fbdiv / indiv;
-			}
-			else
-			{
-				SystemCoreClock = __HSI * fbdiv / indiv;
-			}
-			break;
-		}
 		
 		case SYS_CLK_32KHz:
 			SystemCoreClock = __LSI;
@@ -122,22 +95,18 @@ void SystemInit(void)
 {
 	SYS->CLKEN0 |= (1 << SYS_CLKEN0_ANAC_Pos);
 	
-	Flash_Param_at_xMHz(72);
+	Flash_Param_at_xMHz(48);
 	
 	switchToHRC();
 	
 	switch(SYS_CLK)
 	{
-		case SYS_CLK_8MHz:
+		case SYS_CLK_48MHz:
 			switchOnHRC();
 			break;
 		
 		case SYS_CLK_XTAL:
 			switchOnXTAL();
-			break;
-		
-		case SYS_CLK_PLL:
-			switchOnPLL(SYS_PLL_SRC, PLL_IN_DIV, PLL_FB_DIV);
 			break;
 		
 		case SYS_CLK_32KHz:
@@ -197,25 +166,6 @@ void switchOnXTAL(void)
 	PORT_Init(PORTB, PIN12, PORTB_PIN12_XTAL_IN,  0);
 	
 	SYS->XTALCR |= (1 << SYS_XTALCR_ON_Pos) | (1 << SYS_XTALCR_DET_Pos);
-}
-
-void switchOnPLL(uint32_t src, uint32_t indiv, uint32_t fbdiv)
-{
-	if(src == SYS_CLK_XTAL)
-		switchOnXTAL();
-	else
-		switchOnHRC();
-	
-	SYS->PLLCR = (0						<< SYS_PLLCR_PWRDN_Pos)  |
-				 (1						<< SYS_PLLCR_OUTEN_Pos)  |
-				 ((src == SYS_CLK_XTAL) << SYS_PLLCR_INSEL_Pos)  |
-				 (0						<< SYS_PLLCR_BYPASS_Pos) |
-				 (indiv					<< SYS_PLLCR_INDIV_Pos)  |
-				 (fbdiv					<< SYS_PLLCR_FBDIV_Pos);
-	
-	while((SYS->PLLSR & SYS_PLLSR_LOCK_Msk) == 0) __NOP();		//等待PLL锁定
-	
-	SYS->PLLSR |= SYS_PLLSR_ENA_Msk;
 }
 
 void switchOn32KHz(void)

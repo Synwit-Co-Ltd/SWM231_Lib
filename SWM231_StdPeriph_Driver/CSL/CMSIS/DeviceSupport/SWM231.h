@@ -83,31 +83,30 @@ typedef struct {
 	
 		 uint32_t RESERVED;
 
-	__IO uint32_t SLEEP;
+	__IO uint32_t SLEEPCR;
 	
-		 uint32_t RESERVED2[4];
+		 uint32_t RESERVED2[3];
 	
+	__IO uint32_t RSTCR;
 	__IO uint32_t RSTSR;					//Reset Status
 		
 		 uint32_t RESERVED3[22];
 	
 	__I  uint32_t CHIPID[4];
 	
-	__IO uint32_t BACKUP[4];				//Data Backup Register
+	__IO uint32_t BACKUP[6];				//Data Backup Register
 	
-		 uint32_t RESERVED4[24];
+		 uint32_t RESERVED4[22];
 		 
 	__IO uint32_t PAWKEN;				    //PORTA Wakeup Enable
 	__IO uint32_t PBWKEN;	
-	__IO uint32_t PCWKEN;
 	
-		 uint32_t RESERVED5[9];
+		 uint32_t RESERVED5[10];
 
 	__IO uint32_t PAWKSR;				    //PORTA Wakeup Status，写1清零
 	__IO uint32_t PBWKSR;	
-	__IO uint32_t PCWKSR;
 	
-		 uint32_t RESERVED6[(0x400-0x138)/4-1];
+		 uint32_t RESERVED6[(0x400-0x134)/4-1];
 	
 	__IO uint32_t IOFILT0;					//IO Filter 0
 	__IO uint32_t IOFILT1;
@@ -131,8 +130,7 @@ typedef struct {
 	__IO uint32_t XTALCR;
 	__IO uint32_t XTALSR;
 		
-	__IO uint32_t PLLCR;
-    __IO uint32_t PLLSR;
+		 uint32_t RESERVED10[2];
 	
 	__IO uint32_t PVDCR;
 	__IO uint32_t PVDSR;
@@ -146,7 +144,7 @@ typedef struct {
 	
 	__IO uint32_t PGA0CR;					//PGA0 Control Register
 	__IO uint32_t PGA1CR;
-	__IO uint32_t PGA2CR;
+		 uint32_t RESERVED11;
 	__IO uint32_t PGAREF;					//PGA Vref Control Register
 	
 	__IO uint32_t TEMPCR;					//Temperature Sensor Control Register
@@ -159,7 +157,7 @@ typedef struct {
 #define SYS_CLKSEL_SYS_Msk			(0x01 << SYS_CLKSEL_SYS_Pos)
 #define SYS_CLKSEL_CLK_DIVx_Pos		1		//选择CLK_DIVx  0 CLK_DIV1   1 CLK_DIV2   2 CLK_DIV4   3 CLK_DIV8
 #define SYS_CLKSEL_CLK_DIVx_Msk		(0x03 << SYS_CLKSEL_CLK_DIVx_Pos)
-#define SYS_CLKSEL_CLK_Pos			3		//Clock Source  0 LRC   1 PLL   2 XTAL   3 HRC
+#define SYS_CLKSEL_CLK_Pos			3		//Clock Source  0 LRC   2 XTAL   3 HRC
 #define SYS_CLKSEL_CLK_Msk			(0x03 << SYS_CLKSEL_CLK_Pos)
 #define SYS_CLKSEL_IOFILT_Pos		5		//IO Filter时钟选择，0 HRC   2 XTAL   3 LRC
 #define SYS_CLKSEL_IOFILT_Msk		(0x03 << SYS_CLKSEL_IOFILT_Pos)
@@ -173,52 +171,53 @@ typedef struct {
 #define SYS_CLKEN0_GPIOA_Msk		(0x01 << SYS_CLKEN0_GPIOA_Pos)
 #define SYS_CLKEN0_GPIOB_Pos		1
 #define SYS_CLKEN0_GPIOB_Msk		(0x01 << SYS_CLKEN0_GPIOB_Pos)
-#define SYS_CLKEN0_GPIOC_Pos		2
-#define SYS_CLKEN0_GPIOC_Msk		(0x01 << SYS_CLKEN0_GPIOC_Pos)
-#define SYS_CLKEN0_UART0_Pos		3
+#define SYS_CLKEN0_UART0_Pos		2
 #define SYS_CLKEN0_UART0_Msk		(0x01 << SYS_CLKEN0_UART0_Pos)
-#define SYS_CLKEN0_UART1_Pos		4
+#define SYS_CLKEN0_UART1_Pos		3
 #define SYS_CLKEN0_UART1_Msk		(0x01 << SYS_CLKEN0_UART1_Pos)
-#define SYS_CLKEN0_USART0_Pos		5
-#define SYS_CLKEN0_USART0_Msk		(0x01 << SYS_CLKEN0_USART0_Pos)
-#define SYS_CLKEN0_SPI0_Pos			6
+#define SYS_CLKEN0_SPI0_Pos			4
 #define SYS_CLKEN0_SPI0_Msk			(0x01 << SYS_CLKEN0_SPI0_Pos)
-#define SYS_CLKEN0_I2C0_Pos			7
-#define SYS_CLKEN0_I2C0_Msk			(0x01 << SYS_CLKEN0_I2C0_Pos)
-#define SYS_CLKEN0_QSPI0_Pos		8
-#define SYS_CLKEN0_QSPI0_Msk		(0x01 << SYS_CLKEN0_QSPI0_Pos)
-#define SYS_CLKEN0_TIMR_Pos			9
+#define SYS_CLKEN0_TIMR_Pos			5
 #define SYS_CLKEN0_TIMR_Msk			(0x01 << SYS_CLKEN0_TIMR_Pos)
-#define SYS_CLKEN0_BTIMR_Pos		10
+#define SYS_CLKEN0_BTIMR_Pos		6
 #define SYS_CLKEN0_BTIMR_Msk		(0x01 << SYS_CLKEN0_BTIMR_Pos)
-#define SYS_CLKEN0_PWM_Pos			11
+#define SYS_CLKEN0_PWM_Pos			7
 #define SYS_CLKEN0_PWM_Msk			(0x01 << SYS_CLKEN0_PWM_Pos)
-#define SYS_CLKEN0_CRC_Pos			12
-#define SYS_CLKEN0_CRC_Msk			(0x01 << SYS_CLKEN0_CRC_Pos)
-#define SYS_CLKEN0_DIV_Pos			13
+#define SYS_CLKEN0_DIV_Pos			8
 #define SYS_CLKEN0_DIV_Msk			(0x01 << SYS_CLKEN0_DIV_Pos)
-#define SYS_CLKEN0_ANAC_Pos			14		//模拟控制单元时钟使能
+#define SYS_CLKEN0_ANAC_Pos			9		//模拟控制单元时钟使能
 #define SYS_CLKEN0_ANAC_Msk			(0x01 << SYS_CLKEN0_ANAC_Pos)
-#define SYS_CLKEN0_ADC0_Pos			15
+#define SYS_CLKEN0_ADC0_Pos			10
 #define SYS_CLKEN0_ADC0_Msk			(0x01 << SYS_CLKEN0_ADC0_Pos)
-#define SYS_CLKEN0_CAN0_Pos			16
-#define SYS_CLKEN0_CAN0_Msk			(0x01 << SYS_CLKEN0_CAN0_Pos)
-#define SYS_CLKEN0_IOFILT_Pos		17
+#define SYS_CLKEN0_IOFILT_Pos		11
 #define SYS_CLKEN0_IOFILT_Msk		(0x01 << SYS_CLKEN0_IOFILT_Pos)
-#define SYS_CLKEN0_WDT_Pos			18
+#define SYS_CLKEN0_WDT_Pos			12
 #define SYS_CLKEN0_WDT_Msk			(0x01 << SYS_CLKEN0_WDT_Pos)
-#define SYS_CLKEN0_MPU_Pos			19
-#define SYS_CLKEN0_MPU_Msk			(0x01 << SYS_CLKEN0_MPU_Pos)
-#define SYS_CLKEN0_QEI_Pos			20
-#define SYS_CLKEN0_QEI_Msk			(0x01 << SYS_CLKEN0_QEI_Pos)
+#define SYS_CLKEN0_FOC_Pos			13
+#define SYS_CLKEN0_FOC_Msk			(0x01 << SYS_CLKEN0_FOC_Pos)
 
-#define SYS_SLEEP_SLEEP_Pos			0		//将该位置1后，系统将进入SLEEP模式
-#define SYS_SLEEP_SLEEP_Msk			(0x01 << SYS_SLEEP_SLEEP_Pos)
+#define SYS_SLEEPCR_CLK_Pos			0		//clock used when sleep, 0 LRC, 1 XTAL_32k
+#define SYS_SLEEPCR_CLK_Msk			(0x01 << SYS_SLEEPCR_CLK_Pos)
+#define SYS_SLEEPCR_FLASH_Pos		1		//flash state when sleep, 0 standby, 1 powerdown
+#define SYS_SLEEPCR_FLASH_Msk		(0x01 << SYS_SLEEPCR_FLASH_Pos)
+#define SYS_SLEEPCR_WKEDGE_Pos		2		//wake-up edge, 0 falling edge, 1 rising edge
+#define SYS_SLEEPCR_WKEDGE_Msk		(0x01 << SYS_SLEEPCR_WKEDGE_Pos)
+#define SYS_SLEEPCR_DISDMA_Pos		3		//disable DMA when sleep, 0 DMA work, 1 DMA not work
+#define SYS_SLEEPCR_DISDMA_Msk		(0x01 << SYS_SLEEPCR_DISDMA_Pos)
+#define SYS_SLEEPCR_DISLDO_Pos		4		//disable LDO when sleep, 0 main LDO work, 1 main LDO close, LDO_LP work
+#define SYS_SLEEPCR_DISLDO_Msk		(0x01 << SYS_SLEEPCR_DISLDO_Pos)
 
-#define SYS_RSTSR_POR_Pos			0		//1 出现过POR复位，写1清零
+#define SYS_RSTCR_GPIO_Pos			0		//1 复位引脚用作 GPIO
+#define SYS_RSTCR_GPIO_Msk			(0x01 << SYS_RSTCR_GPIO_Pos)
+#define SYS_RSTCR_KEY_Pos			16		//为 0x5A5A 时，对该寄存器的写操作有效
+#define SYS_RSTCR_KEY_Msk			(0xFFFF << SYS_RSTCR_KEY_Pos)
+
+#define SYS_RSTSR_POR_Pos			0		//1 出现过POR/LVR复位，写1清零
 #define SYS_RSTSR_POR_Msk			(0x01 << SYS_RSTSR_POR_Pos)
 #define SYS_RSTSR_WDT_Pos			1		//1 出现过WDT复位，写1清零
 #define SYS_RSTSR_WDT_Msk			(0x01 << SYS_RSTSR_WDT_Pos)
+#define SYS_RSTSR_PIN_Pos			2		//1 出现过NRST引脚复位，写1清零
+#define SYS_RSTSR_PIN_Msk			(0x01 << SYS_RSTSR_PIN_Pos)
 
 #define SYS_IOFILT_TIM_Pos			0		//滤波窗口时间 = Tfilter_clk * 时钟分频 * 2^TIM
 #define SYS_IOFILT_TIM_Msk			(0x0F << SYS_IOFILT_TIM_Pos)
@@ -237,44 +236,30 @@ typedef struct {
 #define SYS_PRSTR0_GPIOA_Msk		(0x01 <<SYS_PRSTR0_GPIOA_Pos)
 #define SYS_PRSTR0_GPIOB_Pos		1
 #define SYS_PRSTR0_GPIOB_Msk		(0x01 <<SYS_PRSTR0_GPIOB_Pos)
-#define SYS_PRSTR0_GPIOC_Pos		2
-#define SYS_PRSTR0_GPIOC_Msk		(0x01 <<SYS_PRSTR0_GPIOC_Pos)
-#define SYS_PRSTR0_UART0_Pos		3
+#define SYS_PRSTR0_UART0_Pos		2
 #define SYS_PRSTR0_UART0_Msk		(0x01 <<SYS_PRSTR0_UART0_Pos)
-#define SYS_PRSTR0_UART1_Pos		4
+#define SYS_PRSTR0_UART1_Pos		3
 #define SYS_PRSTR0_UART1_Msk		(0x01 <<SYS_PRSTR0_UART1_Pos)
-#define SYS_PRSTR0_USART0_Pos		5
-#define SYS_PRSTR0_USART0_Msk		(0x01 <<SYS_PRSTR0_USART0_Pos)
-#define SYS_PRSTR0_SPI0_Pos			6
+#define SYS_PRSTR0_SPI0_Pos			4
 #define SYS_PRSTR0_SPI0_Msk			(0x01 <<SYS_PRSTR0_SPI0_Pos)
-#define SYS_PRSTR0_I2C0_Pos			7
-#define SYS_PRSTR0_I2C0_Msk			(0x01 <<SYS_PRSTR0_I2C0_Pos)
-#define SYS_PRSTR0_QSPI0_Pos		8
-#define SYS_PRSTR0_QSPI0_Msk		(0x01 <<SYS_PRSTR0_QSPI0_Pos)
-#define SYS_PRSTR0_TIMR_Pos			9
+#define SYS_PRSTR0_TIMR_Pos			5
 #define SYS_PRSTR0_TIMR_Msk			(0x01 <<SYS_PRSTR0_TIMR_Pos)
-#define SYS_PRSTR0_BTIMR_Pos		10
+#define SYS_PRSTR0_BTIMR_Pos		6
 #define SYS_PRSTR0_BTIMR_Msk		(0x01 <<SYS_PRSTR0_BTIMR_Pos)
-#define SYS_PRSTR0_PWM_Pos			11
+#define SYS_PRSTR0_PWM_Pos			7
 #define SYS_PRSTR0_PWM_Msk			(0x01 <<SYS_PRSTR0_PWM_Pos)
-#define SYS_PRSTR0_CRC_Pos			12
-#define SYS_PRSTR0_CRC_Msk			(0x01 <<SYS_PRSTR0_CRC_Pos)
-#define SYS_PRSTR0_DIV_Pos			13
+#define SYS_PRSTR0_DIV_Pos			8
 #define SYS_PRSTR0_DIV_Msk			(0x01 <<SYS_PRSTR0_DIV_Pos)
-#define SYS_PRSTR0_ANAC_Pos			14
+#define SYS_PRSTR0_ANAC_Pos			9
 #define SYS_PRSTR0_ANAC_Msk			(0x01 <<SYS_PRSTR0_ANAC_Pos)
-#define SYS_PRSTR0_ADC0_Pos			15
+#define SYS_PRSTR0_ADC0_Pos			10
 #define SYS_PRSTR0_ADC0_Msk			(0x01 <<SYS_PRSTR0_ADC0_Pos)
-#define SYS_PRSTR0_CAN0_Pos			16
-#define SYS_PRSTR0_CAN0_Msk			(0x01 <<SYS_PRSTR0_CAN0_Pos)
-#define SYS_PRSTR0_IOFILT_Pos		17
+#define SYS_PRSTR0_IOFILT_Pos		1`
 #define SYS_PRSTR0_IOFILT_Msk		(0x01 <<SYS_PRSTR0_IOFILT_Pos)
-#define SYS_PRSTR0_WDT_Pos			18
+#define SYS_PRSTR0_WDT_Pos			12
 #define SYS_PRSTR0_WDT_Msk			(0x01 <<SYS_PRSTR0_WDT_Pos)
-#define SYS_PRSTR0_MPU_Pos			19
-#define SYS_PRSTR0_MPU_Msk			(0x01 <<SYS_PRSTR0_MPU_Pos)
-#define SYS_PRSTR0_QEI_Pos			20
-#define SYS_PRSTR0_QEI_Msk			(0x01 << SYS_PRSTR0_QEI_Pos)
+#define SYS_PRSTR0_FOC_Pos			13
+#define SYS_PRSTR0_FOC_Msk			(0x01 <<SYS_PRSTR0_FOC_Pos)
 
 #define SYS_VRFCR_EN_Pos			0
 #define SYS_VRFCR_EN_Msk			(0x01 << SYS_VRFCR_EN_Pos)
@@ -295,24 +280,6 @@ typedef struct {
 
 #define SYS_XTALSR_STOP_Pos			0		//XTAL Stop，写1清零
 #define SYS_XTALSR_STOP_Msk			(0x01 << SYS_XTALSR_STOP_Pos)
-
-#define SYS_PLLCR_PWRDN_Pos			0		//PLL Power Down
-#define SYS_PLLCR_PWRDN_Msk			(0x01 << SYS_PLLCR_PWRDN_Pos)
-#define SYS_PLLCR_OUTEN_Pos			1		//PLL Clock Out Enable
-#define SYS_PLLCR_OUTEN_Msk			(0x01 << SYS_PLLCR_OUTEN_Pos)
-#define SYS_PLLCR_INSEL_Pos			2		//1 XTAL	0 HRC
-#define SYS_PLLCR_INSEL_Msk			(0x01 << SYS_PLLCR_INSEL_Pos)
-#define SYS_PLLCR_BYPASS_Pos		3 		//1 fPLL = fIN / INDIV
-#define SYS_PLLCR_BYPASS_Msk		(0x01 << SYS_PLLCR_BYPASS_Pos)
-#define SYS_PLLCR_INDIV_Pos			8		//PLL 输入源时钟分频
-#define SYS_PLLCR_INDIV_Msk			(0x3F << SYS_PLLCR_INDIV_Pos)
-#define SYS_PLLCR_FBDIV_Pos			14		//PLL FeedBack分频寄存器，fPLL = fIN / INDIV * FBDIV
-#define SYS_PLLCR_FBDIV_Msk			(0x7F << SYS_PLLCR_FBDIV_Pos)
-
-#define SYS_PLLSR_LOCK_Pos			0		//PLL Lock indicate
-#define SYS_PLLSR_LOCK_Msk			(0x01 << SYS_PLLSR_LOCK_Pos)
-#define SYS_PLLSR_ENA_Pos			1
-#define SYS_PLLSR_ENA_Msk			(0x01 << SYS_PLLSR_ENA_Pos)
 
 #define SYS_PVDCR_EN_Pos		    0		//PVD Enable
 #define SYS_PVDCR_EN_Msk		    (0x01 << SYS_PVDCR_EN_Pos)
@@ -339,7 +306,7 @@ typedef struct {
 #define SYS_ACMP0CR_HYS_Msk			(0x03 << SYS_ACMP0CR_HYS_Pos)
 #define SYS_ACMP0CR_VNSEL_Pos		3		//负端选择：0 VN   1 DAC_OUT   2 VPX
 #define SYS_ACMP0CR_VNSEL_Msk		(0x03 << SYS_ACMP0CR_VNSEL_Pos)
-#define SYS_ACMP0CR_VPSEL_Pos		5		//正端选择：0 VP0   1 VP1   2 VP2   3 PGA0_VP   4 PGA2_VP
+#define SYS_ACMP0CR_VPSEL_Pos		5		//正端选择：0 VP0   1 VP1   2 VP2   3 PGA0_VP   4 PGA0_IN
 #define SYS_ACMP0CR_VPSEL_Msk		(0x07 << SYS_ACMP0CR_VPSEL_Pos)
 #define SYS_ACMP0CR_VPXEN_Pos		8		//1 VP0/VP1/VP2星形连接,中心点作为VPX
 #define SYS_ACMP0CR_VPXEN_Msk		(0x01 << SYS_ACMP0CR_VPXEN_Pos)
@@ -354,7 +321,7 @@ typedef struct {
 #define SYS_ACMP1CR_HYS_Msk			(0x03 << SYS_ACMP1CR_HYS_Pos)
 #define SYS_ACMP1CR_VNSEL_Pos		3		//负端选择：0 VN   1 DAC_OUT
 #define SYS_ACMP1CR_VNSEL_Msk		(0x01 << SYS_ACMP1CR_VNSEL_Pos)
-#define SYS_ACMP1CR_VPSEL_Pos		5		//正端选择：0 VP   1 PGA1_VP   2 PGA0_OUT   3 PGA1_OUT   4 PGA2_OUT
+#define SYS_ACMP1CR_VPSEL_Pos		5		//正端选择：0 VP   1 PGA1_VP   2 PGA0_OUT   3 PGA1_OUT   4 PGA1_IN
 #define SYS_ACMP1CR_VPSEL_Msk		(0x07 << SYS_ACMP1CR_VPSEL_Pos)
 #define SYS_ACMP1CR_IE_Pos			16
 #define SYS_ACMP1CR_IE_Msk			(0x01 << SYS_ACMP1CR_IE_Pos)
@@ -389,6 +356,8 @@ typedef struct {
 #define SYS_PGA0CR_BUFEN_Msk		(0x01 << SYS_PGA0CR_BUFEN_Pos)
 #define SYS_PGA0CR_BYPASS_Pos		7 	//输出 BUF 旁路
 #define SYS_PGA0CR_BYPASS_Msk		(0x01 << SYS_PGA0CR_BYPASS_Pos)
+#define SYS_PGA0CR_INSEL_Pos		8	//0 OPA0_IN, 1 OPA1_IN, 2 GND
+#define SYS_PGA0CR_INSEL_Msk		(0x03 << SYS_PGA0CR_INSEL_Pos)
 
 #define SYS_PGA1CR_EN_Pos			0
 #define SYS_PGA1CR_EN_Msk			(0x01 << SYS_PGA1CR_EN_Pos)
@@ -402,19 +371,6 @@ typedef struct {
 #define SYS_PGA1CR_BUFEN_Msk		(0x01 << SYS_PGA1CR_BUFEN_Pos)
 #define SYS_PGA1CR_BYPASS_Pos		7
 #define SYS_PGA1CR_BYPASS_Msk		(0x01 << SYS_PGA1CR_BYPASS_Pos)
-
-#define SYS_PGA2CR_EN_Pos			0
-#define SYS_PGA2CR_EN_Msk			(0x01 << SYS_PGA2CR_EN_Pos)
-#define SYS_PGA2CR_MODE_Pos			1
-#define SYS_PGA2CR_MODE_Msk			(0x01 << SYS_PGA2CR_MODE_Pos)
-#define SYS_PGA2CR_ROUT_Pos			2
-#define SYS_PGA2CR_ROUT_Msk			(0x03 << SYS_PGA2CR_ROUT_Pos)
-#define SYS_PGA2CR_GAIN_Pos			4
-#define SYS_PGA2CR_GAIN_Msk			(0x03 << SYS_PGA2CR_GAIN_Pos)
-#define SYS_PGA2CR_BUFEN_Pos		6
-#define SYS_PGA2CR_BUFEN_Msk		(0x01 << SYS_PGA2CR_BUFEN_Pos)
-#define SYS_PGA2CR_BYPASS_Pos		7
-#define SYS_PGA2CR_BYPASS_Msk		(0x01 << SYS_PGA2CR_BYPASS_Pos)
 
 #define SYS_PGAREF_REFSEL_Pos		0 		//PGA 参考电压选择：0 1.2v   1 1.8v   2 2.25v   3 ADCVREF/2
 #define SYS_PGAREF_REFSEL_Msk		(0x03 << SYS_PGAREF_REFSEL_Pos)
