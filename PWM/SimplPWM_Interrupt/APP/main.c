@@ -7,14 +7,14 @@ int main(void)
 	
 	SystemInit();
 	
-	GPIO_Init(GPIOA, PIN4, 1, 0, 0, 0);
-	GPIO_Init(GPIOA, PIN5, 1, 0, 0, 0);
-	GPIO_Init(GPIOA, PIN8, 1, 0, 0, 0);
+	GPIO_Init(GPIOA, PIN0, 1, 0, 0, 0);
+	GPIO_Init(GPIOA, PIN1, 1, 0, 0, 0);
+	GPIO_Init(GPIOA, PIN3, 1, 0, 0, 0);
 	
-	PORT_Init(PORTA, PIN3, PORTA_PIN3_PWM0A,  0);
-	PORT_Init(PORTA, PIN2, PORTA_PIN2_PWM0AN, 0);
-	PORT_Init(PORTA, PIN6, PORTA_PIN6_PWM0B,  0);
-	PORT_Init(PORTA, PIN7, PORTA_PIN7_PWM0BN, 0);
+	PORT_Init(PORTA, PIN5, PORTA_PIN5_PWM0A,  0);
+	PORT_Init(PORTA, PIN4, PORTA_PIN4_PWM0AN, 0);
+	PORT_Init(PORTB, PIN6, PORTB_PIN6_PWM0B,  0);
+	PORT_Init(PORTB, PIN7, PORTB_PIN7_PWM0BN, 0);
 	
 	PWM_initStruct.Mode = PWM_EDGE_ALIGNED;
 	PWM_initStruct.Clkdiv = 6;					//F_PWM = 30M/6 = 5M	
@@ -52,18 +52,18 @@ void PWM0_Handler(void)
 	{
 		PWM_IntClr(PWM0, PWM_IT_OVF_UP);
 		
-		GPIO_InvBit(GPIOA, PIN8);
+		GPIO_InvBit(GPIOA, PIN3);
 	}
 	if(PWM_IntStat(PWM0, PWM_IT_CMPA_UP))
 	{
 		PWM_IntClr(PWM0, PWM_IT_CMPA_UP);
 		
-		GPIO_InvBit(GPIOA, PIN4);
+		GPIO_InvBit(GPIOA, PIN0);
 	}
 	if(PWM_IntStat(PWM0, PWM_IT_CMPB_UP))
 	{
 		PWM_IntClr(PWM0, PWM_IT_CMPB_UP);
 		
-		GPIO_InvBit(GPIOA, PIN5);
+		GPIO_InvBit(GPIOA, PIN1);
 	}
 }

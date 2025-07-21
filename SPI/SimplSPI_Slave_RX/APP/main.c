@@ -50,10 +50,10 @@ void SPISlvInit(void)
 {
 	SPI_InitStructure SPI_initStruct;
 	
-	PORT_Init(PORTB, PIN15, PORTB_PIN15_SPI0_SSEL, 1);
-	PORT_Init(PORTB, PIN10, PORTB_PIN10_SPI0_SCLK, 1);
-	PORT_Init(PORTB, PIN13, PORTB_PIN13_SPI0_MOSI, 1);
-	PORT_Init(PORTB, PIN14, PORTB_PIN14_SPI0_MISO, 0);
+	PORT_Init(PORTA, PIN4, PORTA_PIN4_SPI0_SCLK, 1);
+	PORT_Init(PORTA, PIN5, PORTA_PIN5_SPI0_MOSI, 1);
+	PORT_Init(PORTA, PIN6, PORTA_PIN6_SPI0_MISO, 0);
+	PORT_Init(PORTA, PIN7, PORTA_PIN7_SPI0_SSEL, 1);
 	
 	SPI_initStruct.FrameFormat = SPI_FORMAT_SPI;
 	SPI_initStruct.SampleEdge = SPI_SECOND_EDGE;
@@ -72,7 +72,7 @@ void SPISlvInit(void)
 	SPI_Open(SPI0);
 }
 
-void GPIOB3_GPIOA11_SPI0_Handler(void)
+void SPI0_Handler(void)
 {
 	if(SPI0->IF & SPI_IF_RFTHR_Msk)
 	{
@@ -103,8 +103,8 @@ void SerialInit(void)
 {
 	UART_InitStructure UART_initStruct;
 	
-	PORT_Init(PORTA, PIN0, PORTA_PIN0_UART0_RX, 1);	//GPIOA.0配置为UART0 RXD
-	PORT_Init(PORTA, PIN1, PORTA_PIN1_UART0_TX, 0);	//GPIOA.1配置为UART0 TXD
+	PORT_Init(PORTA, PIN2, PORTA_PIN2_UART0_TX, 0);
+	PORT_Init(PORTA, PIN3, PORTA_PIN3_UART0_RX, 1);
  	
  	UART_initStruct.Baudrate = 57600;
 	UART_initStruct.DataBits = UART_DATA_8BIT;
@@ -120,14 +120,6 @@ void SerialInit(void)
 	UART_Open(UART0);
 }
 
-/****************************************************************************************************************************************** 
-* 函数名称: fputc()
-* 功能说明: printf()使用此函数完成实际的串口打印动作
-* 输    入: int ch		要打印的字符
-*			FILE *f		文件句柄
-* 输    出: 无
-* 注意事项: 无
-******************************************************************************************************************************************/
 int fputc(int ch, FILE *f)
 {
 	UART_WriteByte(UART0, ch);

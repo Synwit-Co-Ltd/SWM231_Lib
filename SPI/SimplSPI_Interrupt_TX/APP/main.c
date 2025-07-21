@@ -33,14 +33,14 @@ void SPIMstInit(void)
 {
 	SPI_InitStructure SPI_initStruct;
 	
-	GPIO_Init(GPIOB, PIN15, 1, 0, 0, 0);				//软件控制片选
-#define SPI_CS_Low()	GPIO_ClrBit(GPIOB, PIN15)
-#define SPI_CS_High()	GPIO_SetBit(GPIOB, PIN15)
+	GPIO_Init(GPIOA, PIN7, 1, 0, 0, 0);				//软件控制片选
+#define SPI_CS_Low()	GPIO_ClrBit(GPIOA, PIN7)
+#define SPI_CS_High()	GPIO_SetBit(GPIOA, PIN7)
 	SPI_CS_High();
 	
-	PORT_Init(PORTB, PIN10, PORTB_PIN10_SPI0_SCLK, 0);
-	PORT_Init(PORTB, PIN13, PORTB_PIN13_SPI0_MOSI, 0);
-	PORT_Init(PORTB, PIN14, PORTB_PIN14_SPI0_MISO, 1);
+	PORT_Init(PORTA, PIN4, PORTA_PIN4_SPI0_SCLK, 0);
+	PORT_Init(PORTA, PIN5, PORTA_PIN5_SPI0_MOSI, 0);
+	PORT_Init(PORTA, PIN6, PORTA_PIN6_SPI0_MISO, 1);
 	
 	SPI_initStruct.clkDiv = SPI_CLKDIV_32;
 	SPI_initStruct.FrameFormat = SPI_FORMAT_SPI;
@@ -54,8 +54,6 @@ void SPIMstInit(void)
 	SPI_initStruct.TXThresholdIEn = 0;
 	SPI_initStruct.TXCompleteIEn  = 0;
 	SPI_Init(SPI0, &SPI_initStruct);
-	
-	NVIC_EnableIRQ(GPIOB3_GPIOA11_SPI0_IRQn);
 	
 	SPI_Open(SPI0);
 }
@@ -72,7 +70,7 @@ void SPIMstSend(uint16_t buff[], uint32_t cnt)
  	SPI_INTEn(SPI0, SPI_IT_TX_THRES);
 }
 
-void GPIOB3_GPIOA11_SPI0_Handler(void)
+void SPI0_Handler(void)
 {
 	if(SPI_INTStat(SPI0, SPI_IT_TX_THRES))
 	{
@@ -108,8 +106,8 @@ void SerialInit(void)
 {
 	UART_InitStructure UART_initStruct;
 	
-	PORT_Init(PORTA, PIN0, PORTA_PIN0_UART0_RX, 1);	//GPIOA.0配置为UART0 RXD
-	PORT_Init(PORTA, PIN1, PORTA_PIN1_UART0_TX, 0);	//GPIOA.1配置为UART0 TXD
+	PORT_Init(PORTA, PIN2, PORTA_PIN2_UART0_TX, 0);
+	PORT_Init(PORTA, PIN3, PORTA_PIN3_UART0_RX, 1);
  	
  	UART_initStruct.Baudrate = 57600;
 	UART_initStruct.DataBits = UART_DATA_8BIT;
@@ -125,14 +123,6 @@ void SerialInit(void)
 	UART_Open(UART0);
 }
 
-/****************************************************************************************************************************************** 
-* 函数名称: fputc()
-* 功能说明: printf()使用此函数完成实际的串口打印动作
-* 输    入: int ch		要打印的字符
-*			FILE *f		文件句柄
-* 输    出: 无
-* 注意事项: 无
-******************************************************************************************************************************************/
 int fputc(int ch, FILE *f)
 {
 	UART_WriteByte(UART0, ch);

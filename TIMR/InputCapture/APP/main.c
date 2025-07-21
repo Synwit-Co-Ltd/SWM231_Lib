@@ -12,7 +12,7 @@ int main(void)
 	
 	TestSignal();	//产生测试信号供Input Capture功能测量
 	
-	PORT_Init(PORTA, PIN14, PORTA_PIN14_TIMR0_IN, 1);
+	PORT_Init(PORTA, PIN0, PORTA_PIN0_TIMR0_IN, 1);
 	
 	TIMR_Init(TIMR0, TIMR_MODE_IC, CyclesPerUs, 10000000, 0);	//最大测量脉宽1us*10_000_000 = 10s
 	
@@ -30,7 +30,7 @@ void TestSignal(void)
 {
 	PWM_InitStructure  PWM_initStruct;
 	
-	PORT_Init(PORTA, PIN3, PORTA_PIN3_PWM0A,  0);
+	PORT_Init(PORTA, PIN5, PORTA_PIN5_PWM0A,  0);
 	
 	PWM_initStruct.Mode = PWM_EDGE_ALIGNED;
 	PWM_initStruct.Clkdiv = 60;					//F_PWM = 60M/60 = 1M
@@ -81,8 +81,8 @@ void SerialInit(void)
 {
 	UART_InitStructure UART_initStruct;
 	
-	PORT_Init(PORTA, PIN0, PORTA_PIN0_UART0_RX, 1);	//GPIOA.0配置为UART0 RXD
-	PORT_Init(PORTA, PIN1, PORTA_PIN1_UART0_TX, 0);	//GPIOA.1配置为UART0 TXD
+	PORT_Init(PORTA, PIN2, PORTA_PIN2_UART0_TX, 0);
+	PORT_Init(PORTA, PIN3, PORTA_PIN3_UART0_RX, 1);
  	
  	UART_initStruct.Baudrate = 57600;
 	UART_initStruct.DataBits = UART_DATA_8BIT;
@@ -98,14 +98,6 @@ void SerialInit(void)
 	UART_Open(UART0);
 }
 
-/****************************************************************************************************************************************** 
-* 函数名称: fputc()
-* 功能说明: printf()使用此函数完成实际的串口打印动作
-* 输    入: int ch		要打印的字符
-*			FILE *f		文件句柄
-* 输    出: 无
-* 注意事项: 无
-******************************************************************************************************************************************/
 int fputc(int ch, FILE *f)
 {
 	UART_WriteByte(UART0, ch);

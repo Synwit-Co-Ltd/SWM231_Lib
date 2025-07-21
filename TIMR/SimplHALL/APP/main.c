@@ -11,10 +11,10 @@ int main(void)
 	
 	TestSignal();
 	
-	PORT_Init(PORTB, PIN4, PORTB_PIN4_HALL_IN0, 1);		//连接PA9
-	PORT_Init(PORTB, PIN5, PORTB_PIN5_HALL_IN1, 1);		//连接PA10
-	PORT_Init(PORTB, PIN6, PORTB_PIN6_HALL_IN2, 1);		//连接PA11
-	PORTB->PULLU |= ((1 << PIN4) | (1 << PIN5) | (1 << PIN6));
+	PORT_Init(PORTB, PIN3, PORTB_PIN3_HALL_IN0, 1);		//连接PA3
+	PORT_Init(PORTB, PIN4, PORTB_PIN4_HALL_IN1, 1);		//连接PA4
+	PORT_Init(PORTB, PIN5, PORTB_PIN5_HALL_IN2, 1);		//连接PA5
+	PORTB->PULLU |= ((1 << PIN3) | (1 << PIN4) | (1 << PIN5));
 	
 	TIMR_Init(TIMR0, TIMR_MODE_TIMER, CyclesPerUs, 2000000, 1);		//2秒钟未检测到HALL输入变化，触发超时中断
 	
@@ -49,29 +49,29 @@ void TIMR0_Handler(void)
 
 void TestSignal(void)
 {
-	GPIO_Init(GPIOA, PIN9,  1, 0, 0, 0);
-	GPIO_Init(GPIOA, PIN10, 1, 0, 0, 0);
-	GPIO_Init(GPIOA, PIN11, 1, 0, 0, 0);
+	GPIO_Init(GPIOA, PIN3,  1, 0, 0, 0);
+	GPIO_Init(GPIOA, PIN4, 1, 0, 0, 0);
+	GPIO_Init(GPIOA, PIN5, 1, 0, 0, 0);
 	
-	TIMR_Init(TIMR1, TIMR_MODE_TIMER, CyclesPerUs, 100000, 1);
-	TIMR_Start(TIMR1);
+	TIMR_Init(BTIMR1, TIMR_MODE_TIMER, CyclesPerUs, 100000, 1);
+	TIMR_Start(BTIMR1);
 }
 
 
-void TIMR1_Handler(void)
+void BTIMR1_Handler(void)
 {
 	static uint32_t setp = 0;
 	
-	TIMR1->IF = (1 << TIMR_IF_TO_Pos);
+	BTIMR1->IF = TIMR_IF_TO_Msk;
 	
 	switch(setp++)
 	{
-	case 0: GPIO_SetBit(GPIOA, PIN9);  break;
-	case 1: GPIO_SetBit(GPIOA, PIN10); break;
-	case 2: GPIO_SetBit(GPIOA, PIN11); break;
-	case 3: GPIO_ClrBit(GPIOA, PIN9);  break;
-	case 4: GPIO_ClrBit(GPIOA, PIN10); break;
-	case 5: GPIO_ClrBit(GPIOA, PIN11); setp = 0; break;
+	case 0: GPIO_SetBit(GPIOA, PIN3); break;
+	case 1: GPIO_SetBit(GPIOA, PIN4); break;
+	case 2: GPIO_SetBit(GPIOA, PIN5); break;
+	case 3: GPIO_ClrBit(GPIOA, PIN3); break;
+	case 4: GPIO_ClrBit(GPIOA, PIN4); break;
+	case 5: GPIO_ClrBit(GPIOA, PIN5); setp = 0; break;
 	}
 }
 
@@ -80,8 +80,8 @@ void SerialInit(void)
 {
 	UART_InitStructure UART_initStruct;
 	
-	PORT_Init(PORTA, PIN0, PORTA_PIN0_UART0_RX, 1);	//GPIOA.0配置为UART0 RXD
-	PORT_Init(PORTA, PIN1, PORTA_PIN1_UART0_TX, 0);	//GPIOA.1配置为UART0 TXD
+	PORT_Init(PORTA, PIN2, PORTA_PIN2_UART0_TX, 0);
+	PORT_Init(PORTA, PIN3, PORTA_PIN3_UART0_RX, 1);
  	
  	UART_initStruct.Baudrate = 57600;
 	UART_initStruct.DataBits = UART_DATA_8BIT;
@@ -97,14 +97,6 @@ void SerialInit(void)
 	UART_Open(UART0);
 }
 
-/****************************************************************************************************************************************** 
-* 函数名称: fputc()
-* 功能说明: printf()使用此函数完成实际的串口打印动作
-* 输    入: int ch		要打印的字符
-*			FILE *f		文件句柄
-* 输    出: 无
-* 注意事项: 无
-******************************************************************************************************************************************/
 int fputc(int ch, FILE *f)
 {
 	UART_WriteByte(UART0, ch);

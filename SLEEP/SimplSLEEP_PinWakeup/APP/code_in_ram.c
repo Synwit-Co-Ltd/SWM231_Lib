@@ -7,19 +7,14 @@
 */
 
 void EnterSleepMode(void) 
-{ 
-		volatile int i;
+{
+	int i;
 	
-		SYS->SLEEP |= (1 << SYS_SLEEP_SLEEP_Pos);
-			
-		while((SYS->PAWKSR & (1 << PIN4)) == 0)
-		{
-				__NOP();
-		}
-		SYS->PAWKSR |= (1 << PIN4);							//清除唤醒状态
-
-		for(i=0;i<1000;i++)//等待FLASH唤醒,至少需要20uS.
-		{
-			__NOP();
-		}
+	__WFI();
+	
+	while((SYS->PAWKSR & (1 << PIN4)) == 0) __NOP();
+	
+	SYS->PAWKSR |= (1 << PIN4);							//清除唤醒状态
+	
+	for(i=0;i<1000;i++)	__NOP(); //等待FLASH唤醒,至少需要20uS.
 }  
