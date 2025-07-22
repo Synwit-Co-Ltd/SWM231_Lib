@@ -36,8 +36,8 @@ void FOC_Init(FOC_TypeDef * FOCx, FOC_InitStructure * initStruct)
 	
 	for(int i = 0; i < 3; i++) __NOP();
 	
-	FOCx->CR = (initStruct->Mode			<< FOC_CR_MODE_Pos) |
-			   (initStruct->Clark3Input	<< FOC_CR_CLAKI3_Pos) |
+	FOCx->CR = (initStruct->Mode		   << FOC_CR_MODE_Pos) |
+			   (initStruct->Clark3Input	   << FOC_CR_CLARKI3_Pos) |
 			   (initStruct->SVPWM2Resistor << FOC_CR_PWMI2_Pos);
 	
 	FOC_INTClr(initStruct->INTEn);

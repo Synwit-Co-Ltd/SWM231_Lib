@@ -1516,13 +1516,13 @@ typedef struct {
 	
 		 uint32_t RSVD;
 	
-	__IO uint32_t CLAKIAB;					// CLARK input a and b
+	__IO uint32_t CLARKIAB;					// CLARK input a and b
 	
 		 uint32_t RSVD2;
 	
-	__IO uint32_t CLAKIC;					// CLARK input c
+	__IO uint32_t CLARKIC;					// CLARK input c
 	
-	__I  uint32_t CLAKOAB;					// CLARK output αand β
+	__I  uint32_t CLARKOAB;					// CLARK output αand β
 	
 		 uint32_t RSVD3;
 	
@@ -1530,7 +1530,7 @@ typedef struct {
 	
 		 uint32_t RSVD4;
 	
-	__IO uint32_t PARKSIN;					// PARK sin and cos value of θ
+	__IO uint32_t PARKRAD;					// PARK sin and cos value of θ
 	
 		 uint32_t RSVD5;
 	
@@ -1574,15 +1574,15 @@ typedef struct {
 	
 		 uint32_t RSVD15;
 	
-	__IO uint32_t IPAKIDQ;					// iPARK input d and q
+	__IO uint32_t IPARKIDQ;					// iPARK input d and q
 	
 		 uint32_t RSVD16;
 	
-	__IO uint32_t IPAKSIN;					// iPARK sin and cos value of θ
+	__IO uint32_t IPARKRAD;					// iPARK sin and cos value of θ
 	
 		 uint32_t RSVD17;
 	
-	__I  uint32_t IPAKOAB;					// iPARK output αand β
+	__I  uint32_t IPARKOAB;					// iPARK output αand β
 	
 		 uint32_t RSVD18[2];
 	
@@ -1614,10 +1614,10 @@ typedef struct {
 #define FOC_CR_MODE_Msk				(0x01 << FOC_CR_MODE_Pos)
 #define FOC_CR_RESET_Pos			1
 #define FOC_CR_RESET_Msk			(0x01 << FOC_CR_RESET_Pos)
-#define FOC_CR_CLAKI3_Pos			4		// CLARK input 3-args mode, 0 根据CLARKIa、CLARKIb计算输出， 1 根据 根据CLARKIa、CLARKIb、CLARKIc计算输出
-#define FOC_CR_CLAKI3_Msk			(0x01 << FOC_CR_CLAKI3_Pos)
-#define FOC_CR_CLAKMOD_Pos			5		// CLARK work mode, 0 等幅值变换
-#define FOC_CR_CLAKMOD_Msk			(0x01 << FOC_CR_CLAKMOD_Pos)
+#define FOC_CR_CLARKI3_Pos			4		// CLARK input 3-args mode, 0 根据CLARKIa、CLARKIb计算输出， 1 根据 根据CLARKIa、CLARKIb、CLARKIc计算输出
+#define FOC_CR_CLARKI3_Msk			(0x01 << FOC_CR_CLARKI3_Pos)
+#define FOC_CR_CLARKMOD_Pos			5		// CLARK work mode, 0 等幅值变换
+#define FOC_CR_CLARKMOD_Msk			(0x01 << FOC_CR_CLARKMOD_Pos)
 #define FOC_CR_PWMMOD_Pos			12		// SVPWM work mode, 0 七段式模式
 #define FOC_CR_PWMMOD_Msk			(0x01 << FOC_CR_PWMMOD_Pos)
 #define FOC_CR_PWMI2_Pos			13		// SVPWM current sample mode, 0 单电阻采样, 1 双电阻采样
@@ -1674,50 +1674,50 @@ typedef struct {
 #define FOC_SR_SVPWMOF_Pos			20
 #define FOC_SR_SVPWMOF_Msk			(0x01 << FOC_SR_SVPWMOF_Pos)
 
-#define FOC_CLAKIAB_IA_Pos			0
-#define FOC_CLAKIAB_IA_Msk			(0xFFFF << FOC_CLAKIAB_IA_Pos)
-#define FOC_CLAKIAB_IB_Pos			16
-#define FOC_CLAKIAB_IB_Msk			(0xFFFF << FOC_CLAKIAB_IB_Pos)
+#define FOC_CLARKIAB_IA_Pos			0
+#define FOC_CLARKIAB_IA_Msk			(0xFFFF << FOC_CLARKIAB_IA_Pos)
+#define FOC_CLARKIAB_IB_Pos			16
+#define FOC_CLARKIAB_IB_Msk			(0xFFFFu<< FOC_CLARKIAB_IB_Pos)
 
-#define FOC_CLAKOAB_OA_Pos			0
-#define FOC_CLAKOAB_OA_Msk			(0xFFFF << FOC_CLAKOAB_OA_Pos)
-#define FOC_CLAKOAB_OB_Pos			16
-#define FOC_CLAKOAB_OB_Msk			(0xFFFF << FOC_CLAKOAB_OB_Pos)
+#define FOC_CLARKOAB_OA_Pos			0
+#define FOC_CLARKOAB_OA_Msk			(0xFFFF << FOC_CLARKOAB_OA_Pos)
+#define FOC_CLARKOAB_OB_Pos			16
+#define FOC_CLARKOAB_OB_Msk			(0xFFFFu<< FOC_CLARKOAB_OB_Pos)
 
 #define FOC_PARKIAB_IA_Pos			0
 #define FOC_PARKIAB_IA_Msk			(0xFFFF << FOC_PARKIAB_IA_Pos)
 #define FOC_PARKIAB_IB_Pos			16
-#define FOC_PARKIAB_IB_Msk			(0xFFFF << FOC_PARKIAB_IB_Pos)
+#define FOC_PARKIAB_IB_Msk			(0xFFFFu<< FOC_PARKIAB_IB_Pos)
 
-#define FOC_PARKSIN_SIN_Pos			0
-#define FOC_PARKSIN_SIN_Msk			(0xFFFF << FOC_PARKSIN_SIN_Pos)
-#define FOC_PARKSIN_COS_Pos			16
-#define FOC_PARKSIN_COS_Msk			(0xFFFF << FOC_PARKSIN_COS_Pos)
+#define FOC_PARKRAD_SIN_Pos			0
+#define FOC_PARKRAD_SIN_Msk			(0xFFFF << FOC_PARKRAD_SIN_Pos)
+#define FOC_PARKRAD_COS_Pos			16
+#define FOC_PARKRAD_COS_Msk			(0xFFFFu<< FOC_PARKRAD_COS_Pos)
 
 #define FOC_PARKODQ_OD_Pos			0
 #define FOC_PARKODQ_OD_Msk			(0xFFFF << FOC_PARKODQ_OD_Pos)
 #define FOC_PARKODQ_OQ_Pos			16
-#define FOC_PARKODQ_OQ_Msk			(0xFFFF << FOC_PARKODQ_OQ_Pos)
+#define FOC_PARKODQ_OQ_Msk			(0xFFFFu<< FOC_PARKODQ_OQ_Pos)
 
 #define FOC_PIDIDQ_ID_Pos			0
 #define FOC_PIDIDQ_ID_Msk			(0xFFFF << FOC_PIDIDQ_ID_Pos)
 #define FOC_PIDIDQ_IQ_Pos			16
-#define FOC_PIDIDQ_IQ_Msk			(0xFFFF << FOC_PIDIDQ_IQ_Pos)
+#define FOC_PIDIDQ_IQ_Msk			(0xFFFFu<< FOC_PIDIDQ_IQ_Pos)
 
 #define FOC_PIDREF_ID_Pos			0
 #define FOC_PIDREF_ID_Msk			(0xFFFF << FOC_PIDREF_ID_Pos)
 #define FOC_PIDREF_IQ_Pos			16
-#define FOC_PIDREF_IQ_Msk			(0xFFFF << FOC_PIDREF_IQ_Pos)
+#define FOC_PIDREF_IQ_Msk			(0xFFFFu<< FOC_PIDREF_IQ_Pos)
 
 #define FOC_PIDMAX_ID_Pos			0
 #define FOC_PIDMAX_ID_Msk			(0xFFFF << FOC_PIDMAX_ID_Pos)
 #define FOC_PIDMAX_IQ_Pos			16
-#define FOC_PIDMAX_IQ_Msk			(0xFFFF << FOC_PIDMAX_IQ_Pos)
+#define FOC_PIDMAX_IQ_Msk			(0xFFFFu<< FOC_PIDMAX_IQ_Pos)
 
 #define FOC_PIDMIN_ID_Pos			0
 #define FOC_PIDMIN_ID_Msk			(0xFFFF << FOC_PIDMIN_ID_Pos)
 #define FOC_PIDMIN_IQ_Pos			16
-#define FOC_PIDMIN_IQ_Msk			(0xFFFF << FOC_PIDMIN_IQ_Pos)
+#define FOC_PIDMIN_IQ_Msk			(0xFFFFu<< FOC_PIDMIN_IQ_Pos)
 
 #define FOC_PIDKP_ID_Pos			0
 #define FOC_PIDKP_ID_Msk			(0x3FFF << FOC_PIDKP_ID_Pos)
@@ -1732,72 +1732,72 @@ typedef struct {
 #define FOC_PIDLERR_ID_Pos			0
 #define FOC_PIDLERR_ID_Msk			(0xFFFF << FOC_PIDLERR_ID_Pos)
 #define FOC_PIDLERR_IQ_Pos			16
-#define FOC_PIDLERR_IQ_Msk			(0xFFFF << FOC_PIDLERR_IQ_Pos)
+#define FOC_PIDLERR_IQ_Msk			(0xFFFFu<< FOC_PIDLERR_IQ_Pos)
 
 #define FOC_PIDLOUT_OD_Pos			0
 #define FOC_PIDLOUT_OD_Msk			(0xFFFF << FOC_PIDLOUT_OD_Pos)
 #define FOC_PIDLOUT_OQ_Pos			16
-#define FOC_PIDLOUT_OQ_Msk			(0xFFFF << FOC_PIDLOUT_OQ_Pos)
+#define FOC_PIDLOUT_OQ_Msk			(0xFFFFu<< FOC_PIDLOUT_OQ_Pos)
 
 #define FOC_PIDODQ_OD_Pos			0
 #define FOC_PIDODQ_OD_Msk			(0xFFFF << FOC_PIDODQ_OD_Pos)
 #define FOC_PIDODQ_OQ_Pos			16
-#define FOC_PIDODQ_OQ_Msk			(0xFFFF << FOC_PIDODQ_OQ_Pos)
+#define FOC_PIDODQ_OQ_Msk			(0xFFFFu<< FOC_PIDODQ_OQ_Pos)
 
 #define FOC_IPARKIDQ_ID_Pos			0
 #define FOC_IPARKIDQ_ID_Msk			(0xFFFF << FOC_IPARKIDQ_ID_Pos)
 #define FOC_IPARKIDQ_IQ_Pos			16
-#define FOC_IPARKIDQ_IQ_Msk			(0xFFFF << FOC_IPARKIDQ_IQ_Pos)
+#define FOC_IPARKIDQ_IQ_Msk			(0xFFFFu<< FOC_IPARKIDQ_IQ_Pos)
 
-#define FOC_IPARKSIN_SIN_Pos		0
-#define FOC_IPARKSIN_SIN_Msk		(0xFFFF << FOC_IPARKSIN_SIN_Pos)
-#define FOC_IPARKSIN_COS_Pos		16
-#define FOC_IPARKSIN_COS_Msk		(0xFFFF << FOC_IPARKSIN_COS_Pos)
+#define FOC_IPARKRAD_SIN_Pos		0
+#define FOC_IPARKRAD_SIN_Msk		(0xFFFF << FOC_IPARKRAD_SIN_Pos)
+#define FOC_IPARKRAD_COS_Pos		16
+#define FOC_IPARKRAD_COS_Msk		(0xFFFFu<< FOC_IPARKRAD_COS_Pos)
 
 #define FOC_IPARKOAB_OA_Pos			0
 #define FOC_IPARKOAB_OA_Msk			(0xFFFF << FOC_IPARKOAB_OA_Pos)
 #define FOC_IPARKOAB_OB_Pos			16
-#define FOC_IPARKOAB_OB_Msk			(0xFFFF << FOC_IPARKOAB_OB_Pos)
+#define FOC_IPARKOAB_OB_Msk			(0xFFFFu<< FOC_IPARKOAB_OB_Pos)
 
 #define FOC_PWMIAB_IA_Pos			0
 #define FOC_PWMIAB_IA_Msk			(0xFFFF << FOC_PWMIAB_IA_Pos)
 #define FOC_PWMIAB_IB_Pos			16
-#define FOC_PWMIAB_IB_Msk			(0xFFFF << FOC_PWMIAB_IB_Pos)
+#define FOC_PWMIAB_IB_Msk			(0xFFFFu<< FOC_PWMIAB_IB_Pos)
 
 #define FOC_PWMMIN_MIN_Pos			0		// 最小采样时间
 #define FOC_PWMMIN_MIN_Msk			(0xFFFF << FOC_PWMMIN_MIN_Pos)
 #define FOC_PWMMIN_SAMP3_Pos		16		// 双电阻采样延时参数3
-#define FOC_PWMMIN_SAMP3_Msk		(0xFFFF << FOC_PWMMIN_SAMP3_Pos)
+#define FOC_PWMMIN_SAMP3_Msk		(0xFFFFu<< FOC_PWMMIN_SAMP3_Pos)
 
 #define FOC_PWMDLY_SAMP1_Pos		0		// 单电阻采样延时参数1
 #define FOC_PWMDLY_SAMP1_Msk		(0xFFFF << FOC_PWMDLY_SAMP1_Pos)
 #define FOC_PWMDLY_SAMP2_Pos		16		// 单电阻采样延时参数2
-#define FOC_PWMDLY_SAMP2_Msk		(0xFFFF << FOC_PWMDLY_SAMP2_Pos)
+#define FOC_PWMDLY_SAMP2_Msk		(0xFFFFu<< FOC_PWMDLY_SAMP2_Pos)
 
 #define FOC_PWMTIM_PERIOD_Pos		0		// period
 #define FOC_PWMTIM_PERIOD_Msk		(0xFFFF << FOC_PWMTIM_PERIOD_Pos)
 #define FOC_PWMTIM_DZ_Pos			16		// deadzone
-#define FOC_PWMTIM_DZ_Msk			(0xFFFF << FOC_PWMTIM_DZ_Pos)
+#define FOC_PWMTIM_DZ_Msk			(0xFFFFu<< FOC_PWMTIM_DZ_Pos)
 
 #define FOC_PWMTSP_POINT1_Pos		0		// 采样时间点参数1
 #define FOC_PWMTSP_POINT1_Msk		(0xFFFF << FOC_PWMTSP_POINT1_Pos)
 #define FOC_PWMTSP_POINT2_Pos		16
-#define FOC_PWMTSP_POINT2_Msk		(0xFFFF << FOC_PWMTSP_POINT2_Pos)
+#define FOC_PWMTSP_POINT2_Msk		(0xFFFFu<< FOC_PWMTSP_POINT2_Pos)
 
 #define FOC_PWMAD_DUTYA_Pos			0
 #define FOC_PWMAD_DUTYA_Msk			(0xFFFF << FOC_PWMAD_DUTYA_Pos)
 #define FOC_PWMAD_DUTYAN_Pos		16
-#define FOC_PWMAD_DUTYAN_Msk		(0xFFFF << FOC_PWMAD_DUTYAN_Pos)
+#define FOC_PWMAD_DUTYAN_Msk		(0xFFFFu<< FOC_PWMAD_DUTYAN_Pos)
 
 #define FOC_PWMBD_DUTYB_Pos			0
 #define FOC_PWMBD_DUTYB_Msk			(0xFFFF << FOC_PWMBD_DUTYB_Pos)
 #define FOC_PWMBD_DUTYBN_Pos		16
-#define FOC_PWMBD_DUTYBN_Msk		(0xFFFF << FOC_PWMBD_DUTYBN_Pos)
+#define FOC_PWMBD_DUTYBN_Msk		(0xFFFFu<< FOC_PWMBD_DUTYBN_Pos)
 
 #define FOC_PWMCD_DUTYC_Pos			0
 #define FOC_PWMCD_DUTYC_Msk			(0xFFFF << FOC_PWMCD_DUTYC_Pos)
 #define FOC_PWMCD_DUTYCN_Pos		16
-#define FOC_PWMCD_DUTYCN_Msk		(0xFFFF << FOC_PWMCD_DUTYCN_Pos)
+#define FOC_PWMCD_DUTYCN_Msk		(0xFFFFu<< FOC_PWMCD_DUTYCN_Pos)
 
 
 
