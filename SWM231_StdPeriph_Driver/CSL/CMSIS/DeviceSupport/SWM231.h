@@ -1620,8 +1620,8 @@ typedef struct {
 #define FOC_CR_CLAKMOD_Msk			(0x01 << FOC_CR_CLAKMOD_Pos)
 #define FOC_CR_PWMMOD_Pos			12		// SVPWM work mode, 0 七段式模式
 #define FOC_CR_PWMMOD_Msk			(0x01 << FOC_CR_PWMMOD_Pos)
-#define FOC_CR_PWMI3_Pos			13		// SVPWM current sample mode, 0 单电阻采样, 1 双电阻采样
-#define FOC_CR_PWMI3_Msk			(0x01 << FOC_CR_PWMI3_Pos)
+#define FOC_CR_PWMI2_Pos			13		// SVPWM current sample mode, 0 单电阻采样, 1 双电阻采样
+#define FOC_CR_PWMI2_Msk			(0x01 << FOC_CR_PWMI2_Pos)
 
 #define FOC_STA_FOC_Pos				0		// 写 1 启动一次 FOC 模块计算, 计算完成自动清零
 #define FOC_STA_FOC_Msk				(0x01 << FOC_STA_FOC_Pos)
@@ -1987,6 +1987,7 @@ typedef struct {
 #include "SWM231_adc.h"
 #include "SWM231_dma.h"
 #include "SWM231_div.h"
+#include "SWM231_foc.h"
 #include "SWM231_wdt.h"
 #include "SWM231_flash.h"
 #include "SWM231_iofilt.h"

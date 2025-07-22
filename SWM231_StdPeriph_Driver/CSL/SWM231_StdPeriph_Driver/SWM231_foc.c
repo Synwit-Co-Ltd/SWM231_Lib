@@ -1,6 +1,6 @@
 /****************************************************************************************************************************************** 
-* 文件名称: SWM231_div.c
-* 功能说明:	SWM231单片机的DIV硬件除法功能驱动库
+* 文件名称: SWM231_foc.c
+* 功能说明:	SWM231单片机的FOC模块驱动库
 * 技术支持:	http://www.synwit.com.cn/e/tool/gbook/?bid=1
 * 注意事项:
 * 版本日期:	V1.0.0		2016年1月30日
@@ -19,17 +19,28 @@
 * COPYRIGHT 2012 Synwit Technology
 *******************************************************************************************************************************************/
 #include "SWM231.h"
-#include "SWM231_div.h"
+#include "SWM231_foc.h"
 
 
 /****************************************************************************************************************************************** 
-* 函数名称:	DIV_Init()
-* 功能说明:	硬件除法器初始化
-* 输    入: DIV_TypeDef * DIVx	指定要被设置的硬件除法器，有效值包括DIV
+* 函数名称:	FOC_Init()
+* 功能说明:	FOC模块初始化
+* 输    入: FOC_TypeDef * FOCx	指定要被设置的FOC模块，有效值包括FOC
+*			FOC_InitStructure * initStruct    包含FOC模块相关设定值的结构体
 * 输    出: 无
 * 注意事项: 无
 ******************************************************************************************************************************************/
-void DIV_Init(DIV_TypeDef * DIVx)
+void FOC_Init(FOC_TypeDef * FOCx, FOC_InitStructure * initStruct)
 {
-	SYS->CLKEN0 |= (0x01 << SYS_CLKEN0_DIV_Pos);
+	SYS->CLKEN0 |= SYS_CLKEN0_FOC_Msk;
+	
+	for(int i = 0; i < 3; i++) __NOP();
+	
+	FOCx->CR = (initStruct->Mode			<< FOC_CR_MODE_Pos) |
+			   (initStruct->Clark3Input	<< FOC_CR_CLAKI3_Pos) |
+			   (initStruct->SVPWM2Resistor << FOC_CR_PWMI2_Pos);
+	
+	FOC_INTClr(initStruct->INTEn);
+	FOC_INTEn(initStruct->INTEn);
 }
+
