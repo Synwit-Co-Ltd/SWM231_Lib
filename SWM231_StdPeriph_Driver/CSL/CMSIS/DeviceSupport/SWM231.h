@@ -254,7 +254,7 @@ typedef struct {
 #define SYS_PRSTR0_ANAC_Msk			(0x01 <<SYS_PRSTR0_ANAC_Pos)
 #define SYS_PRSTR0_ADC0_Pos			10
 #define SYS_PRSTR0_ADC0_Msk			(0x01 <<SYS_PRSTR0_ADC0_Pos)
-#define SYS_PRSTR0_IOFILT_Pos		1`
+#define SYS_PRSTR0_IOFILT_Pos		11
 #define SYS_PRSTR0_IOFILT_Msk		(0x01 <<SYS_PRSTR0_IOFILT_Pos)
 #define SYS_PRSTR0_WDT_Pos			12
 #define SYS_PRSTR0_WDT_Msk			(0x01 <<SYS_PRSTR0_WDT_Pos)
@@ -1506,6 +1506,303 @@ typedef struct {
 
 
 typedef struct {
+	__IO uint32_t CR;
+	
+	__IO uint32_t STA;						// start
+	
+	__IO uint32_t IE;
+	
+	__IO uint32_t SR;
+	
+		 uint32_t RSVD;
+	
+	__IO uint32_t CLAKIAB;					// CLARK input a and b
+	
+		 uint32_t RSVD2;
+	
+	__IO uint32_t CLAKIC;					// CLARK input c
+	
+	__I  uint32_t CLAKOAB;					// CLARK output αand β
+	
+		 uint32_t RSVD3;
+	
+	__IO uint32_t PARKIAB;					// PARK input αand β
+	
+		 uint32_t RSVD4;
+	
+	__IO uint32_t PARKSIN;					// PARK sin and cos value of θ
+	
+		 uint32_t RSVD5;
+	
+	__I  uint32_t PARKODQ;					// PARK output d and q
+	
+		 uint32_t RSVD6;
+		 
+	__IO uint32_t PIDIDQ;					// PID input d and q
+	
+		 uint32_t RSVD7;
+	
+	__IO uint32_t PIDREF;					// PID reference value of d and q
+	
+		 uint32_t RSVD8;
+	
+	__IO uint32_t PIDMAX;					// PID max value of d and q
+	
+		 uint32_t RSVD9;
+	
+	__IO uint32_t PIDMIN;					// PID min value of d and q
+	
+		 uint32_t RSVD10;
+	
+	__IO uint32_t PIDKP;					// PID Kp parameter for d and q
+	
+		 uint32_t RSVD11;
+	
+	__IO uint32_t PIDKI;					// PID Ki parameter for d and q
+	
+		 uint32_t RSVD12;
+	
+	__IO uint32_t PIDLERR;					// PID last error for d and q
+	
+		 uint32_t RSVD13;
+	
+	__IO uint32_t PIDLOUT;					// PID last output for d and q
+	
+		 uint32_t RSVD14;
+	
+	__I  uint32_t PIDODQ;					// PID output d and q
+	
+		 uint32_t RSVD15;
+	
+	__IO uint32_t IPAKIDQ;					// iPARK input d and q
+	
+		 uint32_t RSVD16;
+	
+	__IO uint32_t IPAKSIN;					// iPARK sin and cos value of θ
+	
+		 uint32_t RSVD17;
+	
+	__I  uint32_t IPAKOAB;					// iPARK output αand β
+	
+		 uint32_t RSVD18[2];
+	
+	__IO uint32_t PWMIAB;					// SVPWM input αand β
+	
+		 uint32_t RSVD19;
+	
+	__IO uint32_t PWMMIN;					// SVPWM min sample time
+	
+	__IO uint32_t PWMDLY;					// SVPWM sample delay
+	
+		 uint32_t RSVD20;
+	
+	__IO uint32_t PWMTIM;					// SVPWM period and deadzone time
+	
+		 uint32_t RSVD21;
+	
+	__I  uint32_t PWMTSP;					// SVPWM sample point time
+	
+	__I  uint32_t PWMTAD;					// SVPWM A-phase duty time
+	
+	__I  uint32_t PWMTBD;					// SVPWM B-phase duty time
+	
+	__I  uint32_t PWMTCD;					// SVPWM C-phase duty time
+} FOC_TypeDef;
+
+
+#define FOC_CR_MODE_Pos				0		// 0 分模块单独控制模式, 1 FOC整模块控制模式
+#define FOC_CR_MODE_Msk				(0x01 << FOC_CR_MODE_Pos)
+#define FOC_CR_RESET_Pos			1
+#define FOC_CR_RESET_Msk			(0x01 << FOC_CR_RESET_Pos)
+#define FOC_CR_CLAKI3_Pos			4		// CLARK input 3-args mode, 0 根据CLARKIa、CLARKIb计算输出， 1 根据 根据CLARKIa、CLARKIb、CLARKIc计算输出
+#define FOC_CR_CLAKI3_Msk			(0x01 << FOC_CR_CLAKI3_Pos)
+#define FOC_CR_CLAKMOD_Pos			5		// CLARK work mode, 0 等幅值变换
+#define FOC_CR_CLAKMOD_Msk			(0x01 << FOC_CR_CLAKMOD_Pos)
+#define FOC_CR_PWMMOD_Pos			12		// SVPWM work mode, 0 七段式模式
+#define FOC_CR_PWMMOD_Msk			(0x01 << FOC_CR_PWMMOD_Pos)
+#define FOC_CR_PWMI3_Pos			13		// SVPWM current sample mode, 0 单电阻采样, 1 双电阻采样
+#define FOC_CR_PWMI3_Msk			(0x01 << FOC_CR_PWMI3_Pos)
+
+#define FOC_STA_FOC_Pos				0		// 写 1 启动一次 FOC 模块计算, 计算完成自动清零
+#define FOC_STA_FOC_Msk				(0x01 << FOC_STA_FOC_Pos)
+#define FOC_STA_CLARK_Pos			1
+#define FOC_STA_CLARK_Msk			(0x01 << FOC_STA_CLARK_Pos)
+#define FOC_STA_PARK_Pos			2
+#define FOC_STA_PARK_Msk			(0x01 << FOC_STA_PARK_Pos)
+#define FOC_STA_PID_Pos				3
+#define FOC_STA_PID_Msk				(0x01 << FOC_STA_PID_Pos)
+#define FOC_STA_IPARK_Pos			4
+#define FOC_STA_IPARK_Msk			(0x01 << FOC_STA_IPARK_Pos)
+#define FOC_STA_SVPWM_Pos			5
+#define FOC_STA_SVPWM_Msk			(0x01 << FOC_STA_SVPWM_Pos)
+
+#define FOC_IE_FOC_Pos				0		// FOC 模块计算完成中断使能
+#define FOC_IE_FOC_Msk				(0x01 << FOC_IE_FOC_Pos)
+#define FOC_IE_CLARK_Pos			1
+#define FOC_IE_CLARK_Msk			(0x01 << FOC_IE_CLARK_Pos)
+#define FOC_IE_PARK_Pos				2
+#define FOC_IE_PARK_Msk				(0x01 << FOC_IE_PARK_Pos)
+#define FOC_IE_PID_Pos				3
+#define FOC_IE_PID_Msk				(0x01 << FOC_IE_PID_Pos)
+#define FOC_IE_IPARK_Pos			4
+#define FOC_IE_IPARK_Msk			(0x01 << FOC_IE_IPARK_Pos)
+#define FOC_IE_SVPWM_Pos			5
+#define FOC_IE_SVPWM_Msk			(0x01 << FOC_IE_SVPWM_Pos)
+
+#define FOC_SR_BUSY_Pos				0		// 只适用于 FOC->CR.MODE = 1 时
+#define FOC_SR_BUSY_Msk				(0x01 << FOC_SR_BUSY_Pos)
+#define FOC_SR_FOC_Pos				1		// FOC 模块计算完成中断标志，写 1 清零
+#define FOC_SR_FOC_Msk				(0x01 << FOC_SR_FOC_Pos)
+#define FOC_SR_CLARK_Pos			2
+#define FOC_SR_CLARK_Msk			(0x01 << FOC_SR_CLARK_Pos)
+#define FOC_SR_PARK_Pos				3
+#define FOC_SR_PARK_Msk				(0x01 << FOC_SR_PARK_Pos)
+#define FOC_SR_PID_Pos				4
+#define FOC_SR_PID_Msk				(0x01 << FOC_SR_PID_Pos)
+#define FOC_SR_IPARK_Pos			5
+#define FOC_SR_IPARK_Msk			(0x01 << FOC_SR_IPARK_Pos)
+#define FOC_SR_SVPWM_Pos			6
+#define FOC_SR_SVPWM_Msk			(0x01 << FOC_SR_SVPWM_Pos)
+#define FOC_SR_CLARKOF_Pos			16		// CLARK 模块计算溢出标志，写 1 清零
+#define FOC_SR_CLARKOF_Msk			(0x01 << FOC_SR_CLARKOF_Pos)
+#define FOC_SR_PARKOF_Pos			17
+#define FOC_SR_PARKOF_Msk			(0x01 << FOC_SR_PARKOF_Pos)
+#define FOC_SR_PIDOF_Pos			18
+#define FOC_SR_PIDOF_Msk			(0x01 << FOC_SR_PIDOF_Pos)
+#define FOC_SR_IPARKOF_Pos			19
+#define FOC_SR_IPARKOF_Msk			(0x01 << FOC_SR_IPARKOF_Pos)
+#define FOC_SR_SVPWMOF_Pos			20
+#define FOC_SR_SVPWMOF_Msk			(0x01 << FOC_SR_SVPWMOF_Pos)
+
+#define FOC_CLAKIAB_IA_Pos			0
+#define FOC_CLAKIAB_IA_Msk			(0xFFFF << FOC_CLAKIAB_IA_Pos)
+#define FOC_CLAKIAB_IB_Pos			16
+#define FOC_CLAKIAB_IB_Msk			(0xFFFF << FOC_CLAKIAB_IB_Pos)
+
+#define FOC_CLAKOAB_OA_Pos			0
+#define FOC_CLAKOAB_OA_Msk			(0xFFFF << FOC_CLAKOAB_OA_Pos)
+#define FOC_CLAKOAB_OB_Pos			16
+#define FOC_CLAKOAB_OB_Msk			(0xFFFF << FOC_CLAKOAB_OB_Pos)
+
+#define FOC_PARKIAB_IA_Pos			0
+#define FOC_PARKIAB_IA_Msk			(0xFFFF << FOC_PARKIAB_IA_Pos)
+#define FOC_PARKIAB_IB_Pos			16
+#define FOC_PARKIAB_IB_Msk			(0xFFFF << FOC_PARKIAB_IB_Pos)
+
+#define FOC_PARKSIN_SIN_Pos			0
+#define FOC_PARKSIN_SIN_Msk			(0xFFFF << FOC_PARKSIN_SIN_Pos)
+#define FOC_PARKSIN_COS_Pos			16
+#define FOC_PARKSIN_COS_Msk			(0xFFFF << FOC_PARKSIN_COS_Pos)
+
+#define FOC_PARKODQ_OD_Pos			0
+#define FOC_PARKODQ_OD_Msk			(0xFFFF << FOC_PARKODQ_OD_Pos)
+#define FOC_PARKODQ_OQ_Pos			16
+#define FOC_PARKODQ_OQ_Msk			(0xFFFF << FOC_PARKODQ_OQ_Pos)
+
+#define FOC_PIDIDQ_ID_Pos			0
+#define FOC_PIDIDQ_ID_Msk			(0xFFFF << FOC_PIDIDQ_ID_Pos)
+#define FOC_PIDIDQ_IQ_Pos			16
+#define FOC_PIDIDQ_IQ_Msk			(0xFFFF << FOC_PIDIDQ_IQ_Pos)
+
+#define FOC_PIDREF_ID_Pos			0
+#define FOC_PIDREF_ID_Msk			(0xFFFF << FOC_PIDREF_ID_Pos)
+#define FOC_PIDREF_IQ_Pos			16
+#define FOC_PIDREF_IQ_Msk			(0xFFFF << FOC_PIDREF_IQ_Pos)
+
+#define FOC_PIDMAX_ID_Pos			0
+#define FOC_PIDMAX_ID_Msk			(0xFFFF << FOC_PIDMAX_ID_Pos)
+#define FOC_PIDMAX_IQ_Pos			16
+#define FOC_PIDMAX_IQ_Msk			(0xFFFF << FOC_PIDMAX_IQ_Pos)
+
+#define FOC_PIDMIN_ID_Pos			0
+#define FOC_PIDMIN_ID_Msk			(0xFFFF << FOC_PIDMIN_ID_Pos)
+#define FOC_PIDMIN_IQ_Pos			16
+#define FOC_PIDMIN_IQ_Msk			(0xFFFF << FOC_PIDMIN_IQ_Pos)
+
+#define FOC_PIDKP_ID_Pos			0
+#define FOC_PIDKP_ID_Msk			(0x3FFF << FOC_PIDKP_ID_Pos)
+#define FOC_PIDKP_IQ_Pos			16
+#define FOC_PIDKP_IQ_Msk			(0x3FFF << FOC_PIDKP_IQ_Pos)
+
+#define FOC_PIDKI_ID_Pos			0
+#define FOC_PIDKI_ID_Msk			(0x3FFF << FOC_PIDKI_ID_Pos)
+#define FOC_PIDKI_IQ_Pos			16
+#define FOC_PIDKI_IQ_Msk			(0x3FFF << FOC_PIDKI_IQ_Pos)
+
+#define FOC_PIDLERR_ID_Pos			0
+#define FOC_PIDLERR_ID_Msk			(0xFFFF << FOC_PIDLERR_ID_Pos)
+#define FOC_PIDLERR_IQ_Pos			16
+#define FOC_PIDLERR_IQ_Msk			(0xFFFF << FOC_PIDLERR_IQ_Pos)
+
+#define FOC_PIDLOUT_OD_Pos			0
+#define FOC_PIDLOUT_OD_Msk			(0xFFFF << FOC_PIDLOUT_OD_Pos)
+#define FOC_PIDLOUT_OQ_Pos			16
+#define FOC_PIDLOUT_OQ_Msk			(0xFFFF << FOC_PIDLOUT_OQ_Pos)
+
+#define FOC_PIDODQ_OD_Pos			0
+#define FOC_PIDODQ_OD_Msk			(0xFFFF << FOC_PIDODQ_OD_Pos)
+#define FOC_PIDODQ_OQ_Pos			16
+#define FOC_PIDODQ_OQ_Msk			(0xFFFF << FOC_PIDODQ_OQ_Pos)
+
+#define FOC_IPARKIDQ_ID_Pos			0
+#define FOC_IPARKIDQ_ID_Msk			(0xFFFF << FOC_IPARKIDQ_ID_Pos)
+#define FOC_IPARKIDQ_IQ_Pos			16
+#define FOC_IPARKIDQ_IQ_Msk			(0xFFFF << FOC_IPARKIDQ_IQ_Pos)
+
+#define FOC_IPARKSIN_SIN_Pos		0
+#define FOC_IPARKSIN_SIN_Msk		(0xFFFF << FOC_IPARKSIN_SIN_Pos)
+#define FOC_IPARKSIN_COS_Pos		16
+#define FOC_IPARKSIN_COS_Msk		(0xFFFF << FOC_IPARKSIN_COS_Pos)
+
+#define FOC_IPARKOAB_OA_Pos			0
+#define FOC_IPARKOAB_OA_Msk			(0xFFFF << FOC_IPARKOAB_OA_Pos)
+#define FOC_IPARKOAB_OB_Pos			16
+#define FOC_IPARKOAB_OB_Msk			(0xFFFF << FOC_IPARKOAB_OB_Pos)
+
+#define FOC_PWMIAB_IA_Pos			0
+#define FOC_PWMIAB_IA_Msk			(0xFFFF << FOC_PWMIAB_IA_Pos)
+#define FOC_PWMIAB_IB_Pos			16
+#define FOC_PWMIAB_IB_Msk			(0xFFFF << FOC_PWMIAB_IB_Pos)
+
+#define FOC_PWMMIN_MIN_Pos			0		// 最小采样时间
+#define FOC_PWMMIN_MIN_Msk			(0xFFFF << FOC_PWMMIN_MIN_Pos)
+#define FOC_PWMMIN_SAMP3_Pos		16		// 双电阻采样延时参数3
+#define FOC_PWMMIN_SAMP3_Msk		(0xFFFF << FOC_PWMMIN_SAMP3_Pos)
+
+#define FOC_PWMDLY_SAMP1_Pos		0		// 单电阻采样延时参数1
+#define FOC_PWMDLY_SAMP1_Msk		(0xFFFF << FOC_PWMDLY_SAMP1_Pos)
+#define FOC_PWMDLY_SAMP2_Pos		16		// 单电阻采样延时参数2
+#define FOC_PWMDLY_SAMP2_Msk		(0xFFFF << FOC_PWMDLY_SAMP2_Pos)
+
+#define FOC_PWMTIM_PERIOD_Pos		0		// period
+#define FOC_PWMTIM_PERIOD_Msk		(0xFFFF << FOC_PWMTIM_PERIOD_Pos)
+#define FOC_PWMTIM_DZ_Pos			16		// deadzone
+#define FOC_PWMTIM_DZ_Msk			(0xFFFF << FOC_PWMTIM_DZ_Pos)
+
+#define FOC_PWMTSP_POINT1_Pos		0		// 采样时间点参数1
+#define FOC_PWMTSP_POINT1_Msk		(0xFFFF << FOC_PWMTSP_POINT1_Pos)
+#define FOC_PWMTSP_POINT2_Pos		16
+#define FOC_PWMTSP_POINT2_Msk		(0xFFFF << FOC_PWMTSP_POINT2_Pos)
+
+#define FOC_PWMAD_DUTYA_Pos			0
+#define FOC_PWMAD_DUTYA_Msk			(0xFFFF << FOC_PWMAD_DUTYA_Pos)
+#define FOC_PWMAD_DUTYAN_Pos		16
+#define FOC_PWMAD_DUTYAN_Msk		(0xFFFF << FOC_PWMAD_DUTYAN_Pos)
+
+#define FOC_PWMBD_DUTYB_Pos			0
+#define FOC_PWMBD_DUTYB_Msk			(0xFFFF << FOC_PWMBD_DUTYB_Pos)
+#define FOC_PWMBD_DUTYBN_Pos		16
+#define FOC_PWMBD_DUTYBN_Msk		(0xFFFF << FOC_PWMBD_DUTYBN_Pos)
+
+#define FOC_PWMCD_DUTYC_Pos			0
+#define FOC_PWMCD_DUTYC_Msk			(0xFFFF << FOC_PWMCD_DUTYC_Pos)
+#define FOC_PWMCD_DUTYCN_Pos		16
+#define FOC_PWMCD_DUTYCN_Msk		(0xFFFF << FOC_PWMCD_DUTYCN_Pos)
+
+
+
+
+typedef struct {
 	__IO uint32_t DATA;
 	
 	__IO uint32_t ADDR;
@@ -1670,6 +1967,8 @@ typedef struct {
 #define PWMG				((PWMG_TypeDef *) PWMG_BASE)
 
 #define DIV					((DIV_TypeDef  *) DIV_BASE)
+
+#define FOC					((FOC_TypeDef  *) FOC_BASE)
 
 #define DMA					((DMA_TypeDef  *) DMA_BASE)
 
