@@ -196,8 +196,6 @@ typedef struct {
 #define SYS_CLKEN0_FOC_Pos			13
 #define SYS_CLKEN0_FOC_Msk			(0x01 << SYS_CLKEN0_FOC_Pos)
 
-#define SYS_SLEEPCR_CLK_Pos			0		//clock used when sleep, 0 LRC, 1 XTAL_32k
-#define SYS_SLEEPCR_CLK_Msk			(0x01 << SYS_SLEEPCR_CLK_Pos)
 #define SYS_SLEEPCR_FLASH_Pos		1		//flash state when sleep, 0 standby, 1 powerdown
 #define SYS_SLEEPCR_FLASH_Msk		(0x01 << SYS_SLEEPCR_FLASH_Pos)
 #define SYS_SLEEPCR_WKEDGE_Pos		2		//wake-up edge, 0 falling edge, 1 rising edge
@@ -541,9 +539,17 @@ typedef struct {
 
 
 typedef struct {
-	__IO uint32_t HALLIE;					//[0] HALL中断使能
+		 uint32_t RSVD[8];
 	
-		 uint32_t RESERVED;
+	__IO uint32_t ICSR;						//Input Capture Pin Status
+	
+		 uint32_t RSVD2[7];
+	
+	__IO uint32_t EN;
+	
+		 uint32_t RSVD3[3];
+	
+	__IO uint32_t HALLIE;					//[0] HALL中断使能
 	
 	__IO uint32_t HALLIF;
 	
@@ -551,15 +557,9 @@ typedef struct {
 	
 	__IO uint32_t HALLDR;					//HALL输入跳变沿将计数器（加载值 - 当前值）存入此寄存器
 	
-		 uint32_t RESERVED2[2];
+		 uint32_t RSVD4;
 	
 	__IO uint32_t HALLSR;
-	
-	__IO uint32_t ICSR;						//Input Capture Pin Status
-		
-		 uint32_t RESERVED3[7];
-	
-	__IO uint32_t EN;
 } TIMRG_TypeDef;
 
 

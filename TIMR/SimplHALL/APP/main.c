@@ -4,7 +4,7 @@ void SerialInit(void);
 void TestSignal(void);
 
 int main(void)
-{	
+{
 	SystemInit();
 	
 	SerialInit();
@@ -16,14 +16,14 @@ int main(void)
 	PORT_Init(PORTB, PIN5, PORTB_PIN5_HALL_IN2, 1);		//连接PA5
 	PORTB->PULLU |= ((1 << PIN3) | (1 << PIN4) | (1 << PIN5));
 	
-	TIMR_Init(TIMR0, TIMR_MODE_TIMER, CyclesPerUs, 2000000, 1);		//2秒钟未检测到HALL输入变化，触发超时中断
+	TIMR_Init(BTIMR0, TIMR_MODE_TIMER, CyclesPerUs, 2000000, 1);		//2秒钟未检测到HALL输入变化，触发超时中断
 	
-	TIMRG->HALLEN = 1;
-	TIMRG->HALLIF = 7;
-	TIMRG->HALLIE = 1;
+	BTIMRG->HALLEN = 1;
+	BTIMRG->HALLIF = 7;
+	BTIMRG->HALLIE = 1;
 	NVIC_EnableIRQ(HALL_IRQn);
 	
-	TIMR_Start(TIMR0);
+	TIMR_Start(BTIMR0);
 	
 	while(1==1)
 	{
@@ -33,15 +33,15 @@ int main(void)
 
 void HALL_Handler(void)
 {
-	TIMRG->HALLIF = 7;
+	BTIMRG->HALLIF = 7;
 	
-	printf("%dus\r\n", TIMRG->HALLDR);
+	printf("%dus\r\n", BTIMRG->HALLDR);
 }
 
 
-void TIMR0_Handler(void)
+void BTIMR0_Handler(void)
 {
-	TIMR0->IF = (1 << TIMR_IF_TO_Pos);
+	BTIMR0->IF = (1 << TIMR_IF_TO_Pos);
 	
 	printf("HALL Time-out\r\n");
 }
@@ -49,7 +49,7 @@ void TIMR0_Handler(void)
 
 void TestSignal(void)
 {
-	GPIO_Init(GPIOA, PIN3,  1, 0, 0, 0);
+	GPIO_Init(GPIOA, PIN3, 1, 0, 0, 0);
 	GPIO_Init(GPIOA, PIN4, 1, 0, 0, 0);
 	GPIO_Init(GPIOA, PIN5, 1, 0, 0, 0);
 	
