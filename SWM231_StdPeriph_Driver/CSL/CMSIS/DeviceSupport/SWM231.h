@@ -882,16 +882,14 @@ typedef struct {
 	__IO uint32_t SEQ1CHK;
 	
 		 uint32_t RESERVED[2];
-		
-	__IO uint32_t DATA[10];
 	
-		 uint32_t RESERVED2[6];
+	__IO uint32_t DATA[16];
 	
 	__IO uint32_t SEQ0DMA;
 	
 	__IO uint32_t SEQ1DMA;
 	
-		 uint32_t RESERVED3[98];
+		 uint32_t RESERVED2[98];
 	
 	__IO uint32_t START;
 } ADC_TypeDef;
@@ -901,8 +899,6 @@ typedef struct {
 #define ADC_CR_PWDN_Msk				(0x01 << ADC_CR_PWDN_Pos)
 #define ADC_CR_RESET_Pos			1		//模拟IP内部逻辑复位，硬件自动清零
 #define ADC_CR_RESET_Msk			(0x01 << ADC_CR_RESET_Pos)
-#define ADC_CR_BITS_Pos				2 		//转换结果位数：0 12-bit   1 10-bit   2 8-bit   3 6-bit
-#define ADC_CR_BITS_Msk				(0x03 << ADC_CR_BITS_Pos)
 #define ADC_CR_SEQ0DMAEN_Pos		4
 #define ADC_CR_SEQ0DMAEN_Msk		(0x01 << ADC_CR_SEQ0DMAEN_Pos)
 #define ADC_CR_SEQ1DMAEN_Pos		5
@@ -911,6 +907,12 @@ typedef struct {
 #define ADC_CR_AVG_Msk				(0x03 << ADC_CR_AVG_Pos)
 #define ADC_CR_CLKDIV_Pos			8
 #define ADC_CR_CLKDIV_Msk			(0x1F << ADC_CR_CLKDIV_Pos)
+#define ADC_CR_BITS_Pos				13 		//转换结果位数：0 12-bit   1 10-bit
+#define ADC_CR_BITS_Msk				(0x01 << ADC_CR_BITS_Pos)
+#define ADC_CR_CMPPWS_Pos			14		// ADC CMP power-save enable
+#define ADC_CR_CMPPWS_Msk			(0x01 << ADC_CR_CMPPWS_Pos)
+#define ADC_CR_VCMPWS_Pos			15		// ADC VCM power-save enable
+#define ADC_CR_VCMPWS_Msk			(0x01 << ADC_CR_VCMPWS_Pos)
 
 #define ADC_IE_SEQ0EOC_Pos			0
 #define ADC_IE_SEQ0EOC_Msk			(0x01 << ADC_IE_SEQ0EOC_Pos)
@@ -1026,12 +1028,6 @@ typedef struct {
 #define ADC_START_ADC0SEQ1_Msk		(0x01 << ADC_START_ADC0SEQ1_Pos)
 #define ADC_START_ADC0BUSY_Pos		2
 #define ADC_START_ADC0BUSY_Msk		(0x01 << ADC_START_ADC0BUSY_Pos)
-#define ADC_START_ADC1SEQ0_Pos		8
-#define ADC_START_ADC1SEQ0_Msk		(0x01 << ADC_START_ADC1SEQ0_Pos)
-#define ADC_START_ADC1SEQ1_Pos		9
-#define ADC_START_ADC1SEQ1_Msk		(0x01 << ADC_START_ADC1SEQ1_Pos)
-#define ADC_START_ADC1BUSY_Pos		10
-#define ADC_START_ADC1BUSY_Msk		(0x01 << ADC_START_ADC1BUSY_Pos)
 
 
 

@@ -77,8 +77,8 @@ void ADC_SEQ_Init(ADC_TypeDef * ADCx, uint32_t seq, ADC_SEQ_InitStructure * init
 void ADC_CMP_Init(ADC_TypeDef * ADCx, uint32_t seq, ADC_CMP_InitStructure * initStruct);	//ADC比较功能初始化
 void ADC_Open(ADC_TypeDef * ADCx);							//ADC开启，可以软件启动、或硬件触发ADC转换
 void ADC_Close(ADC_TypeDef * ADCx);							//ADC关闭，无法软件启动、或硬件触发ADC转换
-void ADC_Start(uint32_t ADC0_seq, uint32_t ADC1_seq);		//启动指定ADC，开始模数转换
-void ADC_Stop(uint32_t ADC0_seq, uint32_t ADC1_seq);		//关闭指定ADC，停止模数转换
+void ADC_Start(uint32_t ADC0_seq);							//启动指定ADC，开始模数转换
+void ADC_Stop(uint32_t ADC0_seq);							//关闭指定ADC，停止模数转换
 bool ADC_Busy(ADC_TypeDef * ADCx);
 
 uint32_t ADC_Read(ADC_TypeDef * ADCx, uint32_t chn);		//从指定通道读取转换结果

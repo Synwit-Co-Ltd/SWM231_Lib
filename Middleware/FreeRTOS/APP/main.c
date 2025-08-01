@@ -63,7 +63,7 @@ void TaskADC(void *arg)
 	
 	while(1)
 	{
-		ADC_Start(ADC_SEQ0, 0);
+		ADC_Start(ADC_SEQ0);
 		
 		vTaskDelay(200);
 	}

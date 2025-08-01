@@ -35,7 +35,7 @@ int main(void)
 	
 	while(1==1)
 	{
-		ADC_Start(ADC_SEQ0, 0);
+		ADC_Start(ADC_SEQ0);
 		while(ADC_Busy(ADC0)) __NOP();
 		printf("%4d,", ADC_Read(ADC0, ADC_CH14));
 	}

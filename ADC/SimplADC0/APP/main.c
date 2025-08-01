@@ -46,7 +46,7 @@ int main(void)
 	ADC_Open(ADC0);
 	
 #if ADC_USE_INT
-	ADC_Start(ADC_SEQ0, 0);
+	ADC_Start(ADC_SEQ0);
 	
 	while(1==1)
 	{
@@ -54,7 +54,7 @@ int main(void)
 #else
 	while(1==1)
 	{
-		ADC_Start(ADC_SEQ0, 0);
+		ADC_Start(ADC_SEQ0);
 		while(ADC_Busy(ADC0)) __NOP();
 		printf("%4d,", ADC_Read(ADC0, ADC_CH0));
 	}
@@ -70,7 +70,7 @@ void ADC_Handler(void)
 		
 		printf("%4d,", ADC_Read(ADC0, ADC_CH0));
 		
-		ADC_Start(ADC_SEQ0, 0);
+		ADC_Start(ADC_SEQ0);
 	}
 }
 

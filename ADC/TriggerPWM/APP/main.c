@@ -49,7 +49,7 @@ int main(void)
 		/* 1、若 ADC 正在执行 SEQ0 转换，则此软件启动被忽略，不会产生 SEQ1 转换结果
 		 * 2、若 ADC 正在执行 SEQ1 转换，新到来的 PWM 触发会打断、并终止软件启动的 SEQ1 转换，不会产生 SEQ1 转换结果
 		*/
-		ADC_Start(ADC_SEQ1, 0);
+		ADC_Start(ADC_SEQ1);
 		while(ADC_Busy(ADC0)) __NOP();
 		if(ADC_DataAvailable(ADC0, ADC_CH1))
 		{

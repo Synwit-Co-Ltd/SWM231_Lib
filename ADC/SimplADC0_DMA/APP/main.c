@@ -55,7 +55,7 @@ int main(void)
 	DMA_CH_Init(DMA_CH0, &DMA_initStruct);
 	DMA_CH_Open(DMA_CH0);
 	
-	ADC_Start(ADC_SEQ1, 0);
+	ADC_Start(ADC_SEQ1);
 	
 	while(1==1)
 	{
@@ -87,7 +87,7 @@ void GPIOB1_GPIOA9_DMA_Handler(void)
 	{
 		DMA_CH_INTClr(DMA_CH0, DMA_IT_DONE);
 		
-		ADC_Start(ADC_SEQ1, 0);		// 转换 250 次后停止，需重新启动
+		ADC_Start(ADC_SEQ1);		// 转换 250 次后停止，需重新启动
 		
 		CirBuf_Write(&CirBuf, &ADC_Result[ADC_SIZE/2], ADC_SIZE - ADC_SIZE/2);
 	}

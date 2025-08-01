@@ -179,28 +179,24 @@ void ADC_Close(ADC_TypeDef * ADCx)
 * 函数名称:	ADC_Start()
 * 功能说明:	软件触发模式下启动ADC转换
 * 输    入: uint32_t ADC0_seq		指定要设置的ADC0序列，有效值为ADC_SEQ0、ADC_SEQ1及其组合（即“按位或”运算）
-*			uint32_t ADC1_seq		指定要设置的ADC1序列，有效值为ADC_SEQ0、ADC_SEQ1及其组合（即“按位或”运算）
 * 输    出: 无
 * 注意事项: 无
 ******************************************************************************************************************************************/
-void ADC_Start(uint32_t ADC0_seq, uint32_t ADC1_seq)
+void ADC_Start(uint32_t ADC0_seq)
 {
-	ADC0->START |= (ADC0_seq << ADC_START_ADC0SEQ0_Pos) |
-				   (ADC1_seq << ADC_START_ADC1SEQ0_Pos);
+	ADC0->START |= (ADC0_seq << ADC_START_ADC0SEQ0_Pos);
 }
 
 /****************************************************************************************************************************************** 
 * 函数名称:	ADC_Stop()
 * 功能说明:	软件触发模式下停止ADC转换
 * 输    入: uint32_t ADC0_seq		指定要设置的ADC0序列，有效值为ADC_SEQ0、ADC_SEQ1及其组合（即“按位或”运算）
-*			uint32_t ADC1_seq		指定要设置的ADC1序列，有效值为ADC_SEQ0、ADC_SEQ1及其组合（即“按位或”运算）
 * 输    出: 无
 * 注意事项: 无
 ******************************************************************************************************************************************/
-void ADC_Stop(uint32_t ADC0_seq, uint32_t ADC1_seq)
+void ADC_Stop(uint32_t ADC0_seq)
 {
-	ADC0->START &= ~((ADC0_seq << ADC_START_ADC0SEQ0_Pos) |
-					 (ADC1_seq << ADC_START_ADC1SEQ0_Pos));
+	ADC0->START &= ~(ADC0_seq << ADC_START_ADC0SEQ0_Pos);
 }
 
 /****************************************************************************************************************************************** 
@@ -212,10 +208,7 @@ void ADC_Stop(uint32_t ADC0_seq, uint32_t ADC1_seq)
 ******************************************************************************************************************************************/
 bool ADC_Busy(ADC_TypeDef * ADCx)
 {
-	if(ADCx == ADC0)
-		return ADC0->START & ADC_START_ADC0BUSY_Msk;
-	else
-		return ADC0->START & ADC_START_ADC1BUSY_Msk;
+	return ADC0->START & ADC_START_ADC0BUSY_Msk;
 }
 
 /****************************************************************************************************************************************** 
