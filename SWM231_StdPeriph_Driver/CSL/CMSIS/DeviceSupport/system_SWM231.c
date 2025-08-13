@@ -118,8 +118,10 @@ void SystemInit(void)
 	
 	Flash_Param_at_xMHz(CyclesPerUs);
 	
-	PORTB->PULLD &= ~((1 << PIN10) | (1 << PIN11));
-	PORTB->PULLU &= ~((1 << PIN12) | (1 << PIN15));
+	PORTA->PULLD = 0;
+	PORTA->PULLU = 0;
+	PORTB->PULLD = 0;
+	PORTB->PULLU = 0;
 }
 
 void switchToHRC(void)

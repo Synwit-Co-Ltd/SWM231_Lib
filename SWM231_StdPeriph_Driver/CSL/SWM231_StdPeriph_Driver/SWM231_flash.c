@@ -81,7 +81,7 @@ void Flash_Param_at_xMHz(uint32_t x)
 {
 	__disable_irq();
 	
-	IAP_Flash_Param(1000 / x, 0x0B11FFAC);
+	IAP_Flash_Param(1000 / x * 0.3, 0x0B11FFAC);
 	
 	__enable_irq();
 }

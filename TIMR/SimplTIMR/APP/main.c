@@ -2,7 +2,7 @@
 
 
 int main(void)
-{	
+{
 	SystemInit();
 	
 	GPIO_Init(GPIOA, PIN4, 1, 0, 0, 0);			//Êä³ö£¬½ÓLED
