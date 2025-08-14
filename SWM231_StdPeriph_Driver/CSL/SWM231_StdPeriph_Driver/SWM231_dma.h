@@ -7,7 +7,7 @@ typedef struct {
 	
 	uint8_t  Unit;				//DMA_UNIT_BYTE、DMA_UNIT_HALFWORD、DMA_UNIT_WORD
 	
-	uint32_t Count;				//传输 Unit 个数，最大取值0xFFFF
+	uint32_t Count;				//传输 Unit 个数，最大取值0xFFFFFF
 	
 	uint32_t MemoryAddr;
 	
@@ -27,8 +27,9 @@ typedef struct {
 
 #define DMA_CH0		0
 
-#define DMA_MODE_SINGLE			0		// 单次模式，传输完成后停止
-#define DMA_MODE_CIRCLE			1		// 环形模式，传输完成后从头执行下一轮传输
+
+#define DMA_MODE_SINGLE		0		// 单次模式，传输完成后停止
+#define DMA_MODE_CIRCLE		1		// 环形模式，传输完成后从头执行下一轮传输
 
 #define DMA_UNIT_BYTE		0
 #define DMA_UNIT_HALFWORD	1
@@ -87,8 +88,8 @@ void DMA_CH_Close(uint32_t chn);
 
 static inline void DMA_CH_SetCount(uint32_t chn, uint32_t count)
 {
-	DMA->CH[chn].NDT = ( count 		<< DMA_NDT_LEN_Pos) |
-					   ((count / 2) << DMA_NDT_HALF_Pos);
+	DMA->CH[chn].NDT = (count	<< DMA_NDT_LEN_Pos) |
+					   (4		<< DMA_NDT_HALF_Pos);
 }
 
 

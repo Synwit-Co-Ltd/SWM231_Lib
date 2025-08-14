@@ -25,7 +25,7 @@
 /****************************************************************************************************************************************** 
 * 函数名称: DMA_CH_Init()
 * 功能说明:	DMA通道初始化
-* 输    入: uint32_t chn			指定要配置的通道，有效值有DMA_CH0、DMA_CH1
+* 输    入: uint32_t chn			指定要配置的通道，有效值有DMA_CH0
 *			DMA_InitStructure * initStruct    包含DMA通道相关设定值的结构体
 * 输    出: 无
 * 注意事项: 无
@@ -41,8 +41,8 @@ void DMA_CH_Init(uint32_t chn, DMA_InitStructure * initStruct)
 					  (initStruct->PeripheralAddrInc << DMA_CR_PINC_Pos) |
 					  (initStruct->Priority			 << DMA_CR_PL_Pos);
 	
-	DMA->CH[chn].NDT = ( initStruct->Count 		<< DMA_NDT_LEN_Pos) |
-					   ((initStruct->Count / 2) << DMA_NDT_HALF_Pos);
+	DMA->CH[chn].NDT = (initStruct->Count	<< DMA_NDT_LEN_Pos) |
+					   (4					<< DMA_NDT_HALF_Pos);
 	
 	DMA->CH[chn].MAR = initStruct->MemoryAddr;
 	DMA->CH[chn].PAR = initStruct->PeripheralAddr;
@@ -84,7 +84,7 @@ void DMA_CH_Init(uint32_t chn, DMA_InitStructure * initStruct)
 /****************************************************************************************************************************************** 
 * 函数名称: DMA_CH_Open()
 * 功能说明:	DMA通道开启，对于软件启动通道，开启后立即传输；对于硬件触发通道，开启后还需等出现触发信号后才开始搬运
-* 输    入: uint32_t chn			指定要配置的通道，有效值有DMA_CH0、DMA_CH1
+* 输    入: uint32_t chn			指定要配置的通道，有效值有DMA_CH0
 * 输    出: 无
 * 注意事项: 无
 ******************************************************************************************************************************************/
@@ -96,7 +96,7 @@ void DMA_CH_Open(uint32_t chn)
 /****************************************************************************************************************************************** 
 * 函数名称: DMA_CH_Close()
 * 功能说明:	DMA通道关闭
-* 输    入: uint32_t chn			指定要配置的通道，有效值有DMA_CH0、DMA_CH1
+* 输    入: uint32_t chn			指定要配置的通道，有效值有DMA_CH0
 * 输    出: 无
 * 注意事项: 无
 ******************************************************************************************************************************************/
@@ -109,7 +109,7 @@ void DMA_CH_Close(uint32_t chn)
 /****************************************************************************************************************************************** 
 * 函数名称: DMA_CH_INTEn()
 * 功能说明:	DMA中断使能
-* 输    入: uint32_t chn			指定要配置的通道，有效值有DMA_CH0、DMA_CH1
+* 输    入: uint32_t chn			指定要配置的通道，有效值有DMA_CH0
 *			uint32_t it				interrupt type，有效值有 DMA_IT_DONE、DMA_IT_HALF、DMA_IT_ERROR
 * 输    出: 无
 * 注意事项: 无
@@ -122,7 +122,7 @@ void DMA_CH_INTEn(uint32_t chn, uint32_t it)
 /****************************************************************************************************************************************** 
 * 函数名称: DMA_CH_INTDis()
 * 功能说明:	DMA中断禁止
-* 输    入: uint32_t chn			指定要配置的通道，有效值有DMA_CH0、DMA_CH1
+* 输    入: uint32_t chn			指定要配置的通道，有效值有DMA_CH0
 *			uint32_t it				interrupt type，有效值有 DMA_IT_DONE、DMA_IT_HALF、DMA_IT_ERROR
 * 输    出: 无
 * 注意事项: 无
@@ -135,7 +135,7 @@ void DMA_CH_INTDis(uint32_t chn, uint32_t it)
 /****************************************************************************************************************************************** 
 * 函数名称: DMA_CH_INTClr()
 * 功能说明:	DMA中断标志清除
-* 输    入: uint32_t chn			指定要配置的通道，有效值有DMA_CH0、DMA_CH1
+* 输    入: uint32_t chn			指定要配置的通道，有效值有DMA_CH0
 *			uint32_t it				interrupt type，有效值有 DMA_IT_DONE、DMA_IT_HALF、DMA_IT_ERROR
 * 输    出: 无
 * 注意事项: 无
@@ -148,7 +148,7 @@ void DMA_CH_INTClr(uint32_t chn, uint32_t it)
 /****************************************************************************************************************************************** 
 * 函数名称: DMA_CH_INTStat()
 * 功能说明:	DMA中断状态查询
-* 输    入: uint32_t chn			指定要配置的通道，有效值有DMA_CH0、DMA_CH1
+* 输    入: uint32_t chn			指定要配置的通道，有效值有DMA_CH0
 *			uint32_t it				interrupt type，有效值有 DMA_IT_DONE、DMA_IT_HALF、DMA_IT_ERROR
 * 输    出: uint32_t				 0 指定中断未发生    非0 指定中断已发生   
 * 注意事项: 无

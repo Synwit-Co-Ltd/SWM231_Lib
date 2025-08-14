@@ -1385,7 +1385,7 @@ typedef struct {
 		__IO uint32_t MAR;					//Memory address register
 		
 			 uint32_t RESERVED[3];
-	} CH[2];
+	} CH[1];
 } DMA_TypeDef;
 
 
@@ -1397,14 +1397,6 @@ typedef struct {
 #define DMA_IF_HALF0_Msk			(0x01 << DMA_IF_HALF0_Pos)
 #define DMA_IF_ERR0_Pos				3		//Channel 0 transfer error
 #define DMA_IF_ERR0_Msk				(0x01 << DMA_IF_ERR0_Pos)
-#define DMA_IF_GLB1_Pos				4
-#define DMA_IF_GLB1_Msk				(0x01 << DMA_IF_GLB1_Pos)
-#define DMA_IF_DONE1_Pos			5
-#define DMA_IF_DONE1_Msk			(0x01 << DMA_IF_DONE1_Pos)
-#define DMA_IF_HALF1_Pos			6
-#define DMA_IF_HALF1_Msk			(0x01 << DMA_IF_HALF1_Pos)
-#define DMA_IF_ERR1_Pos				7
-#define DMA_IF_ERR1_Msk				(0x01 << DMA_IF_ERR1_Pos)
 
 #define DMA_IFC_GLB0_Pos			0
 #define DMA_IFC_GLB0_Msk			(0x01 << DMA_IFC_GLB0_Pos)
@@ -1414,14 +1406,6 @@ typedef struct {
 #define DMA_IFC_HALF0_Msk			(0x01 << DMA_IFC_HALF0_Pos)
 #define DMA_IFC_ERR0_Pos			3
 #define DMA_IFC_ERR0_Msk			(0x01 << DMA_IFC_ERR0_Pos)
-#define DMA_IFC_GLB1_Pos			4
-#define DMA_IFC_GLB1_Msk			(0x01 << DMA_IFC_GLB1_Pos)
-#define DMA_IFC_DONE1_Pos			5
-#define DMA_IFC_DONE1_Msk			(0x01 << DMA_IFC_DONE1_Pos)
-#define DMA_IFC_HALF1_Pos			6
-#define DMA_IFC_HALF1_Msk			(0x01 << DMA_IFC_HALF1_Pos)
-#define DMA_IFC_ERR1_Pos			7
-#define DMA_IFC_ERR1_Msk			(0x01 << DMA_IFC_ERR1_Pos)
 
 #define DMA_MUX_MRDHSSIG_Pos		0		//memory read  handshake signal
 #define DMA_MUX_MRDHSSIG_Msk		(0x03 << DMA_MUX_MRDHSSIG_Pos)
@@ -1462,9 +1446,10 @@ typedef struct {
 #define DMA_CR_MEM2MEM_Msk			(0x01 << DMA_CR_MEM2MEM_Pos)
 
 #define DMA_NDT_LEN_Pos				0		//通道关闭时，写入要传输的数据个数；通道使能后，指示剩余的待传输数据数目
-#define DMA_NDT_LEN_Msk				(0xFFFF << DMA_NDT_LEN_Pos)
-#define DMA_NDT_HALF_Pos			16		//传输 HALF 指定个数数据后，置位 DMA->IF.HALF 中断标志位
-#define DMA_NDT_HALF_Msk			(0xFFFF << DMA_NDT_HALF_Pos)
+#define DMA_NDT_LEN_Msk				(0xFFFFFF << DMA_NDT_LEN_Pos)
+#define DMA_NDT_HALF_Pos			24		// After the specified number of data is transmitted, set the DMA->IF.HALF interrupt flag bit
+											// 1 1/8 * LEN, 2 2/8 * LEN, ...
+#define DMA_NDT_HALF_Msk			(0x07 << DMA_NDT_HALF_Pos)
 
 
 
