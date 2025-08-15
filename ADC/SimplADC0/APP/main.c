@@ -15,7 +15,7 @@ int main(void)
 	
 	SerialInit();
 	
-	PORT_Init(PORTA, PIN1,  PORTA_PIN1_ADC0_CH0,  0);
+//	PORT_Init(PORTA, PIN1,  PORTA_PIN1_ADC0_CH0,  0);	// ADC0_REFP 引脚，使用内部基准时基准电压会输出在此引脚上
 	PORT_Init(PORTB, PIN9,  PORTB_PIN9_ADC0_CH1,  0);
 	// OPA0_OUT => ADC0_CH2
 	// OPA1_OUT => ADC0_CH3
@@ -40,7 +40,7 @@ int main(void)
 	ADC_SEQ_initStruct.samp_tim = 6;
 	ADC_SEQ_initStruct.conv_cnt = 1;
 	ADC_SEQ_initStruct.EOCIntEn = ADC_USE_INT;
-	ADC_SEQ_initStruct.channels = (uint8_t []){ ADC_CH0, 0xF };
+	ADC_SEQ_initStruct.channels = (uint8_t []){ ADC_CH1, 0xF };
 	ADC_SEQ_Init(ADC0, ADC_SEQ0, &ADC_SEQ_initStruct);
 	
 	ADC_Open(ADC0);
@@ -56,7 +56,7 @@ int main(void)
 	{
 		ADC_Start(ADC_SEQ0);
 		while(ADC_Busy(ADC0)) __NOP();
-		printf("%4d,", ADC_Read(ADC0, ADC_CH0));
+		printf("%4d,", ADC_Read(ADC0, ADC_CH1));
 	}
 #endif
 }
@@ -68,7 +68,7 @@ void ADC_Handler(void)
 	{
 		ADC_INTClr(ADC0, ADC_SEQ0, ADC_IT_EOC);
 		
-		printf("%4d,", ADC_Read(ADC0, ADC_CH0));
+		printf("%4d,", ADC_Read(ADC0, ADC_CH1));
 		
 		ADC_Start(ADC_SEQ0);
 	}

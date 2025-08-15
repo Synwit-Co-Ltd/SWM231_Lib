@@ -12,13 +12,11 @@ int main(void)
 	
 	SerialInit();
 	
-	GPIO_Init(GPIOA, PIN5, 1, 0, 0, 0);
-	
 	PORT_Init(PORTA, PIN1,  PORTA_PIN1_ADC0_CH0,  0);
 	PORT_Init(PORTB, PIN9,  PORTB_PIN9_ADC0_CH1,  0);
 	PORT_Init(PORTB, PIN8,  PORTB_PIN8_ADC0_CH4,  0);
-	PORT_Init(PORTB, PIN7,  PORTB_PIN7_ADC0_CH5,  0);
-	PORT_Init(PORTB, PIN6,  PORTB_PIN6_ADC0_CH6,  0);
+//	PORT_Init(PORTB, PIN7,  PORTB_PIN7_ADC0_CH5,  0);
+//	PORT_Init(PORTB, PIN6,  PORTB_PIN6_ADC0_CH6,  0);
 	PORT_Init(PORTB, PIN5,  PORTB_PIN5_ADC0_CH7,  0);
 	
 	ADC_initStruct.clkdiv = 4;
@@ -26,14 +24,14 @@ int main(void)
 	ADC_initStruct.samplAvg = ADC_AVG_SAMPLE1;
 	ADC_Init(ADC0, &ADC_initStruct);
 	
-	ADC_SEQ_initStruct.trig_src = ADC_TRIGGER_PWM0;		// PWM0 触发 ADC 通道 0 转换，产生中断
+	ADC_SEQ_initStruct.trig_src = ADC_TRIGGER_PWM0;		// PWM0 触发 ADC 通道 4 转换，产生中断
 	ADC_SEQ_initStruct.samp_tim = 6;
 	ADC_SEQ_initStruct.conv_cnt = 1;
 	ADC_SEQ_initStruct.EOCIntEn = 1;
-	ADC_SEQ_initStruct.channels = (uint8_t []){ ADC_CH0, 0xF };
+	ADC_SEQ_initStruct.channels = (uint8_t []){ ADC_CH4, 0xF };
 	ADC_SEQ_Init(ADC0, ADC_SEQ0, &ADC_SEQ_initStruct);
 	
-	ADC_SEQ_initStruct.trig_src = ADC_TRIGGER_SW;		// 软件 启动 ADC 通道 2 转换，不产生中断
+	ADC_SEQ_initStruct.trig_src = ADC_TRIGGER_SW;		// 软件 启动 ADC 通道 1 转换，不产生中断
 	ADC_SEQ_initStruct.samp_tim = 6;
 	ADC_SEQ_initStruct.conv_cnt = 1;
 	ADC_SEQ_initStruct.EOCIntEn = 0;
@@ -63,13 +61,11 @@ int main(void)
 
 void ADC_Handler(void)
 {
-	GPIO_InvBit(GPIOA, PIN5);
-	
 	if(ADC_INTStat(ADC0, ADC_SEQ0, ADC_IT_EOC))
 	{
 		ADC_INTClr(ADC0, ADC_SEQ0, ADC_IT_EOC);
 		
-//		printf("%d,", ADC_Read(ADC0, ADC_CH0));
+//		printf("%d,", ADC_Read(ADC0, ADC_CH4));
 	}
 }
 

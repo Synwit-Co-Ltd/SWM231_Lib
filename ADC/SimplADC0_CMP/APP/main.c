@@ -37,7 +37,7 @@ int main(void)
 	ADC_SEQ_initStruct.samp_tim = 6;
 	ADC_SEQ_initStruct.conv_cnt = ADC_SIZE;
 	ADC_SEQ_initStruct.EOCIntEn = 0;
-	ADC_SEQ_initStruct.channels = (uint8_t []){ ADC_CH0, 0xF };
+	ADC_SEQ_initStruct.channels = (uint8_t []){ ADC_CH1, 0xF };
 	ADC_SEQ_Init(ADC0, ADC_SEQ1, &ADC_SEQ_initStruct);
 	
 	ADC_CMP_initStruct.LowerLimit = ADC_LIMIT_MIN;
@@ -80,7 +80,8 @@ void ADC_Handler(void)
 	{
 		ADC_INTClr(ADC0, ADC_SEQ1, ADC_IT_CMP_MAX);
 		
-		memcpy(adc_result, ADC_Result, sizeof(ADC_Result));
+		for(int i = 0; i < sizeof(ADC_Result)/2; i++)
+			adc_result[i] = ADC_Result[i] & ADC_SEQ1DMA_DATA_Msk;
 		
 		printf("ADC Value > %d found:\n", ADC_LIMIT_MAX);
 		for(int i = 0; i < ADC_SIZE; i++)
@@ -92,7 +93,8 @@ void ADC_Handler(void)
 	{
 		ADC_INTClr(ADC0, ADC_SEQ1, ADC_IT_CMP_MIN);
 		
-		memcpy(adc_result, ADC_Result, sizeof(ADC_Result));
+		for(int i = 0; i < sizeof(ADC_Result)/2; i++)
+			adc_result[i] = ADC_Result[i] & ADC_SEQ1DMA_DATA_Msk;
 		
 		printf("ADC Value < %d found:\n", ADC_LIMIT_MIN);
 		for(int i = 0; i < ADC_SIZE; i++)

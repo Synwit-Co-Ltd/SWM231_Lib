@@ -27,7 +27,7 @@ int main(void)
 	ADC_SEQ_initStruct.samp_tim = 6;
 	ADC_SEQ_initStruct.conv_cnt = 1;
 	ADC_SEQ_initStruct.EOCIntEn = 0;
-	ADC_SEQ_initStruct.channels = (uint8_t []){ ADC_CH0, ADC_CH2, ADC_CH6, ADC_CH5, 0xF };	// 可以任意指定通道顺序
+	ADC_SEQ_initStruct.channels = (uint8_t []){ ADC_CH1, ADC_CH4, ADC_CH6, ADC_CH5, 0xF };	// 可以任意指定通道顺序
 	ADC_SEQ_Init(ADC0, ADC_SEQ0, &ADC_SEQ_initStruct);
 	
 	ADC_Open(ADC0);
@@ -37,7 +37,7 @@ int main(void)
 		ADC_Start(ADC_SEQ0);
 		while(ADC_Busy(ADC0)) __NOP();
 #if 1
-		printf("%4d\t%4d\t%4d\t%4d\r\n", ADC_Read(ADC0, ADC_CH0), ADC_Read(ADC0, ADC_CH2), ADC_Read(ADC0, ADC_CH5), ADC_Read(ADC0, ADC_CH6));
+		printf("%4d\t%4d\t%4d\t%4d\r\n", ADC_Read(ADC0, ADC_CH1), ADC_Read(ADC0, ADC_CH4), ADC_Read(ADC0, ADC_CH5), ADC_Read(ADC0, ADC_CH6));
 #else
 		printf("%4d,", ADC_Read(ADC0, ADC_CH0));
 		ADC_Read(ADC0, ADC_CH3);	// clear available flag
