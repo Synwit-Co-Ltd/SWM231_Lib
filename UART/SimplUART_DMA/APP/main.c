@@ -7,7 +7,7 @@
 #define TEST_DMA	TEST_DMA_TX
 
 
-const char TX_String[8][32] = {
+char TX_String[8][32] = {
 	"TestString\r\n",
 	"TestString1\r\n",
 	"TestString12\r\n",
@@ -58,7 +58,7 @@ int main(void)
 	DMA_initStruct.MemoryAddrInc = 1;
 	DMA_initStruct.PeripheralAddr = (uint32_t)&UART1->DATA;
 	DMA_initStruct.PeripheralAddrInc = 0;
-	DMA_initStruct.Handshake = DMA_CH0_UART0RX;
+	DMA_initStruct.Handshake = DMA_CH0_UART1RX;
 	DMA_initStruct.Priority = DMA_PRI_LOW;
 	DMA_initStruct.INTEn = 0;
 	DMA_CH_Init(DMA_CH0, &DMA_initStruct);
@@ -71,7 +71,7 @@ int main(void)
 	DMA_initStruct.MemoryAddrInc = 1;
 	DMA_initStruct.PeripheralAddr = (uint32_t)&UART1->DATA;
 	DMA_initStruct.PeripheralAddrInc = 0;
-	DMA_initStruct.Handshake = DMA_CH0_UART0TX;
+	DMA_initStruct.Handshake = DMA_CH0_UART1TX;
 	DMA_initStruct.Priority = DMA_PRI_LOW;
 	DMA_initStruct.INTEn = 0;
 	DMA_CH_Init(DMA_CH0, &DMA_initStruct);
@@ -79,22 +79,24 @@ int main(void)
 	
 	while(1==1)
 	{
+#if TEST_DMA == TEST_DMA_TX
 		for(int i = 0; i < 8; i++)
 		{
 			DMA_CH_SetAddrAndCount(DMA_CH0, (uint32_t)TX_String[i], strlen(TX_String[i]));
 			DMA_CH_Open(DMA_CH0);
 			
-			for(int j = 0; j < SystemCoreClock/8; j++) __NOP();
+			for(int j = 0; j < SystemCoreClock/32; j++) __NOP();
 		}
+#endif
 	}
 }
 
 
-void UART0_Handler(void)
+void UART1_Handler(void)
 {
-	if(UART_INTStat(UART0, UART_IT_RX_TOUT))
+	if(UART_INTStat(UART1, UART_IT_RX_TOUT))
 	{
-		UART_INTClr(UART0, UART_IT_RX_TOUT);
+		UART_INTClr(UART1, UART_IT_RX_TOUT);
 		
 		int str_len = RX_LEN - DMA_CH_GetRemaining(DMA_CH0);
 		RX_Buffer[str_len] = '\0';

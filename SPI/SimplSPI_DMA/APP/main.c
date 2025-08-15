@@ -81,7 +81,7 @@ int main(void)
 }
 
 
-void GPIOB1_GPIOA9_DMA_Handler(void)
+void DMA_Handler(void)
 {
 	uint32_t i;
 	

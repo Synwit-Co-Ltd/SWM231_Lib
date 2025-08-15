@@ -75,7 +75,7 @@ int main(void)
 }
 
 
-void GPIOB1_GPIOA9_DMA_Handler(void)
+void DMA_Handler(void)
 {
 	if(DMA_CH_INTStat(DMA_CH0, DMA_IT_HALF))
 	{
