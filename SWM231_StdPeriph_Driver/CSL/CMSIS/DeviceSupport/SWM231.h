@@ -374,7 +374,7 @@ typedef struct {
 #define SYS_PGAREF_REFSEL_Msk		(0x03 << SYS_PGAREF_REFSEL_Pos)
 
 #define SYS_TEMPCR_EN_Pos			0
-#define SYS_TEMPCR_EN_Msk			(0x03 << SYS_TEMPCR_EN_Pos)
+#define SYS_TEMPCR_EN_Msk			(0x01 << SYS_TEMPCR_EN_Pos)
 
 #define SYS_ADCREF_REFSEL_Pos		0 		//ADC ²Î¿¼µçÑ¹Ñ¡Ôñ£º0 VDD   1 VREF
 #define SYS_ADCREF_REFSEL_Msk		(0x01 << SYS_ADCREF_REFSEL_Pos)

@@ -29,10 +29,10 @@
 *			uint32_t n		       指定GPIO引脚，有效值包括PIN0、PIN1、PIN2、... ... PIN14、PIN15
 *			uint32_t dir	       引脚方向，0 输入        1 输出
 *			uint32_t pull_up	   上拉使能
-*			uint32_t pull_down	   下拉使能
+*			uint32_t pull_down	   下拉使能，注意：只有 PB10 引脚有下拉功能
 *			uint32_t open_drain	   开漏使能
 * 输    出: 无
-* 注意事项: 无
+* 注意事项: 只有 PB10 引脚有下拉功能
 ******************************************************************************************************************************************/
 void GPIO_Init(GPIO_TypeDef * GPIOx, uint32_t n, uint32_t dir, uint32_t pull_up, uint32_t pull_down, uint32_t open_drain)
 {

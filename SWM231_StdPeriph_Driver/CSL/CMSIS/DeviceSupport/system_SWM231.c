@@ -118,7 +118,6 @@ void SystemInit(void)
 	
 	Flash_Param_at_xMHz(CyclesPerUs);
 	
-	PORTA->PULLD = 0;
 	PORTA->PULLU = 0;
 	PORTB->PULLD = 0;
 	PORTB->PULLU = 0;
