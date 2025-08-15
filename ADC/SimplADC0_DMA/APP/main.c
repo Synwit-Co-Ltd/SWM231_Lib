@@ -25,6 +25,7 @@ int main(void)
 	PORT_Init(PORTB, PIN7,  PORTB_PIN7_ADC0_CH5,  0);
 	PORT_Init(PORTB, PIN6,  PORTB_PIN6_ADC0_CH6,  0);
 	PORT_Init(PORTB, PIN5,  PORTB_PIN5_ADC0_CH7,  0);
+	PORT_Init(PORTB, PIN2,  PORTB_PIN2_ADC0_CH12, 0);
 	
 	ADC_initStruct.clkdiv = 4;
 	ADC_initStruct.refsrc = ADC_REF_VDD;
@@ -35,7 +36,7 @@ int main(void)
 	ADC_SEQ_initStruct.samp_tim = 6;
 	ADC_SEQ_initStruct.conv_cnt = ADC_SIZE;
 	ADC_SEQ_initStruct.EOCIntEn = 0;
-	ADC_SEQ_initStruct.channels = (uint8_t []){ ADC_CH1, 0xF };
+	ADC_SEQ_initStruct.channels = (uint8_t []){ ADC_CH12, 0xF };
 	ADC_SEQ_Init(ADC0, ADC_SEQ1, &ADC_SEQ_initStruct);
 	
 	ADC0->CR |= (1 << ADC_CR_SEQ1DMAEN_Pos);
