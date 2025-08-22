@@ -1504,7 +1504,7 @@ typedef struct {
 		 uint32_t RSVD2;
 	
 	__IO uint32_t CLARKIC;					// CLARK input c
-	
+	// 0x20
 	__I  uint32_t CLARKOAB;					// CLARK output ¦Áand ¦Â
 	
 		 uint32_t RSVD3;
@@ -1519,8 +1519,8 @@ typedef struct {
 	
 	__I  uint32_t PARKODQ;					// PARK output d and q
 	
-		 uint32_t RSVD6;
-		 
+		 uint32_t RSVD6[2];
+	// 0x44
 	__IO uint32_t PIDIDQ;					// PID input d and q
 	
 		 uint32_t RSVD7;
@@ -1536,7 +1536,7 @@ typedef struct {
 	__IO uint32_t PIDMIN;					// PID min value of d and q
 	
 		 uint32_t RSVD10;
-	
+	// 0x64
 	__IO uint32_t PIDKP;					// PID Kp parameter for d and q
 	
 		 uint32_t RSVD11;
@@ -1552,7 +1552,7 @@ typedef struct {
 	__IO uint32_t PIDLOUT;					// PID last output for d and q
 	
 		 uint32_t RSVD14;
-	
+	// 0x84
 	__I  uint32_t PIDODQ;					// PID output d and q
 	
 		 uint32_t RSVD15;
@@ -1568,7 +1568,7 @@ typedef struct {
 	__I  uint32_t IPARKOAB;					// iPARK output ¦Áand ¦Â
 	
 		 uint32_t RSVD18[2];
-	
+	// 0xA8
 	__IO uint32_t PWMIAB;					// SVPWM input ¦Áand ¦Â
 	
 		 uint32_t RSVD19;
