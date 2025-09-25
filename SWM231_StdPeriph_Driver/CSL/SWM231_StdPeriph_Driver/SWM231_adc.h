@@ -3,7 +3,7 @@
 
 
 typedef struct {
-	uint8_t  clkdiv;		//1-32
+	uint8_t  clkdiv;		//2-32
 	uint8_t  refsrc;		//ADC_REF_VDD、ADC_REF_REFP、ADC_REF_2V4、ADC_REF_3V6、ADC_REF_4V5
 	uint8_t  samplAvg;		//ADC_AVG_SAMPLE1、ADC_AVG_SAMPLE2、ADC_AVG_SAMPLE4、ADC_AVG_SAMPLE8
 } ADC_InitStructure;

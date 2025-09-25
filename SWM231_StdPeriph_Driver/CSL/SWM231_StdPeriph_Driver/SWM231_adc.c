@@ -39,10 +39,12 @@ void ADC_Init(ADC_TypeDef * ADCx, ADC_InitStructure * initStruct)
 	
 	ADC_Close(ADCx);		//一些关键寄存器只能在ADC关闭时设置
 	
-	ADCx->CR &= ~(ADC_CR_CLKDIV_Msk | ADC_CR_AVG_Msk | ADC_CR_BITS_Pos);
-	ADCx->CR |= ((initStruct->clkdiv - 1) << ADC_CR_CLKDIV_Pos) |
-				(initStruct->samplAvg	  << ADC_CR_AVG_Pos)    |
-				(0					 	  << ADC_CR_BITS_Pos);
+	ADCx->CR &= ~(ADC_CR_AVG_Msk | ADC_CR_BITS_Pos);
+	ADCx->CR |= (initStruct->samplAvg << ADC_CR_AVG_Pos) |
+				(0					  << ADC_CR_BITS_Pos);
+	
+	// ADCx->CR.CLKDIV 默认值为 3，且写 0 会保持原值不变，因此不能用先清零、后写入的方式修改
+	ADCx->CR = (ADCx->CR & (~ADC_CR_CLKDIV_Msk)) | ((initStruct->clkdiv - 1) << ADC_CR_CLKDIV_Pos);
 	
 	if(initStruct->refsrc & (1 << 0))
 	{
