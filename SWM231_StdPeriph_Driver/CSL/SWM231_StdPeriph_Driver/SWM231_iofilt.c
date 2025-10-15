@@ -26,8 +26,8 @@
 * 函数名称:	IOFILT_Init()
 * 功能说明:	IO滤波器初始化
 * 输    入: uint32_t IOFILTn	要初始化的滤波器，可取值 0-1
-*			uint32_t signal		要对哪些信号进行滤波，当 IOFILTn = 0 时，可取值 IOFILT0_PB14、IOFILT0_PB4、IOFILT0_PB5、IOFILT0_PB6 及其“或”
-*													  当 IOFILTn = 1 时，可取值 IOFILT1_ACMP0、IOFILT1_ACMP1 及其“或”
+*			uint32_t signal		要对哪些信号进行滤波，当 IOFILTn = 0 时，可取值 IOFILT0_ACMP0、IOFILT0_ACMP1 及其“或”
+*													  当 IOFILTn = 1 时，可取值 IOFILT1_HALL_IN0、IOFILT1_HALL_IN1、IOFILT1_HALL_IN2 及其“或”
 *			uint32_t width		被选信号上宽度小于 width 的脉冲被视作毛刺，过滤掉，可取值 IOFILT_WIDTH_250ns、IOFILT_WIDTH_500ns、...
 * 输    出: 无
 * 注意事项: 无

@@ -3,12 +3,12 @@
 
 
 /* 选择对哪个信号进行滤波 */
-#define IOFILT0_HALL_IN0	1
-#define IOFILT0_HALL_IN1	2
-#define IOFILT0_HALL_IN2	4
+#define IOFILT0_ACMP0		1	// 对 ACMP0_OUT 滤波，ACMP0 的状态（SYS->ACMPSR.CMP0OUT）、中断（SYS->ACMPSR.CMP0IF）、作为 PWM 刹车信号均被滤波
+#define IOFILT0_ACMP1		2
 
-#define IOFILT1_ACMP0		1	// 对 ACMP0_OUT 滤波，ACMP0 的状态（SYS->ACMPSR.CMP0OUT）、中断（SYS->ACMPSR.CMP0IF）、作为 PWM 刹车信号均被滤波
-#define IOFILT1_ACMP1		2
+#define IOFILT1_HALL_IN0	1
+#define IOFILT1_HALL_IN1	2
+#define IOFILT1_HALL_IN2	4
 
 #define IOFILT_WIDTH_250ns	1	// 滤波器时钟源为 HRC 且滤波时钟不分频时，每个滤波周期为 1/8MHz = 125ns
 #define IOFILT_WIDTH_500ns	2
