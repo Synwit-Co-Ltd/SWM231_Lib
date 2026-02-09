@@ -255,3 +255,113 @@ void GD25Q21_WritePage(uint32_t addr, uint8_t data[], uint16_t cnt)
 	
 	GD25Q21_Deassert();
 }
+
+
+/****************************************************************************************************************************************** 
+* 函数名称:	GD25Q21_ReadData_2bit()
+* 功能说明:	从GD25Q21指定地址读取指定个字节数据，读取时使用2线读取
+* 输    入: uint32_t addr		要读取的数据在GD25Q21上的地址
+*			uint8_t buff[]		读取到的数据存储在buff中
+*			uint32_t cnt		要读取数据的字节个数，最大4096
+* 输    出: 无
+* 注意事项: 无
+******************************************************************************************************************************************/
+void GD25Q21_ReadData_2bit(uint32_t addr, uint8_t buff[], uint32_t cnt)
+{
+	uint32_t i;
+	
+	SPI_Close(SPI0);
+	SPI0->CTRL &= ~SPI_CTRL_FFS_Msk;
+	SPI0->CTRL |= (2 << SPI_CTRL_FFS_Pos);
+	SPI0->SPIMCR = (1 << SPI_SPIMCR_EN_Pos) |
+				   (0 << SPI_SPIMCR_SSN_Pos) |
+				   (1 << SPI_SPIMCR_WIDTH_Pos) |
+				   (1 << SPI_SPIMCR_RTYPE_Pos) |
+				   ((cnt - 1) << SPI_SPIMCR_RDLEN_Pos) |
+				   (1 << SPI_SPIMCR_DUMMY_Pos);
+	SPI_Open(SPI0);
+	
+	GD25Q21_Assert();
+	
+	SPI_Write(SPI0, (GD25Q21_CMD_READ_DATA_2bit << 24) | (addr & 0xFFFFFF));
+	while(SPI_IsRXEmpty(SPI0)) __NOP();
+	buff[0] = SPI_Read(SPI0);
+	
+	for(i = 0; i < cnt; i++)
+	{
+		while(SPI_IsRXEmpty(SPI0)) __NOP();
+		
+		buff[i] = SPI_Read(SPI0);
+	}
+	
+	GD25Q21_Deassert();
+	
+	SPI_Close(SPI0);
+	SPI0->SPIMCR = 0;	// 必须先清除SPIMCR.EN，再改变CTRL.FFS
+	SPI0->CTRL &= ~SPI_CTRL_FFS_Msk;
+	SPI0->CTRL |= (0 << SPI_CTRL_FFS_Pos);
+	SPI_Open(SPI0);
+}
+
+/****************************************************************************************************************************************** 
+* 函数名称:	GD25Q21_ReadData_2bit_DMA()
+* 功能说明: 同 GD25Q21_ReadData_2bit，但使用 DMA 读取SPI数据寄存器，可避免软件读取不及时导致的数据丢失
+* 输    入: 同 GD25Q21_ReadData_2bit
+* 输    出: 无
+* 注意事项: 无
+******************************************************************************************************************************************/
+void GD25Q21_ReadData_2bit_DMA(uint32_t addr, uint8_t buff[], uint32_t cnt)
+{
+	DMA_InitStructure DMA_initStruct;
+	
+	// SPI0 RX DMA
+    DMA_initStruct.Mode = DMA_MODE_SINGLE;
+	DMA_initStruct.Unit = DMA_UNIT_BYTE;
+	DMA_initStruct.Count = cnt;
+	DMA_initStruct.PeripheralAddr = (uint32_t)&SPI0->DATA;
+	DMA_initStruct.PeripheralAddrInc = 0;
+	DMA_initStruct.MemoryAddr = (uint32_t)buff;
+	DMA_initStruct.MemoryAddrInc = 1;
+	DMA_initStruct.Handshake = DMA_CH0_SPI0RX;
+	DMA_initStruct.Priority = DMA_PRI_LOW;
+	DMA_initStruct.INTEn = 0;
+	DMA_CH_Init(DMA_CH0, &DMA_initStruct);
+	DMA_CH_Open(DMA_CH0);
+	
+	
+	SPI_Close(SPI0);
+	SPI0->CTRL &= ~SPI_CTRL_FFS_Msk;
+	SPI0->CTRL |= (2 << SPI_CTRL_FFS_Pos);
+	SPI0->SPIMCR = (1 << SPI_SPIMCR_EN_Pos) |
+				   (0 << SPI_SPIMCR_SSN_Pos) |
+				   (1 << SPI_SPIMCR_WIDTH_Pos) |
+				   (1 << SPI_SPIMCR_RTYPE_Pos) |
+				   ((cnt - 1) << SPI_SPIMCR_RDLEN_Pos) |
+				   (1 << SPI_SPIMCR_DUMMY_Pos);
+	SPI_Open(SPI0);
+	
+	GD25Q21_Assert();
+	
+	__disable_irq();
+	
+	SPI_Write(SPI0, (GD25Q21_CMD_READ_DATA_2bit << 24) | (addr & 0xFFFFFF));
+	while(SPI_IsRXEmpty(SPI0)) __NOP();
+	buff[0] = SPI_Read(SPI0);
+	
+	SPI0->CTRL |= (1 << SPI_CTRL_DMARXEN_Pos);
+	
+	__enable_irq();
+	
+	while(DMA_CH_INTStat(DMA_CH0, DMA_IT_DONE) == 0) __NOP();
+	DMA_CH_INTClr(DMA_CH0, DMA_IT_DONE);
+	
+	GD25Q21_Deassert();
+	
+	SPI0->CTRL &= ~(1 << SPI_CTRL_DMARXEN_Pos);
+	
+	SPI_Close(SPI0);
+	SPI0->SPIMCR = 0;
+	SPI0->CTRL &= ~SPI_CTRL_FFS_Msk;
+	SPI0->CTRL |= (0 << SPI_CTRL_FFS_Pos);
+	SPI_Open(SPI0);
+}

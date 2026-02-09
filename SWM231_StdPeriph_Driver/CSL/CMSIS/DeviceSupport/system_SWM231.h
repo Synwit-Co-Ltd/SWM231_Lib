@@ -6,7 +6,7 @@
 #endif
 
 
-#define SYS_CLK_48MHz		3	 	//内部高频48MHz RC振荡器
+#define SYS_CLK_60MHz		3	 	//内部高频60MHz RC振荡器
 #define SYS_CLK_XTAL		2		//外部晶体振荡器（4-24MHz）
 #define SYS_CLK_32KHz		0		//内部低频32KHz RC振荡器
 

@@ -37,7 +37,20 @@ int main(void)
 	
 	printf("\r\nAfter Write: \r\n");
 	for(i = 0; i < 20; i++) printf("0x%02X, ", RdBuff[i]);
+	
+	/* 2Ïß¶Á */
+	memset(RdBuff, 0x00, 20);
+	GD25Q21_ReadData_2bit(EEPROM_ADDR, RdBuff, 20);
+	
+	printf("\r\nDual Read: \r\n");
+	for(i = 0; i < 20; i++) printf("0x%02X, ", RdBuff[i]);
 
+	/* 2Ïß¶Á£¨DMA£© */
+	memset(RdBuff, 0x00, 20);
+	GD25Q21_ReadData_2bit_DMA(EEPROM_ADDR, RdBuff, 20);
+	
+	printf("\r\nDual DMA Read: \r\n");
+	for(i = 0; i < 20; i++) printf("0x%02X, ", RdBuff[i]);
 	while(1==1)
 	{
 	}

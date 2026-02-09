@@ -25,18 +25,18 @@
 /******************************************************************************************************************************************
  * 系统时钟设定
  *****************************************************************************************************************************************/
-#define SYS_CLK_48MHz		3	 	//内部高频48MHz RC振荡器
+#define SYS_CLK_60MHz		3	 	//内部高频60MHz RC振荡器
 #define SYS_CLK_XTAL		2		//外部晶体振荡器（4-24MHz）
 #define SYS_CLK_32KHz		0		//内部低频32KHz RC振荡器
 
-#define SYS_CLK   	SYS_CLK_48MHz
+#define SYS_CLK   	SYS_CLK_60MHz
 
 
 #define SYS_CLK_DIV	SYS_CLK_DIV_1	//SYS_CLK 选择的时钟，经过 SYS_CLK_DIV 分频后用作系统时钟
 
 
 
-#define __HSI		(48000000UL)		//高速内部时钟
+#define __HSI		(60000000UL)		//高速内部时钟
 #define __LSI		(   32000UL)		//低速内部时钟
 #define __HSE		(12000000UL)		//高速外部时钟
 #define __LSE		(   32768UL)		//低速外部时钟
@@ -64,7 +64,7 @@ void SystemCoreClockUpdate(void)
 	{
 		switch((SYS->CLKSEL & SYS_CLKSEL_CLK_Msk) >> SYS_CLKSEL_CLK_Pos)
 		{
-		case SYS_CLK_48MHz:
+		case SYS_CLK_60MHz:
 			SystemCoreClock = __HSI;
 			break;
 		
@@ -101,7 +101,7 @@ void SystemInit(void)
 	
 	switch(SYS_CLK)
 	{
-		case SYS_CLK_48MHz:
+		case SYS_CLK_60MHz:
 			switchOnHRC();
 			break;
 		

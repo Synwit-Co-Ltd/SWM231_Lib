@@ -32,15 +32,14 @@ void FOC_Init(FOC_TypeDef * FOCx, FOC_InitStructure * initStruct);
 
 static __INLINE void FOC_Clark_Input(int16_t ia, int16_t ib)
 {
-	FOC->CLARKIAB = ((uint16_t)ia << FOC_CLARKIAB_IA_Pos) |
-					((uint16_t)ib << FOC_CLARKIAB_IB_Pos);
+	FOC->CLARKIA = ia;
+	FOC->CLARKIB = ib;
 }
 
 static __INLINE void FOC_Clark_Input3(int16_t ia, int16_t ib, int16_t ic)
 {
-	FOC->CLARKIAB = ((uint16_t)ia << FOC_CLARKIAB_IA_Pos) |
-					((uint16_t)ib << FOC_CLARKIAB_IB_Pos);
-	
+	FOC->CLARKIA = ia;
+	FOC->CLARKIB = ib;
 	FOC->CLARKIC = ic;
 }
 
@@ -65,18 +64,17 @@ static __INLINE uint32_t FOC_Clark_Error(void)
 
 static __INLINE void FOC_Clark_Result(int16_t * alpha, int16_t * beta)
 {
-	*alpha = FOC->CLARKOAB & FOC_CLARKOAB_OA_Msk;
-	*beta = (FOC->CLARKOAB & FOC_CLARKOAB_OB_Msk) >> FOC_CLARKOAB_OB_Pos;
+	*alpha = FOC->CLARKOA;
+	*beta  = FOC->CLARKOB;
 }
 
 
 static __INLINE void FOC_Park_Input(int16_t alpha, int16_t beta, int16_t sin, int16_t cos)
 {
-	FOC->PARKIAB = ((uint16_t)alpha << FOC_PARKIAB_IA_Pos) |
-				   ((uint16_t)beta  << FOC_PARKIAB_IB_Pos);
-	
-	FOC->PARKRAD = ((uint16_t)sin << FOC_PARKRAD_SIN_Pos) |
-				   ((uint16_t)cos << FOC_PARKRAD_COS_Pos);
+	FOC->PARKIA = alpha;
+	FOC->PARKIB = beta;
+	FOC->PARKSIN = sin;
+	FOC->PARKCOS = cos;
 }
 
 static __INLINE void FOC_Park_Start(void)
@@ -100,18 +98,17 @@ static __INLINE uint32_t FOC_Park_Error(void)
 
 static __INLINE void FOC_Park_Result(int16_t * id, int16_t * iq)
 {
-	*id = FOC->PARKODQ & FOC_PARKODQ_OD_Msk;
-	*iq =(FOC->PARKODQ & FOC_PARKODQ_OQ_Msk) >> FOC_PARKODQ_OQ_Pos;
+	*id = FOC->PARKOD;
+	*iq = FOC->PARKOQ;
 }
 
 
 static __INLINE void FOC_iPark_Input(int16_t vd, int16_t vq, int16_t sin, int16_t cos)
 {
-	FOC->IPARKIDQ = ((uint16_t)vd << FOC_IPARKIDQ_ID_Pos) |
-					((uint16_t)vq << FOC_IPARKIDQ_IQ_Pos);
-	
-	FOC->IPARKRAD = ((uint16_t)sin << FOC_IPARKRAD_SIN_Pos) |
-					((uint16_t)cos << FOC_IPARKRAD_COS_Pos);
+	FOC->IPARKID = vd;
+	FOC->IPARKIQ = vq;
+	FOC->IPARKSIN = sin;
+	FOC->IPARKCOS = cos;
 }
 
 static __INLINE void FOC_iPark_Start(void)
@@ -135,8 +132,8 @@ static __INLINE uint32_t FOC_iPark_Error(void)
 
 static __INLINE void FOC_iPark_Result(int16_t * alpha, int16_t * beta)
 {
-	*alpha = FOC->IPARKOAB & FOC_IPARKOAB_OA_Msk;
-	*beta = (FOC->IPARKOAB & FOC_IPARKOAB_OB_Msk) >> FOC_IPARKOAB_OB_Pos;
+	*alpha = FOC->IPARKOA;
+	*beta  = FOC->IPARKOB;
 }
 
 

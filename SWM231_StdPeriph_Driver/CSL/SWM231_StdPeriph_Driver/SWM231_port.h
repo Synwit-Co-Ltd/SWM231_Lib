@@ -90,7 +90,6 @@ void PORT_Init(PORT_TypeDef * PORTx, uint32_t n, uint32_t func, uint32_t digit_i
 #define PORTB_PIN2_GPIO         0
 #define PORTB_PIN2_PWM_BRK1     1
 #define PORTB_PIN2_BTIMR2_OUT	2
-#define PORTB_PIN2_ADC0_CH12   	7
 
 #define PORTB_PIN3_GPIO         0
 #define PORTB_PIN3_SPI0_SCLK    1
