@@ -51,6 +51,7 @@ int main(void)
 	
 	printf("\r\nDual DMA Read: \r\n");
 	for(i = 0; i < 20; i++) printf("0x%02X, ", RdBuff[i]);
+	
 	while(1==1)
 	{
 	}

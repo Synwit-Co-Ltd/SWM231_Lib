@@ -40,7 +40,7 @@ void GD25Q21_Init(void)
 	GD25Q21_Deassert();
 	
 	PORT_Init(PORTA, PIN4, PORTA_PIN4_SPI0_SCLK, 0);
-	PORT_Init(PORTA, PIN5, PORTA_PIN5_SPI0_MOSI, 0);
+	PORT_Init(PORTA, PIN5, PORTA_PIN5_SPI0_MOSI, 1);	// for Dual read
 	PORT_Init(PORTA, PIN6, PORTA_PIN6_SPI0_MISO, 1);
 	
 	SPI_initStruct.clkDiv = SPI_CLKDIV_32;
@@ -278,14 +278,13 @@ void GD25Q21_ReadData_2bit(uint32_t addr, uint8_t buff[], uint32_t cnt)
 				   (1 << SPI_SPIMCR_WIDTH_Pos) |
 				   (1 << SPI_SPIMCR_RTYPE_Pos) |
 				   ((cnt - 1) << SPI_SPIMCR_RDLEN_Pos) |
-				   (1 << SPI_SPIMCR_DUMMY_Pos);
+				   (0 << SPI_SPIMCR_DUMMY_Pos);
 	SPI_Open(SPI0);
 	
 	GD25Q21_Assert();
 	
 	SPI_Write(SPI0, (GD25Q21_CMD_READ_DATA_2bit << 24) | (addr & 0xFFFFFF));
 	while(SPI_IsRXEmpty(SPI0)) __NOP();
-	buff[0] = SPI_Read(SPI0);
 	
 	for(i = 0; i < cnt; i++)
 	{
@@ -337,7 +336,7 @@ void GD25Q21_ReadData_2bit_DMA(uint32_t addr, uint8_t buff[], uint32_t cnt)
 				   (1 << SPI_SPIMCR_WIDTH_Pos) |
 				   (1 << SPI_SPIMCR_RTYPE_Pos) |
 				   ((cnt - 1) << SPI_SPIMCR_RDLEN_Pos) |
-				   (1 << SPI_SPIMCR_DUMMY_Pos);
+				   (0 << SPI_SPIMCR_DUMMY_Pos);
 	SPI_Open(SPI0);
 	
 	GD25Q21_Assert();
@@ -346,7 +345,6 @@ void GD25Q21_ReadData_2bit_DMA(uint32_t addr, uint8_t buff[], uint32_t cnt)
 	
 	SPI_Write(SPI0, (GD25Q21_CMD_READ_DATA_2bit << 24) | (addr & 0xFFFFFF));
 	while(SPI_IsRXEmpty(SPI0)) __NOP();
-	buff[0] = SPI_Read(SPI0);
 	
 	SPI0->CTRL |= (1 << SPI_CTRL_DMARXEN_Pos);
 	
