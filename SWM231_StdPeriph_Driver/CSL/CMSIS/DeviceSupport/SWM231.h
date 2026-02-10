@@ -871,7 +871,7 @@ typedef struct {
 #define SPI_SPIMCR_WIDTH_Msk		(0x01 << SPI_SPIMCR_WIDTH_Pos)
 #define SPI_SPIMCR_RTYPE_Pos		2		//read type, 0 read status without addr, 1 read data with addr
 #define SPI_SPIMCR_RTYPE_Msk		(0x01 << SPI_SPIMCR_RTYPE_Pos)
-#define SPI_SPIMCR_DUMMY_Pos		3		//dummy cycle, 0 8 dummy clock, 1 16 dummy clock
+#define SPI_SPIMCR_DUMMY_Pos		3		//dummy cycle, 0 no dummy clock, 1 8 dummy clock
 #define SPI_SPIMCR_DUMMY_Msk		(0x07 << SPI_SPIMCR_DUMMY_Pos)
 #define SPI_SPIMCR_SSN_Pos			6		//0 硬件自动控制，2 强制为低，3 强制为高
 #define SPI_SPIMCR_SSN_Msk			(0x03 << SPI_SPIMCR_SSN_Pos)
