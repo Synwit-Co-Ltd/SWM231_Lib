@@ -81,13 +81,13 @@ void Flash_Param_at_xMHz(uint32_t x)
 {
 	__disable_irq();
 	
-	IAP_Flash_Param(1000 / x * 0.3, 0x0B11FFAC);
+	IAP_Flash_Param(1000 / x, 0x0B11FFAC);
 	
 	FMC->CFG3 = (50000 <<  0) |		// chip erase 50ms
 				( 4000 << 16);		// page erase  4ms
 	
 	FMC->CFG4 = (50000 <<  0) |		// prog setup 50us
-				( 8000 << 17);		// prog time   8us
+				(10000 << 16);		// prog time  10us
 	
 	__enable_irq();
 }
