@@ -15,6 +15,7 @@ typedef struct {
 
 #define FOC_MODE_PART	0		// CLARK、PARK、PID、iPARK、SVPWM 功能通过 FOC->STA 中的对应位启动
 #define FOC_MODE_ALL	1		// 所有功能通过 FOC->STA.FOC 控制位整体启动
+#define FOC_MODE_2STAGE	2		// 两段模式，CLARK、PARK、PID 通过 FOC->STA.CLARK3 启动，iPARK、SVPWM 通过 FOC->STA.IPARK2 启动
 
 
 /* Interrupt Type */
@@ -24,7 +25,9 @@ typedef struct {
 #define FOC_IT_PID		FOC_IE_PID_Msk
 #define FOC_IT_iPARK	FOC_IE_IPARK_Msk
 #define FOC_IT_SVPWM	FOC_IE_SVPWM_Msk
-
+#define FOC_IT_SINCOS	FOC_IE_SINCOS_Msk
+#define FOC_IT_CLARK3	FOC_IE_CLARK3_Msk
+#define FOC_IT_IPARK2	FOC_IE_IPARK2_Msk
 
 
 void FOC_Init(FOC_TypeDef * FOCx, FOC_InitStructure * initStruct);
@@ -137,7 +140,7 @@ static __INLINE void FOC_iPark_Result(int16_t * alpha, int16_t * beta)
 }
 
 
-// it: interrupt type，有效值有 FOC_IT_FOC、FOC_IT_CLARK、FOC_IT_PARK、FOC_IT_PID、FOC_IT_iPARK、FOC_IT_SVPWM 及其“或”
+// it: interrupt type，有效值有 FOC_IT_FOC、FOC_IT_CLARK、FOC_IT_PARK、FOC_IT_PID、FOC_IT_iPARK、FOC_IT_SVPWM、FOC_IT_SINCOS、FOC_IT_CLARK3、FOC_IT_IPARK2 及其“或”
 static __INLINE void FOC_INTEn(uint32_t it)
 {
 	FOC->IE |= it;

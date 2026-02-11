@@ -5,9 +5,9 @@ int main(void)
 {	
 	SystemInit();
 	
-	GPIO_Init(GPIOA, PIN4, 0, 1, 0, 0);			//输入，上拉使能，接KEY
+	GPIO_INIT(GPIOA, PIN4, GPIO_INPUT_PullUp);	//输入，上拉使能，接KEY
 	
-	GPIO_Init(GPIOA, PIN5, 1, 0, 0, 0);			//输出， 接LED
+	GPIO_INIT(GPIOA, PIN5, GPIO_OUTPUT);		//输出， 接LED
 	
 	while(1==1)
 	{
