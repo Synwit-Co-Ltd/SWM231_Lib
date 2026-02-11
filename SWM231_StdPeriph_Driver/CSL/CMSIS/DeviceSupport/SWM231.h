@@ -904,15 +904,13 @@ typedef struct {
 	
 		 uint32_t RESERVED[2];
 	
-	__IO uint32_t DATA[10];					// 通道 10-15 转换结果可通过 SEQ0DMA、SEQ1DMA 读取
-	
-		 uint32_t RESERVED2[6];
+	__IO uint32_t DATA[16];
 	
 	__IO uint32_t SEQ0DMA;
 	
 	__IO uint32_t SEQ1DMA;
 	
-		 uint32_t RESERVED3[98];
+		 uint32_t RESERVED2[98];
 	
 	__IO uint32_t START;
 } ADC_TypeDef;

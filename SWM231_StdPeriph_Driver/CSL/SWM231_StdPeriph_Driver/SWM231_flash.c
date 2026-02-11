@@ -87,7 +87,7 @@ void Flash_Param_at_xMHz(uint32_t x)
 				( 4000 << 16);		// page erase  4ms
 	
 	FMC->CFG4 = (50000 <<  0) |		// prog setup 50us
-				(10000 << 16);		// prog time  10us
+				(40000u<< 16);		// prog time  40us
 	
 	__enable_irq();
 }
