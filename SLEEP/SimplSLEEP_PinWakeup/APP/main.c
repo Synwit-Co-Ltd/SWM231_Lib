@@ -29,7 +29,7 @@ int main(void)
 		for(int i = 0; i < SystemCoreClock/8; i++) __NOP();
 		GPIO_ClrBit(GPIOA, PIN5);							//熄灭LED
 		
-		Flash_Param_at_xMHz(48);
+		Flash_Param_at_xMHz(60);
 		switchToHRC();	//休眠前切换到内部RC时钟，进入低功耗模式之后自动切换到内部低频时钟
 		
 		SYS->XTALCR&= ~((1 << SYS_XTALCR_ON_Pos) | (1 << SYS_XTALCR_DET_Pos)  );//关闭外振,降低功耗
@@ -40,7 +40,6 @@ int main(void)
 		
 		SYS->CLKEN0 |=(1 << SYS_CLKEN0_ANAC_Pos); 
 		switchToHRC();
-		SystemCoreClockUpdate();
 		Flash_Param_at_xMHz(CyclesPerUs);
 	}
 }

@@ -95,7 +95,7 @@ void SystemInit(void)
 {
 	SYS->CLKEN0 |= (1 << SYS_CLKEN0_ANAC_Pos);
 	
-	Flash_Param_at_xMHz(48);
+	Flash_Param_at_xMHz(60);
 	
 	switchToHRC();
 	
