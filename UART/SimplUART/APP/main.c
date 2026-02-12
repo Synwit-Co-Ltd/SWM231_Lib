@@ -11,7 +11,8 @@ int main(void)
 	
 	SerialInit();
    	
-	printf("Hello World from %c%c%c%c%c%c%c%c%c%c%c%c%c!\n",83,121,110,119,105,116,46,99,111,109,46,99,110);
+	printf("Hi from SWM231\n");
+	
 	while(1==1)
 	{
 		while(UART_IsRXFIFOEmpty(UART0));
@@ -23,7 +24,7 @@ int main(void)
 		}
 		else if(err == UART_ERR_PARITY)
 		{
-			printf("Parity error!\r\n");
+			printf("Parity error!\n");
 			
 			while(1) __NOP();
 		}
