@@ -2,7 +2,7 @@
 
 
 int main(void)
-{	
+{
 	SystemInit();
 	
 	PORT_Init(PORTA, PIN0, PORTA_PIN0_TIMR0_OUT, 0);

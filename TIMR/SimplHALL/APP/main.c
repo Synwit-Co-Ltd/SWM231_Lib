@@ -16,7 +16,7 @@ int main(void)
 	PORT_Init(PORTB, PIN5, PORTB_PIN5_HALL_IN2, 1);		//连接PA5
 	PORTB->PULLU |= ((1 << PIN3) | (1 << PIN4) | (1 << PIN5));
 	
-	TIMR_Init(BTIMR0, TIMR_MODE_TIMER, CyclesPerUs, 2000000, 1);		//2秒钟未检测到HALL输入变化，触发超时中断
+	TIMR_Init(BTIMR0, TIMR_MODE_TIMER, CyclesPerUs, 0xFFFFFF, 0);	// HALL 功能使用 BTIMR0 计数器
 	
 	BTIMRG->HALLEN = 1;
 	BTIMRG->HALLIF = 7;
@@ -33,25 +33,24 @@ int main(void)
 
 void HALL_Handler(void)
 {
+	static uint32_t halldr_pre = 0;
+	
 	BTIMRG->HALLIF = 7;
 	
-	printf("%dus\r\n", BTIMRG->HALLDR);
-}
-
-
-void BTIMR0_Handler(void)
-{
-	BTIMR0->IF = (1 << TIMR_IF_TO_Pos);
+	uint32_t halldr = BTIMRG->HALLDR;	// BTIMR0->VALUE 从 0xFFFFFF 递减计数，BTIMRG->HALLDR 从 0 递增计数
 	
-	printf("HALL Time-out\r\n");
+	if(halldr > halldr_pre)
+		printf("%dus\r\n", halldr - halldr_pre);
+	
+	halldr_pre = halldr;
 }
 
 
 void TestSignal(void)
 {
-	GPIO_Init(GPIOA, PIN3, 1, 0, 0, 0);
-	GPIO_Init(GPIOA, PIN4, 1, 0, 0, 0);
-	GPIO_Init(GPIOA, PIN5, 1, 0, 0, 0);
+	GPIO_INIT(GPIOA, PIN3, GPIO_OUTPUT);
+	GPIO_INIT(GPIOA, PIN4, GPIO_OUTPUT);
+	GPIO_INIT(GPIOA, PIN5, GPIO_OUTPUT);
 	
 	TIMR_Init(BTIMR1, TIMR_MODE_TIMER, CyclesPerUs, 100000, 1);
 	TIMR_Start(BTIMR1);
@@ -60,18 +59,18 @@ void TestSignal(void)
 
 void BTIMR1_Handler(void)
 {
-	static uint32_t setp = 0;
+	static uint32_t step = 0;
 	
 	BTIMR1->IF = TIMR_IF_TO_Msk;
 	
-	switch(setp++)
+	switch(step++)
 	{
 	case 0: GPIO_SetBit(GPIOA, PIN3); break;
 	case 1: GPIO_SetBit(GPIOA, PIN4); break;
 	case 2: GPIO_SetBit(GPIOA, PIN5); break;
 	case 3: GPIO_ClrBit(GPIOA, PIN3); break;
 	case 4: GPIO_ClrBit(GPIOA, PIN4); break;
-	case 5: GPIO_ClrBit(GPIOA, PIN5); setp = 0; break;
+	case 5: GPIO_ClrBit(GPIOA, PIN5); step = 0; break;
 	}
 }
 

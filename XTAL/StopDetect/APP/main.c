@@ -3,16 +3,14 @@
 void SerialInit(void);
 
 int main(void)
-{	
-	int i;
-	
+{
 	SystemInit();
 	
 	SerialInit();
 	
-	for(i = 0; i < SystemCoreClock/4; i++) __NOP();	//等待晶振稳定，防止上电时误识别晶振停振
+	SW_DelayMS(500);	//等待晶振稳定，防止上电时误识别晶振停振
 	
-	SYS->XTALSR = SYS_XTALSR_STOP_Msk;				//清除标志
+	SYS->XTALSR = SYS_XTALSR_STOP_Msk;	//清除标志
 	NVIC_ClearPendingIRQ(XTALSTOP_IRQn);
 	NVIC_EnableIRQ(XTALSTOP_IRQn);
    	
@@ -20,7 +18,7 @@ int main(void)
 	{
 		printf("SystemCoreClock = %d\r\n", SystemCoreClock);
 		
-		for(i = 0; i < SystemCoreClock/4; i++) __NOP();
+		SW_DelayMS(500);
 	}
 }
 

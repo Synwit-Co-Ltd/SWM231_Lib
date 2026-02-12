@@ -3,9 +3,7 @@
 void SerialInit(void);
 
 int main(void)
-{	
-	uint32_t i;
-	
+{
 	SystemInit();
 	
 	SerialInit();
@@ -30,7 +28,7 @@ int main(void)
 		 *	3、执行 WDT_Feed() 后，不能立即执行 WDT_Stop()，必须间隔 5 个 WDT 时钟周期再执行 WDT_Stop()
 		*/
 		
-		for(i = 0; i < CyclesPerUs * 300 / 4; i++) __NOP();
+		SW_DelayUS(300);
 	}
 }
 

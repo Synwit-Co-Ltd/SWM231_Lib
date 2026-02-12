@@ -3,7 +3,7 @@
 void SerialInit(void);
 
 int main(void)
-{	
+{
 	SystemInit();
 	
 	SerialInit();
@@ -17,7 +17,7 @@ int main(void)
 }
 
 void WDT_Handler(void)
-{	
+{
 	WDT_INTClr(WDT);
 	
 	printf("WDT Interrupt Happened\r\n");

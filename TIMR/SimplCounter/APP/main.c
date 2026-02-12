@@ -2,12 +2,11 @@
 
 
 int main(void)
-{	
-	uint32_t i;
+{
 	SystemInit();
 	
-	GPIO_Init(GPIOA, PIN4, 1, 0, 0, 0);					//模拟外部被计数信号
-	GPIO_Init(GPIOA, PIN5, 1, 0, 0, 0);					//GPIOA.5 => LED
+	GPIO_INIT(GPIOA, PIN4, GPIO_OUTPUT);				//模拟外部被计数信号
+	GPIO_INIT(GPIOA, PIN5, GPIO_OUTPUT);				//GPIOA.5 => LED
 	
 	PORT_Init(PORTA, PIN0, PORTA_PIN0_TIMR0_IN, 1);		//连接外部被计数信号，PA4 => PA0
 	PORTA->PULLU |= (1 << PIN0);
@@ -18,7 +17,8 @@ int main(void)
 	while(1==1)
 	{
 		GPIO_InvBit(GPIOA, PIN4);
-		for(i = 0; i < CyclesPerUs*1000; i++) __NOP();
+		
+		SW_DelayMS(10);
 	}
 }
 

@@ -5,7 +5,7 @@ void SerialInit(void);
 void TestSignal(void);
 
 int main(void)
-{	
+{
 	SystemInit();
 	
 	SerialInit();

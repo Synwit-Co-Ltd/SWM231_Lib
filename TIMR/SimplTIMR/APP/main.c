@@ -5,8 +5,8 @@ int main(void)
 {
 	SystemInit();
 	
-	GPIO_Init(GPIOA, PIN4, 1, 0, 0, 0);			//输出，接LED
-	GPIO_Init(GPIOA, PIN5, 1, 0, 0, 0);			//输出，接LED
+	GPIO_INIT(GPIOA, PIN4, GPIO_OUTPUT);	//输出，接LED
+	GPIO_INIT(GPIOA, PIN5, GPIO_OUTPUT);	//输出，接LED
 	
 	TIMR_Init(TIMR0, TIMR_MODE_TIMER, CyclesPerUs, 500000, 1);		//每0.5秒钟触发一次中断
 	TIMR_Start(TIMR0);
@@ -27,7 +27,7 @@ void TIMR0_Handler(void)
 }
 
 void BTIMR0_Handler(void)
-{	
+{
 	TIMR_INTClr(BTIMR0, TIMR_IT_TO);
 	
 	GPIO_InvBit(GPIOA, PIN5);	//反转LED亮灭状态

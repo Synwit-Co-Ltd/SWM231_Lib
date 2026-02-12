@@ -1962,4 +1962,17 @@ typedef struct {
 #endif
 
 
+static __INLINE void SW_DelayUS(uint32_t us)
+{
+	us = CyclesPerUs * us / 4;
+	
+	for(int i = 0; i < us; i++) __NOP();
+}
+
+static __INLINE void SW_DelayMS(uint32_t ms)
+{
+	for(int i = 0; i < ms; i++) SW_DelayUS(1000);
+}
+
+
 #endif //__SWM231_H__
