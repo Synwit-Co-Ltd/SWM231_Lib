@@ -100,7 +100,7 @@ void ADC_SEQ_Init(ADC_TypeDef * ADCx, uint32_t seq, ADC_SEQ_InitStructure * init
 	ADCx->SEQTRG |= (initStruct->trig_src << pos);
 	
 	ADCx->SMPTIM &= ~(0xFFu << pos);
-	ADCx->SMPTIM |= ((initStruct->samp_tim - 4) << pos);
+	ADCx->SMPTIM |= ((initStruct->samp_tim - 1) << pos);
 	
 	ADCx->SMPNUM &= ~(0xFFu << pos);
 	ADCx->SMPNUM |= ((initStruct->conv_cnt - 1) << pos);

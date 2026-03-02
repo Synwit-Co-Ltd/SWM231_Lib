@@ -11,7 +11,7 @@ typedef struct {
 
 typedef struct {
 	uint8_t  trig_src;		//ADC序列触发方式：ADC_TRIGGER_SW、ADC_TRIGGER_TIMER0、ADC_TRIGGER_TIMER1、... ...
-	uint8_t  samp_tim;		//ADC序列采样时间，可取值4--259
+	uint8_t  samp_tim;		//ADC序列采样时间，可取值1--256
 	uint8_t  conv_cnt;		//ADC序列转换次数，可取值1--256
 	uint8_t  EOCIntEn;		//转换完成中断使能，可取值0、1
 	uint8_t *channels;		//序列转换通道选择，元素为 ADC_CH0、ADC_CH1、...、ADC_CH11 的数组，最多 8 个通道，以 0xF 结束，通道可重复
