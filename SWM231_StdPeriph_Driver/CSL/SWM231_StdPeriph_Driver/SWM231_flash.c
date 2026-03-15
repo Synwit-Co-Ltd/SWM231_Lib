@@ -28,6 +28,7 @@ typedef int  (*IAP_Flash_Write_t)(uint32_t flash_addr, uint32_t ram_addr, uint32
 const IAP_Flash_Erase_t IAP_Flash_Erase = (IAP_Flash_Erase_t)0x01000385;
 const IAP_Flash_Write_t IAP_Flash_Write = (IAP_Flash_Write_t)0x010003E1;
 const IAP_Flash_Param_t IAP_Flash_Param = (IAP_Flash_Param_t)0x01000451;
+const IAP_Flash_Param_t IAP_Flash_Param_TAC = (IAP_Flash_Param_t)0x01000471;
 
 
 /****************************************************************************************************************************************** 
@@ -80,6 +81,8 @@ uint32_t FLASH_Write(uint32_t addr, uint32_t buff[], uint32_t count)
 void Flash_Param_at_xMHz(uint32_t x)
 {
 	__disable_irq();
+	
+	IAP_Flash_Param_TAC(36, 0x0B11FFAC);
 	
 	IAP_Flash_Param(1000 / x, 0x0B11FFAC);
 	
