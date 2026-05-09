@@ -36,7 +36,7 @@ void ADC_Init(ADC_TypeDef * ADCx, ADC_InitStructure * initStruct)
 	
 	ADC_Close(ADCx);		//一些关键寄存器只能在ADC关闭时设置
 	
-	ADCx->CR &= ~(ADC_CR_AVG_Msk | ADC_CR_BITS_Pos);
+	ADCx->CR &= ~(ADC_CR_AVG_Msk | ADC_CR_BITS_Msk);
 	ADCx->CR |= (initStruct->samplAvg << ADC_CR_AVG_Pos) |
 				(0					  << ADC_CR_BITS_Pos);
 	
