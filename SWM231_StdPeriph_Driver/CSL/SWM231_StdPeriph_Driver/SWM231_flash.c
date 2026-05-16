@@ -37,11 +37,11 @@ const IAP_Flash_Param_t IAP_Flash_Param_TAC = (IAP_Flash_Param_t)0x01000471;
 ******************************************************************************************************************************************/
 uint32_t FLASH_Erase(uint32_t addr)
 {
-	__disable_irq();
+	uint32_t primask = SW_enter_critical();
 	
 	IAP_Flash_Erase(addr / 0x200, 0x0B11FFAC);
 	
-	__enable_irq();
+	SW_exit_critical(primask);
 	
 	return FLASH_RES_OK;
 }
@@ -58,11 +58,11 @@ uint32_t FLASH_Erase(uint32_t addr)
 ******************************************************************************************************************************************/
 uint32_t FLASH_Write(uint32_t addr, uint32_t buff[], uint32_t count)
 {
-	__disable_irq();
+	uint32_t primask = SW_enter_critical();
 	
 	IAP_Flash_Write(addr, (uint32_t)buff, count/2, 0x0B11FFAC);
 	
-	__enable_irq();
+	SW_exit_critical(primask);
 	
 	return FLASH_RES_OK;
 }
@@ -77,7 +77,7 @@ uint32_t FLASH_Write(uint32_t addr, uint32_t buff[], uint32_t count)
 ******************************************************************************************************************************************/
 void Flash_Param_at_xMHz(uint32_t x)
 {
-	__disable_irq();
+	uint32_t primask = SW_enter_critical();
 	
 	IAP_Flash_Param_TAC(36, 0x0B11FFAC);
 	
@@ -89,5 +89,5 @@ void Flash_Param_at_xMHz(uint32_t x)
 	FMC->CFG4 = (50000 <<  0) |		// prog setup 50us
 				(40000u<< 16);		// prog time  40us
 	
-	__enable_irq();
+	SW_exit_critical(primask);
 }
