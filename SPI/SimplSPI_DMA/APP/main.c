@@ -44,23 +44,23 @@ int main(void)
 	
 #if TEST_DMA == TEST_DMA_RX
 	// SPI0 RX DMA
-	SPI0->CTRL |= (1 << SPI_CTRL_DMARXEN_Pos);
+	SPI0->CTRL |= SPI_CTRL_DMARXEN_Msk;
 	
 	DMA_initStruct.Mode = DMA_MODE_SINGLE;
 	DMA_initStruct.Unit = DMA_UNIT_BYTE;
 	DMA_initStruct.Count = BUF_SIZE;
-	DMA_initStruct.PeripheralAddr = (uint32_t)&SPI0->DATA;
-	DMA_initStruct.PeripheralAddrInc = 0;
 	DMA_initStruct.MemoryAddr = (uint32_t)RX_Buffer;
 	DMA_initStruct.MemoryAddrInc = 1;
+	DMA_initStruct.PeripheralAddr = (uint32_t)&SPI0->DATA;
+	DMA_initStruct.PeripheralAddrInc = 0;
 	DMA_initStruct.Handshake = DMA_CH0_SPI0RX;
 	DMA_initStruct.Priority = DMA_PRI_LOW;
-	DMA_initStruct.INTEn = DMA_IT_DONE;
+	DMA_initStruct.INTEn = 0;
 	DMA_CH_Init(DMA_CH0, &DMA_initStruct);
 	DMA_CH_Open(DMA_CH0);
 #else
 	// SPI0 TX DMA
-	SPI0->CTRL |= (1 << SPI_CTRL_DMATXEN_Pos);
+	SPI0->CTRL |= SPI_CTRL_DMATXEN_Msk;
 	
 	DMA_initStruct.Mode = DMA_MODE_SINGLE;
 	DMA_initStruct.Unit = DMA_UNIT_BYTE;
@@ -71,33 +71,28 @@ int main(void)
 	DMA_initStruct.PeripheralAddrInc = 0;
 	DMA_initStruct.Handshake = DMA_CH0_SPI0TX;
 	DMA_initStruct.Priority = DMA_PRI_LOW;
-	DMA_initStruct.INTEn = DMA_IT_DONE;
+	DMA_initStruct.INTEn = 0;
 	DMA_CH_Init(DMA_CH0, &DMA_initStruct);
 	DMA_CH_Open(DMA_CH0);
 #endif
+
 	while(1==1)
 	{
-	}
-}
-
-
-void DMA_Handler(void)
-{
-	uint32_t i;
-	
-	if(DMA_CH_INTStat(DMA_CH0, DMA_IT_DONE))
-	{
-		DMA_CH_INTClr(DMA_CH0, DMA_IT_DONE);
+		SW_DelayMS(500);
 		
-#if TEST_DMA == TEST_DMA_RX
-		for(i = 0; i < BUF_SIZE; i++)  printf("%c", RX_Buffer[i]);
-		
-		memset(RX_Buffer, 0x00, sizeof(RX_Buffer));
+#if TEST_DMA == TEST_DMA_TX
+		DMA_CH_Open(DMA_CH0);
 #else
-		for(i = 0; i < SystemCoreClock/4; i++)  __NOP();		// 延时一会儿
-#endif
+		for(int i = 0; i < strlen(TX_Buffer); i++)
+			SPI_WriteWithWait(SPI0, TX_Buffer[i]);
 		
-		DMA_CH_Open(DMA_CH0);	// 重新开始，再次搬运
+		int rx_count = BUF_SIZE - DMA_CH_GetRemaining(DMA_CH0);
+		
+		for(int i = 0; i < rx_count; i++) printf("%c", RX_Buffer[i]);
+		
+		DMA_CH_Close(DMA_CH0);
+		DMA_CH_Open(DMA_CH0);
+#endif
 	}
 }
 

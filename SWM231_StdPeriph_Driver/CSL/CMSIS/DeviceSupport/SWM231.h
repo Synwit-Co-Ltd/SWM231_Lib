@@ -1960,7 +1960,7 @@ typedef struct {
 
 static __INLINE void SW_DelayUS(uint32_t us)
 {
-	us = CyclesPerUs * us / 4;
+	us = CyclesPerUs * us / 8;
 	
 	for(int i = 0; i < us; i++) __NOP();
 }
