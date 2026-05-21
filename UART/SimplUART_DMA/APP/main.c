@@ -85,7 +85,7 @@ int main(void)
 			DMA_CH_SetAddrAndCount(DMA_CH0, (uint32_t)TX_String[i], strlen(TX_String[i]));
 			DMA_CH_Open(DMA_CH0);
 			
-			for(int j = 0; j < SystemCoreClock/32; j++) __NOP();
+			SW_DelayMS(500);
 		}
 #endif
 	}

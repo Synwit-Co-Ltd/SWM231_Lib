@@ -19,7 +19,7 @@ int main(void)
   		
      	printf("Hi, World!\r\n");
 		
-		for(int i=0; i<SystemCoreClock/16; i++) __NOP();
+		SW_DelayMS(500);
  	}
 }
 

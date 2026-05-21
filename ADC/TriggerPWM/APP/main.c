@@ -54,7 +54,7 @@ int main(void)
 			printf("%d,", ADC_Read(ADC0, ADC_CH1));
 		}
 		
-		for(int i = 0; i < SystemCoreClock/1000; i++) {}
+		SW_DelayMS(10);
 	}
 }
 

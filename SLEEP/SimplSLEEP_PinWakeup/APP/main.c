@@ -10,8 +10,7 @@ extern void EnterSleepMode(void) ;
 
 int main(void)
 {
-	uint32_t i;
-	for(i = 0; i < SystemCoreClock/2; i++)  __NOP();//防止调试过程中卡死
+	SW_DelayMS(2000);	//防止调试过程中卡死
 	
 	SystemInit();
 	
@@ -26,7 +25,7 @@ int main(void)
 	while(1==1)
 	{
 		GPIO_SetBit(GPIOA, PIN5);							//点亮LED
-		for(int i = 0; i < SystemCoreClock/8; i++) __NOP();
+		SW_DelayMS(500);
 		GPIO_ClrBit(GPIOA, PIN5);							//熄灭LED
 		
 		Flash_Param_at_xMHz(60);
