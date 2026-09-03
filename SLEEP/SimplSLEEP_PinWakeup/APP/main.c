@@ -1,12 +1,14 @@
 #include "SWM231.h"
 
-/* 注意：
- *	芯片的 ISP、SWD 引脚默认开启了上拉电阻，会增加休眠功耗，若想获得最低休眠功耗，休眠前请关闭所有引脚的上拉和下拉电阻
+/* 注意：WFE可以通过IO 唤醒,  WFI只能通过中断唤醒
  *
- *	需要注意FLASH会进入深度睡眠模式，唤醒需要等待20uS时间，进入睡眠后，不能访问FLASH,所以进入唤醒和等待需要在RAM中执行。
  */
  
-extern void EnterSleepMode(void) ;
+#define USE_WFI 0
+
+	
+void EnterSleepMode(void) ;
+void GPIO_Sleep_Config(void);
 
 int main(void)
 {
@@ -18,6 +20,13 @@ int main(void)
 	GPIO_SetBit(GPIOA, PIN5);				//点亮LED
 	
 	GPIO_Init(GPIOA, PIN4, 0, 1, 0, 0);		//接按键，上拉使能
+	
+#if USE_WFI	//WFI 只能通过中断唤醒
+	EXTI_Init(GPIOA, PIN4, EXTI_FALL_EDGE);		//下降沿触发中断
+	NVIC_EnableIRQ(GPIOA4_GPIOB4_IRQn);
+	EXTI_Open(GPIOA, PIN4);
+#endif
+	
 	SYS->PAWKEN |= (1 << PIN4);				//开启PA4引脚低电平唤醒
 	
 	SYS->RCCR |= SYS_RCCR_LON_Msk;			//休眠模式使用低频时钟 
@@ -43,35 +52,59 @@ int main(void)
 	}
 }
 
+#if USE_WFI	
 
-void SerialInit(void)
+#define USE_GPIOA4_IRQ	1
+
+#if USE_GPIOA4_IRQ
+void GPIOA4_GPIOB4_Handler(void)
+#else
+void GPIOA_Handler(void)
+#endif
 {
-	UART_InitStructure UART_initStruct;
-	
-	PORT_Init(PORTA, PIN2, PORTA_PIN2_UART0_TX, 0);
-	PORT_Init(PORTA, PIN3, PORTA_PIN3_UART0_RX, 1);
- 	
- 	UART_initStruct.Baudrate = 57600;
-	UART_initStruct.DataBits = UART_DATA_8BIT;
-	UART_initStruct.Parity = UART_PARITY_NONE;
-	UART_initStruct.StopBits = UART_STOP_1BIT;
-	UART_initStruct.RXThreshold = 3;
-	UART_initStruct.RXThresholdIEn = 0;
-	UART_initStruct.TXThreshold = 3;
-	UART_initStruct.TXThresholdIEn = 0;
-	UART_initStruct.TimeoutTime = 10;
-	UART_initStruct.TimeoutIEn = 0;
- 	UART_Init(UART0, &UART_initStruct);
-	UART_Open(UART0);
+	if(EXTI_State(GPIOA, PIN4))
+	{
+		EXTI_Clear(GPIOA, PIN4);
+		
+		GPIO_InvBit(GPIOA, PIN5);
+	}
 }
 
-int fputc(int ch, FILE *f)
+#endif
+
+void GPIO_Sleep_Config(void)
 {
-	UART_WriteByte(UART0, ch);
-	
-	while(UART_IsTXBusy(UART0));
- 	
-	return ch;
+	PORT_Init(PORTB, PIN0, PORTB_PIN0_GPIO,0);//SWCLK
+	PORT_Init(PORTB, PIN1, PORTB_PIN1_GPIO,0);//SWDIO
+
+	PORT_Init(PORTA, PIN9, PORTA_PIN9_GPIO,0);    //TMS
+	PORT_Init(PORTB, PIN3, PORTB_PIN3_GPIO, 0);   //TDI
+	PORT_Init(PORTB, PIN6, PORTB_PIN6_GPIO, 0);   //TCLK
+
+	PORT_Init	(PORTB, PIN10, PORTB_PIN10_GPIO, 0); //ISP
 }
 
+void EnterSleepMode(void) 
+{
+	int i;
+	
+	while(1)
+	{
+		#if USE_WFI	
+		__WFI();
+		#else
+		__WFE();
+		#endif
+
+		if ((SYS->PAWKSR & (1 << PIN4)) != 0) 
+		{
+			break;
+		}
+		
+		__NOP();
+	}
+	
+	SYS->PAWKSR |= (1 << PIN4);							//清除唤醒状态
+	
+}  
 
