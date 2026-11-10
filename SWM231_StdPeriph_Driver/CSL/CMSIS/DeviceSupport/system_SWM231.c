@@ -94,7 +94,7 @@ void SystemInit(void)
 	
 	Flash_Param_at_xMHz(60);
 	
-	switchToHRC();
+	switchToHRC();							// note: before calling switchToDIV(), switchToHRC() must be executed first.
 	
 	switch(SYS_CLK)
 	{
@@ -111,7 +111,7 @@ void SystemInit(void)
 			break;
 	}
 	
-	switchToDIV(SYS_CLK, SYS_CLK_DIV);
+	switchToDIV(SYS_CLK, SYS_CLK_DIV);		// note: before calling switchToDIV(), switchToHRC() must be executed first.
 	
 	Flash_Param_at_xMHz(CyclesPerUs);
 	
